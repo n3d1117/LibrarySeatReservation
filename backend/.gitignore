@@ -1,0 +1,5 @@
+/.idea
+/LibrarySeatReservation-Backend.iml
+/target
+/deploy.sh
+.DS_Store
