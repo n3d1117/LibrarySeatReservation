@@ -34,14 +34,14 @@ public class UserControllerTest {
         dao = mock(UserDao.class);
 
         user = spy(ModelFactory.initializeUser());
-        user.setUsername("username");
+        user.setEmail("some@email.com");
         user.setPassword("password");
         user.setRoles(Arrays.asList(Role.BASIC, Role.ADMIN));
         when(user.getId()).thenReturn(1L);
 
         dto = new UserDto();
         dto.setId(1L);
-        dto.setUsername(user.getUsername());
+        dto.setEmail(user.getEmail());
         dto.setPassword(user.getPassword());
         dto.setRoles(Arrays.asList(Role.BASIC.toString(), Role.ADMIN.toString()));
 
@@ -55,12 +55,12 @@ public class UserControllerTest {
         dto.setPassword(null);
 
         User anotherUser = spy(ModelFactory.initializeUser());
-        anotherUser.setUsername("another username");
+        anotherUser.setEmail("another@email.com");
         when(anotherUser.getId()).thenReturn(2L);
 
         UserDto anotherDto = new UserDto();
         anotherDto.setId(2L);
-        anotherDto.setUsername(anotherUser.getUsername());
+        anotherDto.setEmail(anotherUser.getEmail());
         anotherDto.setRoles(Collections.singletonList(Role.BASIC.toString()));
 
         when(dao.all()).thenReturn(Arrays.asList(user, anotherUser));
@@ -83,7 +83,7 @@ public class UserControllerTest {
 
         ArgumentCaptor<User> argument = ArgumentCaptor.forClass(User.class);
         verify(dao).save(argument.capture());
-        assertEquals(user.getUsername(), argument.getValue().getUsername());
+        assertEquals(user.getEmail(), argument.getValue().getEmail());
         assertEquals(user.getPassword(), argument.getValue().getPassword());
     }
 

@@ -33,9 +33,9 @@ public class SecurityContext implements javax.ws.rs.core.SecurityContext {
 
     @Override
     public boolean isUserInRole(String role) {
-        LOGGER.info(String.format("Checking role for username %s...", principalUsername));
+        LOGGER.info(String.format("Checking role for email %s...", principalUsername));
         try {
-            User principal = dao.findByUsername(principalUsername);
+            User principal = dao.findByEmail(principalUsername);
             return principal.getRoles().stream()
                     .map(Role::toString)
                     .collect(Collectors.toList())

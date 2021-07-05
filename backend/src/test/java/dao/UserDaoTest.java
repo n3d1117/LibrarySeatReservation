@@ -21,7 +21,7 @@ public class UserDaoTest extends JPATest {
     @Override
     protected void init() throws IllegalAccessException {
         user = ModelFactory.initializeUser();
-        user.setUsername("username");
+        user.setEmail("some@email.com");
         user.setPassword("secret");
         user.setRoles(Arrays.asList(Role.BASIC, Role.ADMIN));
         entityManager.persist(user);
@@ -32,7 +32,7 @@ public class UserDaoTest extends JPATest {
     @Test
     public void testFindAll() {
         User anotherUser = ModelFactory.initializeUser();
-        user.setUsername("another username");
+        user.setEmail("another@email.com");
         user.setPassword("another secret");
         entityManager.persist(anotherUser);
 
@@ -48,7 +48,7 @@ public class UserDaoTest extends JPATest {
 
         assertEquals(user.getId(), result.getId());
         assertEquals(user.getUuid(), result.getUuid());
-        assertEquals(user.getUsername(), result.getUsername());
+        assertEquals(user.getEmail(), result.getEmail());
         assertEquals(user.getPassword(), result.getPassword());
         assertIterableEquals(user.getRoles(), result.getRoles());
     }
@@ -59,25 +59,25 @@ public class UserDaoTest extends JPATest {
     }
 
     @Test
-    public void testFindByUsername() {
-        User result = dao.findByUsername(user.getUsername());
+    public void testFindByEmail() {
+        User result = dao.findByEmail(user.getEmail());
 
         assertEquals(user.getId(), result.getId());
         assertEquals(user.getUuid(), result.getUuid());
-        assertEquals(user.getUsername(), result.getUsername());
+        assertEquals(user.getEmail(), result.getEmail());
         assertEquals(user.getPassword(), result.getPassword());
         assertIterableEquals(user.getRoles(), result.getRoles());
     }
 
     @Test
-    public void testFindByUsernameThrowsWhenUserNotFound() {
-        assertThrows(EntityNotFoundException.class, () -> dao.findByUsername("anything"));
+    public void testFindByEmailThrowsWhenUserNotFound() {
+        assertThrows(EntityNotFoundException.class, () -> dao.findByEmail("anything"));
     }
 
     @Test
     public void testSave() {
         User entityToPersist = ModelFactory.initializeUser();
-        entityToPersist.setUsername("another username");
+        entityToPersist.setEmail("another@email.com");
         entityToPersist.setPassword("password");
 
         dao.save(entityToPersist);
@@ -110,7 +110,7 @@ public class UserDaoTest extends JPATest {
     @Test
     public void testDelete() {
         User anotherUser = ModelFactory.initializeUser();
-        user.setUsername("another username");
+        user.setEmail("another@email.com");
         user.setPassword("another secret");
         entityManager.persist(anotherUser);
 
@@ -122,10 +122,10 @@ public class UserDaoTest extends JPATest {
 
     @Test
     public void testVerify() {
-        assertTrue(dao.verify(user.getUsername(), user.getPassword()));
-        assertFalse(dao.verify("another", user.getPassword()));
-        assertFalse(dao.verify(user.getUsername(), "another"));
-        assertFalse(dao.verify("another", "another"));
+        assertTrue(dao.verify(user.getEmail(), user.getPassword()));
+        assertFalse(dao.verify("another@email.com", user.getPassword()));
+        assertFalse(dao.verify(user.getEmail(), "another"));
+        assertFalse(dao.verify("another@email.com", "another"));
     }
 
 }

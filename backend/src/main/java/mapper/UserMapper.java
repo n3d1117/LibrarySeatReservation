@@ -14,14 +14,14 @@ public class UserMapper {
     public UserDto generateRedactedUserDTO(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
-        userDto.setUsername(user.getUsername());
+        userDto.setEmail(user.getEmail());
         serializeRoles(userDto, user.getRoles());
         return userDto;
     }
 
     public User generateUserFromDTO(UserDto dto) {
         User user = ModelFactory.initializeUser();
-        user.setUsername(dto.getUsername());
+        user.setEmail(dto.getEmail());
         user.setPassword(dto.getPassword());
         deserializeRoles(dto.getRoles(), user);
         return user;

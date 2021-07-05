@@ -11,19 +11,19 @@ public class UserDao extends BaseDao<User> {
         super(User.class);
     }
 
-    public User findByUsername(String username) {
+    public User findByEmail(String email) {
         try {
-            return entityManager.createQuery("from User WHERE username = :username", User.class)
-                    .setParameter("username", username)
+            return entityManager.createQuery("from User WHERE email = :email", User.class)
+                    .setParameter("email", email)
                     .getSingleResult();
         } catch (NoResultException e) {
             throw new EntityNotFoundException();
         }
     }
 
-    public boolean verify(String username, String password) {
-        return !entityManager.createQuery("from User WHERE username = :username AND password = :password", User.class)
-                .setParameter("username", username)
+    public boolean verify(String email, String password) {
+        return !entityManager.createQuery("from User WHERE email = :email AND password = :password", User.class)
+                .setParameter("email", email)
                 .setParameter("password", password)
                 .getResultList().isEmpty();
     }

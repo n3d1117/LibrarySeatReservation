@@ -45,15 +45,15 @@ public class SecurityRequestFilter implements ContainerRequestFilter {
             return;
         }
 
-        String username = null;
+        String email = null;
         if (authorizationHeader.toLowerCase().startsWith("basic")) {
             String base64Credentials = authorizationHeader.substring("Basic".length()).trim();
             byte[] bytes = Base64.getDecoder().decode(base64Credentials);
             String credentials = new String(bytes, StandardCharsets.UTF_8);
             String[] tmp = credentials.split(":", 2);
-            username = tmp[0];
+            email = tmp[0];
             String password = tmp[1];
-            if (!userDao.verify(username, password)) {
+            if (!userDao.verify(email, password)) {
                 requestContext.abortWith(
                         Response.status(Response.Status.UNAUTHORIZED).entity("Unauthorized").type("text/plain").build()
                 );
@@ -61,7 +61,7 @@ public class SecurityRequestFilter implements ContainerRequestFilter {
             }
         }
 
-        String principalUsername = username;
+        String principalUsername = email;
         securityContext.setPrincipalUsername(principalUsername);
         securityContext.setContext(requestContext);
         requestContext.setSecurityContext(securityContext);

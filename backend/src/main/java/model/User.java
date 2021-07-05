@@ -8,7 +8,7 @@ import java.util.List;
 public class User extends BaseEntity {
 
     @Column(unique = true)
-    private String username;
+    private String email;
 
     private String password;
 
@@ -24,13 +24,13 @@ public class User extends BaseEntity {
     @Override
     public void copy(BaseEntity a) {
         User that = (User) a;
-        this.username = that.getUsername();
+        this.email = that.getEmail();
         this.password = that.getPassword();
         this.roles = that.getRoles();
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
     public String getPassword() {
@@ -41,8 +41,8 @@ public class User extends BaseEntity {
         return roles;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {

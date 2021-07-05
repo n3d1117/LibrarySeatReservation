@@ -25,13 +25,13 @@ public class UserMapperTest {
         mapper = new UserMapper();
 
         user = spy(ModelFactory.initializeUser());
-        user.setUsername("username");
+        user.setEmail("some@email.com");
         user.setPassword("password");
         user.setRoles(Collections.singletonList(Role.BASIC));
 
         userDto = new UserDto();
         userDto.setId(1L);
-        userDto.setUsername(user.getUsername());
+        userDto.setEmail(user.getEmail());
         userDto.setPassword(user.getPassword());
         userDto.setRoles(Collections.singletonList(Role.BASIC.toString()));
 
@@ -42,37 +42,37 @@ public class UserMapperTest {
     public void testGenerateRedactedUserDTO() {
         UserDto generated = mapper.generateRedactedUserDTO(user);
         assertEquals(userDto.getId(), generated.getId());
-        assertEquals(userDto.getUsername(), generated.getUsername());
+        assertEquals(userDto.getEmail(), generated.getEmail());
         assertNull(generated.getPassword());
         assertIterableEquals(userDto.getRoles(), generated.getRoles());
     }
 
     @Test
     public void testGenerateWrongUserDTO() {
-        user.setUsername("another username");
+        user.setEmail("another@email.com");
         user.setRoles(Arrays.asList(Role.BASIC, Role.ADMIN));
 
         UserDto generated = mapper.generateRedactedUserDTO(user);
-        assertNotEquals(userDto.getUsername(), generated.getUsername());
+        assertNotEquals(userDto.getEmail(), generated.getEmail());
         assertNotEquals(userDto.getRoles(), generated.getRoles());
     }
 
     @Test
     public void testGenerateUserFromDTO() {
         User generated = mapper.generateUserFromDTO(userDto);
-        assertEquals(user.getUsername(), generated.getUsername());
+        assertEquals(user.getEmail(), generated.getEmail());
         assertEquals(user.getPassword(), generated.getPassword());
         assertIterableEquals(user.getRoles(), generated.getRoles());
     }
 
     @Test
     public void testGenerateWrongUserFromDTO() {
-        userDto.setUsername("another username");
+        userDto.setEmail("another@email.com");
         userDto.setPassword("another password");
         userDto.setRoles(Arrays.asList(Role.BASIC.toString(), Role.ADMIN.toString()));
 
         User generated = mapper.generateUserFromDTO(userDto);
-        assertNotEquals(user.getUsername(), generated.getUsername());
+        assertNotEquals(user.getEmail(), generated.getEmail());
         assertNotEquals(user.getPassword(), generated.getPassword());
         assertNotEquals(user.getRoles(), generated.getRoles());
     }
