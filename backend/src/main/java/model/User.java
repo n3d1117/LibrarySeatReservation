@@ -10,6 +10,8 @@ public class User extends BaseEntity {
     @Column(unique = true)
     private String email;
 
+    private String name;
+    private String surname;
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -33,6 +35,14 @@ public class User extends BaseEntity {
         return email;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -43,6 +53,14 @@ public class User extends BaseEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public void setPassword(String password) {

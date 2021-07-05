@@ -15,6 +15,8 @@ public class UserMapper {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setEmail(user.getEmail());
+        userDto.setName(user.getName());
+        userDto.setSurname(user.getSurname());
         serializeRoles(userDto, user.getRoles());
         return userDto;
     }
@@ -22,6 +24,8 @@ public class UserMapper {
     public User generateUserFromDTO(UserDto dto) {
         User user = ModelFactory.initializeUser();
         user.setEmail(dto.getEmail());
+        user.setName(dto.getName());
+        user.setSurname(dto.getSurname());
         user.setPassword(dto.getPassword());
         deserializeRoles(dto.getRoles(), user);
         return user;

@@ -14,11 +14,15 @@ public class UserTest {
     public void testCopy() {
         User u1 = ModelFactory.initializeUser();
         u1.setEmail("jon@snow.com");
+        u1.setName("Jon");
+        u1.setSurname("Snow");
         u1.setPassword("pass1");
         u1.setRoles(Arrays.asList(Role.BASIC, Role.ADMIN));
 
         User u2 = ModelFactory.initializeUser();
         u2.setEmail("cersei@stark.com");
+        u2.setName("Cersei");
+        u2.setSurname("Stark");
         u2.setPassword("pass2");
         u1.setRoles(Collections.singletonList(Role.BASIC));
 
