@@ -29,6 +29,8 @@ public class UserTest {
         u1.copy(u2);
 
         assertEquals(u1.getEmail(), u2.getEmail());
+        assertEquals(u1.getName(), u2.getName());
+        assertEquals(u1.getSurname(), u2.getSurname());
         assertEquals(u1.getPassword(), u2.getPassword());
         assertNotEquals(u1.getUuid(), u2.getUuid());
     }

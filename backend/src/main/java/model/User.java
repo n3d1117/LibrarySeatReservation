@@ -27,6 +27,8 @@ public class User extends BaseEntity {
     public void copy(BaseEntity a) {
         User that = (User) a;
         this.email = that.getEmail();
+        this.name = that.getName();
+        this.surname = that.getSurname();
         this.password = that.getPassword();
         this.roles = that.getRoles();
     }

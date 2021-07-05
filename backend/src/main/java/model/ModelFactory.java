@@ -9,4 +9,8 @@ public class ModelFactory {
     public static User initializeUser() {
         return new User(UUID.randomUUID().toString());
     }
+
+    public static Library initializeLibrary() {
+        return new Library(UUID.randomUUID().toString());
+    }
 }

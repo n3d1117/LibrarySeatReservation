@@ -5,6 +5,7 @@
              version="2.2">
     <persistence-unit name="default">
         <class>model.User</class>
+        <class>model.Library</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
             <property name="hibernate.hbm2ddl.auto" value="update"/>
