@@ -10,6 +10,8 @@ public class Library extends BaseEntity {
     private String name;
     private String address;
 
+    private Integer capacity;
+
     public Library() { }
 
     public Library(String uuid) {
@@ -21,6 +23,7 @@ public class Library extends BaseEntity {
         Library that = (Library) a;
         this.name = that.getName();
         this.address = that.getAddress();
+        this.capacity = that.getCapacity();
     }
 
     public String getName() {
@@ -38,4 +41,13 @@ public class Library extends BaseEntity {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
+
 }

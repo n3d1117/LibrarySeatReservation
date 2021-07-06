@@ -23,11 +23,13 @@ public class LibraryMapperTest {
         library = spy(ModelFactory.initializeLibrary());
         library.setName("name");
         library.setAddress("address");
+        library.setCapacity(50);
 
         libraryDto = new LibraryDto();
         libraryDto.setId(1L);
         libraryDto.setName(library.getName());
         libraryDto.setAddress(library.getAddress());
+        libraryDto.setCapacity(library.getCapacity());
 
         when(library.getId()).thenReturn(1L);
     }
@@ -38,18 +40,19 @@ public class LibraryMapperTest {
         assertEquals(libraryDto.getId(), generated.getId());
         assertEquals(libraryDto.getName(), generated.getName());
         assertEquals(libraryDto.getAddress(), generated.getAddress());
-        assertEquals(libraryDto.getLatitude(), generated.getLatitude());
-        assertEquals(libraryDto.getLongitude(), generated.getLongitude());
+        assertEquals(libraryDto.getCapacity(), generated.getCapacity());
     }
 
     @Test
     public void testGenerateWrongLibraryDTO() {
         library.setName("another name");
         library.setAddress("another address");
+        library.setCapacity(70);
 
         LibraryDto generated = mapper.generateLibraryDTO(library);
         assertNotEquals(libraryDto.getName(), generated.getName());
         assertNotEquals(libraryDto.getAddress(), generated.getAddress());
+        assertNotEquals(libraryDto.getCapacity(), generated.getCapacity());
     }
 
     @Test
@@ -57,16 +60,19 @@ public class LibraryMapperTest {
         Library generated = mapper.generateLibraryFromDTO(libraryDto);
         assertEquals(library.getName(), generated.getName());
         assertEquals(library.getAddress(), generated.getAddress());
+        assertEquals(library.getCapacity(), generated.getCapacity());
     }
 
     @Test
     public void testGenerateWrongLibraryFromDTO() {
         libraryDto.setName("another name");
         libraryDto.setAddress("another address");
+        libraryDto.setCapacity(70);
 
         Library generated = mapper.generateLibraryFromDTO(libraryDto);
         assertNotEquals(library.getName(), generated.getName());
         assertNotEquals(library.getAddress(), generated.getAddress());
+        assertNotEquals(library.getCapacity(), generated.getCapacity());
     }
 
 }

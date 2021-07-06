@@ -34,12 +34,14 @@ public class LibraryControllerTest {
         library = spy(ModelFactory.initializeLibrary());
         library.setName("name");
         library.setAddress("address");
+        library.setCapacity(50);
         when(library.getId()).thenReturn(1L);
 
         dto = new LibraryDto();
         dto.setId(1L);
         dto.setName(library.getName());
         dto.setAddress(library.getAddress());
+        dto.setCapacity(library.getCapacity());
 
         FieldUtils.writeField(controller, "libraryMapper", new LibraryMapper(), true);
         FieldUtils.writeField(controller, "libraryDao", dao, true);
@@ -50,12 +52,14 @@ public class LibraryControllerTest {
         Library anotherLibrary = spy(ModelFactory.initializeLibrary());
         anotherLibrary.setName("another name");
         anotherLibrary.setAddress("another address");
+        anotherLibrary.setCapacity(70);
         when(anotherLibrary.getId()).thenReturn(2L);
 
         LibraryDto anotherDto = new LibraryDto();
         anotherDto.setId(2L);
         anotherDto.setName(anotherLibrary.getName());
         anotherDto.setAddress(anotherLibrary.getAddress());
+        anotherDto.setCapacity(anotherLibrary.getCapacity());
 
         when(dao.all()).thenReturn(Arrays.asList(library, anotherLibrary));
         assertEquals(controller.all(), new Gson().toJson(Arrays.asList(dto, anotherDto)));
@@ -77,6 +81,7 @@ public class LibraryControllerTest {
         verify(dao).save(argument.capture());
         assertEquals(library.getName(), argument.getValue().getName());
         assertEquals(library.getAddress(), argument.getValue().getAddress());
+        assertEquals(library.getCapacity(), argument.getValue().getCapacity());
     }
 
     @Test

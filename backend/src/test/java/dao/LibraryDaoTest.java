@@ -23,6 +23,7 @@ public class LibraryDaoTest extends JPATest {
         library = ModelFactory.initializeLibrary();
         library.setName("Name");
         library.setAddress("Address");
+        library.setCapacity(50);
         entityManager.persist(library);
         dao = new LibraryDao();
         FieldUtils.writeField(dao, "entityManager", entityManager, true);
@@ -33,6 +34,7 @@ public class LibraryDaoTest extends JPATest {
         Library anotherLibrary = ModelFactory.initializeLibrary();
         anotherLibrary.setName("Another Name");
         anotherLibrary.setAddress("Another Address");
+        anotherLibrary.setCapacity(70);
         entityManager.persist(anotherLibrary);
 
         List<Library> allEntities = dao.all();
@@ -47,6 +49,8 @@ public class LibraryDaoTest extends JPATest {
         assertEquals(library.getId(), result.getId());
         assertEquals(library.getUuid(), result.getUuid());
         assertEquals(library.getName(), result.getName());
+        assertEquals(library.getAddress(), result.getAddress());
+        assertEquals(library.getCapacity(), result.getCapacity());
     }
 
     @Test
@@ -59,6 +63,7 @@ public class LibraryDaoTest extends JPATest {
         Library entityToPersist = ModelFactory.initializeLibrary();
         entityToPersist.setName("Another name");
         entityToPersist.setAddress("Another address");
+        entityToPersist.setCapacity(70);
 
         dao.save(entityToPersist);
 
@@ -92,6 +97,7 @@ public class LibraryDaoTest extends JPATest {
         Library anotherLibrary = ModelFactory.initializeLibrary();
         anotherLibrary.setName("Another name");
         anotherLibrary.setAddress("Another address");
+        anotherLibrary.setCapacity(70);
         entityManager.persist(anotherLibrary);
 
         dao.delete(library.getId());
