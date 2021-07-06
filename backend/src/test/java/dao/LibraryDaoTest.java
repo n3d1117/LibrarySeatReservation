@@ -23,8 +23,6 @@ public class LibraryDaoTest extends JPATest {
         library = ModelFactory.initializeLibrary();
         library.setName("Name");
         library.setAddress("Address");
-        library.setLatitude(11.1);
-        library.setLongitude(11.2);
         entityManager.persist(library);
         dao = new LibraryDao();
         FieldUtils.writeField(dao, "entityManager", entityManager, true);
@@ -35,8 +33,6 @@ public class LibraryDaoTest extends JPATest {
         Library anotherLibrary = ModelFactory.initializeLibrary();
         anotherLibrary.setName("Another Name");
         anotherLibrary.setAddress("Another Address");
-        anotherLibrary.setLatitude(12.1);
-        anotherLibrary.setLongitude(13.2);
         entityManager.persist(anotherLibrary);
 
         List<Library> allEntities = dao.all();
@@ -51,8 +47,6 @@ public class LibraryDaoTest extends JPATest {
         assertEquals(library.getId(), result.getId());
         assertEquals(library.getUuid(), result.getUuid());
         assertEquals(library.getName(), result.getName());
-        assertEquals(library.getLongitude(), result.getLongitude());
-        assertEquals(library.getLatitude(), result.getLatitude());
     }
 
     @Test
@@ -65,8 +59,6 @@ public class LibraryDaoTest extends JPATest {
         Library entityToPersist = ModelFactory.initializeLibrary();
         entityToPersist.setName("Another name");
         entityToPersist.setAddress("Another address");
-        entityToPersist.setLongitude(13.2);
-        entityToPersist.setLatitude(1.6);
 
         dao.save(entityToPersist);
 
@@ -100,8 +92,6 @@ public class LibraryDaoTest extends JPATest {
         Library anotherLibrary = ModelFactory.initializeLibrary();
         anotherLibrary.setName("Another name");
         anotherLibrary.setAddress("Another address");
-        anotherLibrary.setLongitude(12.2);
-        anotherLibrary.setLatitude(14.3);
         entityManager.persist(anotherLibrary);
 
         dao.delete(library.getId());

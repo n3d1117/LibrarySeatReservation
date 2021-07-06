@@ -34,16 +34,12 @@ public class LibraryControllerTest {
         library = spy(ModelFactory.initializeLibrary());
         library.setName("name");
         library.setAddress("address");
-        library.setLongitude(12.1);
-        library.setLatitude(12.2);
         when(library.getId()).thenReturn(1L);
 
         dto = new LibraryDto();
         dto.setId(1L);
         dto.setName(library.getName());
         dto.setAddress(library.getAddress());
-        dto.setLongitude(library.getLongitude());
-        dto.setLatitude(library.getLatitude());
 
         FieldUtils.writeField(controller, "libraryMapper", new LibraryMapper(), true);
         FieldUtils.writeField(controller, "libraryDao", dao, true);
@@ -54,16 +50,12 @@ public class LibraryControllerTest {
         Library anotherLibrary = spy(ModelFactory.initializeLibrary());
         anotherLibrary.setName("another name");
         anotherLibrary.setAddress("another address");
-        anotherLibrary.setLatitude(15.2);
-        anotherLibrary.setLongitude(15.3);
         when(anotherLibrary.getId()).thenReturn(2L);
 
         LibraryDto anotherDto = new LibraryDto();
         anotherDto.setId(2L);
         anotherDto.setName(anotherLibrary.getName());
         anotherDto.setAddress(anotherLibrary.getAddress());
-        anotherDto.setLatitude(anotherLibrary.getLatitude());
-        anotherDto.setLongitude(anotherLibrary.getLongitude());
 
         when(dao.all()).thenReturn(Arrays.asList(library, anotherLibrary));
         assertEquals(controller.all(), new Gson().toJson(Arrays.asList(dto, anotherDto)));
@@ -85,8 +77,6 @@ public class LibraryControllerTest {
         verify(dao).save(argument.capture());
         assertEquals(library.getName(), argument.getValue().getName());
         assertEquals(library.getAddress(), argument.getValue().getAddress());
-        assertEquals(library.getLatitude(), argument.getValue().getLatitude());
-        assertEquals(library.getLongitude(), argument.getValue().getLongitude());
     }
 
     @Test
