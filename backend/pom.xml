@@ -28,7 +28,6 @@
         <apache-commons.version>3.12.0</apache-commons.version>
         <hsqldb.version>2.6.0</hsqldb.version>
         <mockito.version>3.11.1</mockito.version>
-        <restassured.version>4.4.0</restassured.version>
 
     </properties>
 

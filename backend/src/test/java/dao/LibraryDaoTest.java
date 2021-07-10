@@ -54,7 +54,7 @@ public class LibraryDaoTest extends JPATest {
     }
 
     @Test
-    public void testFindByIdThrowsWhenlibraryNotFound() {
+    public void testFindByIdThrowsWhenLibraryNotFound() {
         assertThrows(EntityNotFoundException.class, () -> dao.findById(2L));
     }
 
