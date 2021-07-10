@@ -1,0 +1,43 @@
+# Source: https://github.com/BrizziB/Docker-Test_DevEnv
+
+version: "2"
+
+services:
+  wildfly:
+    container_name: "wildfly"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - WILDFLY_USER=admin
+      - WILDFLY_PASS=password
+      - DB_NAME=sample
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+    - db
+    volumes: 
+    - ./workdir/deploy/wildfly/:/opt/jboss/wildfly/standalone/deployments/:rw
+    ports:
+      - "8080:8080" # application
+      - "9990:9990" # admin console
+      - "5005:5005" # debug port
+
+  db:
+    container_name: "db"
+    image: "timescale/timescaledb:latest-pg13"
+    environment:
+      - POSTGRES_DB=sample
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./workdir/db/init/:/docker-entrypoint-initdb.d/
+      - ./workdir/db/data/:/var/lib/postgresql/
+    ports:
+      - "5432:5432"
+    
+networks:
+    default:
+        driver: bridge

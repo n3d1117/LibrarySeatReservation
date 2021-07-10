@@ -4,11 +4,12 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
              version="2.2">
     <persistence-unit name="default">
+        <jta-data-source>java:jboss/datasources/PostgresDS</jta-data-source>
         <class>model.User</class>
         <class>model.Library</class>
         <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
