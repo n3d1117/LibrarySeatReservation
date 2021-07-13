@@ -60,6 +60,27 @@ public class UserRestServices {
     }
 
     @POST
+    @Path("/login")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response login(@QueryParam("email") String email, @QueryParam("password") String password) {
+        try {
+            LOGGER.log(Level.INFO, String.format("Login user with email: %s", email));
+            String loggedInUserJson = userController.login(email, password);
+            return Response
+                    .ok(loggedInUserJson, MediaType.APPLICATION_JSON)
+                    .build();
+        } catch (EntityNotFoundException e) {
+            return Response
+                    .status(Response.Status.UNAUTHORIZED)
+                    .entity("Wrong credentials")
+                    .build();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
+            throw new InternalServerErrorException(e.getLocalizedMessage());
+        }
+    }
+
+    @POST
     @Path("/signup")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

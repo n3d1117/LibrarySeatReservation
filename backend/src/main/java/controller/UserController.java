@@ -50,4 +50,8 @@ public class UserController {
     public void delete(Long id) {
         userDao.delete(id);
     }
+
+    public String login(String email, String password) {
+        return new Gson().toJson(userMapper.generateRedactedUserDTO(userDao.login(email, password)));
+    }
 }

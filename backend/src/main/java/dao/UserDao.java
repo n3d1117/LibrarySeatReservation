@@ -27,4 +27,11 @@ public class UserDao extends BaseDao<User> {
                 .setParameter("password", password)
                 .getResultList().isEmpty();
     }
+
+    public User login(String email, String password) {
+        if (verify(email, password))
+            return findByEmail(email);
+        else
+            throw new EntityNotFoundException();
+    }
 }

@@ -118,4 +118,14 @@ public class UserControllerTest {
         controller.delete(dto.getId());
         verify(dao).delete(dto.getId());
     }
+
+    @Test
+    public void testLoginUser() {
+        user.setPassword(null);
+        dto.setPassword(null);
+        when(dao.login(user.getEmail(), user.getPassword())).thenReturn(user);
+
+        String json = controller.login(user.getEmail(), user.getPassword());
+        assertEquals(new Gson().toJson(dto), json);
+    }
 }
