@@ -48,7 +48,7 @@ public class LibraryRestServices {
         } catch (EntityNotFoundException e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity(String.format("Library with id %s not found", id))
+                    .entity(String.format("Biblioteca con id %s non trovata", id))
                     .build();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -85,7 +85,7 @@ public class LibraryRestServices {
         } catch (IllegalArgumentException e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity(String.format("Library with id %s not found", id))
+                    .entity(String.format("Biblioteca con id %s non trovata", id))
                     .build();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -106,7 +106,7 @@ public class LibraryRestServices {
         } catch (EntityNotFoundException e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity("Specified library not found")
+                    .entity("Biblioteca non trovata")
                     .build();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);

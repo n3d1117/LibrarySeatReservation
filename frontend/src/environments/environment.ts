@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  REST_API_URL: 'http://192.168.1.161:8080/lsr/api'
 };
 
 /*

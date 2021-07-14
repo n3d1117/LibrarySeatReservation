@@ -51,7 +51,7 @@ public class UserRestServices {
         } catch (EntityNotFoundException e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity(String.format("User with id %s not found", id))
+                    .entity(String.format("Utente con id %s non trovato", id))
                     .build();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -72,7 +72,7 @@ public class UserRestServices {
         } catch (EntityNotFoundException e) {
             return Response
                     .status(Response.Status.UNAUTHORIZED)
-                    .entity("Wrong credentials")
+                    .entity("Credenziali errate")
                     .build();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -94,7 +94,7 @@ public class UserRestServices {
         } catch (PersistenceException e) {
             return Response
                     .status(Response.Status.NOT_ACCEPTABLE)
-                    .entity("User with specified email already exists")
+                    .entity("Email già esistente")
                     .build();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -113,7 +113,7 @@ public class UserRestServices {
         } catch (IllegalArgumentException e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity(String.format("User with id %s not found", id))
+                    .entity(String.format("Utente con id %s non trovato", id))
                     .build();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -134,7 +134,7 @@ public class UserRestServices {
         } catch (EntityNotFoundException e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity("Specified user not found")
+                    .entity("Utente non trovato")
                     .build();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);

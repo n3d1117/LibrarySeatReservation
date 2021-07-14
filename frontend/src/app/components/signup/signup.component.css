@@ -1,0 +1,53 @@
+:host {
+  display: flex;
+  justify-content: center;
+  margin: 100px 0;
+  max-width: 500px;
+}
+
+.mat-form-field {
+  width: 100%;
+  min-width: 200px;
+  margin-bottom: 3px !important;
+}
+
+mat-card-title,
+mat-card-content {
+  display: flex;
+  justify-content: center;
+}
+
+mat-card-title {
+  margin-bottom: 15px !important;
+}
+
+.error {
+  color: red;
+  position: absolute;
+  left: 0;
+}
+
+.signup-button {
+  position: absolute;
+  right: 0;
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  border-top-color: #000000;
+  animation: spinner .8s linear infinite;
+}
