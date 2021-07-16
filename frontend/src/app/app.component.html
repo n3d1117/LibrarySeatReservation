@@ -13,9 +13,9 @@
       <mat-icon>arrow_drop_down</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item aria-label="Le mie prenotazioni" (click)="myReservations()">
+      <button mat-menu-item aria-label="Prenotazioni" (click)="myReservations()">
         <mat-icon>event_seat</mat-icon>
-        <span>Le mie prenotazioni</span>
+        <span>{{isAdmin() ? "Gestisci prenotazioni" : "Le mie prenotazioni"}}</span>
       </button>
       <button mat-menu-item aria-label="Logout" (click)="logout()">
         <mat-icon>logout</mat-icon>

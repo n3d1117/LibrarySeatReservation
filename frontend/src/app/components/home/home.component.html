@@ -1,12 +1,14 @@
-
-<p>home works!</p>
-<!--<mat-spinner *ngIf="loading"></mat-spinner>
+<mat-spinner *ngIf="loading"></mat-spinner>
 
 <p *ngIf="error">{{error}}</p>
 
-<mat-nav-list *ngIf="users.length > 0">
-  <a mat-list-item *ngFor="let user of users"> {{ user.id }} - {{ user.email }} - {{ user.name }} {{ user.surname }} - {{ user.roles }} </a>
-</mat-nav-list>-->
+<mat-nav-list *ngIf="libraries.length > 0">
+  <a mat-list-item *ngFor="let library of libraries">
+    {{ library.id }} - {{ library.name }} - {{ library.address }} - {{ library.capacity }}
+  </a>
+</mat-nav-list>
+
+<button mat-raised-button color="primary" (click)="goToAddLibrary()">Aggiungi nuova biblioteca</button>
 
 
 

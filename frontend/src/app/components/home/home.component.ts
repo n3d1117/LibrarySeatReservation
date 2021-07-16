@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthenticationService} from "../../services/authentication.service";
-import {User} from "../../models/user.model";
 import {first} from "rxjs/operators";
+import {Library} from "../../models/library.model";
+import {LibraryService} from "../../services/library.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -10,21 +11,25 @@ import {first} from "rxjs/operators";
 })
 export class HomeComponent implements OnInit {
 
-  //loading = false;
-  //users: User[] = [];
-  //error = '';
+  loading = false;
+  libraries: Library[] = [];
+  error = '';
 
-  constructor(/*private s: AuthenticationService*/) { }
+  constructor(private router: Router, private libraryService: LibraryService) { }
 
   ngOnInit(): void {
-    // this.loading = true;
-    // this.s.all().pipe(first()).subscribe(users => {
-    //   this.loading = false;
-    //   this.users = users;
-    // }, error => {
-    //   this.loading = false;
-    //   this.error = error;
-    // });
+    this.loading = true;
+    this.libraryService.all().pipe(first()).subscribe(libraries => {
+      this.loading = false;
+      this.libraries = libraries;
+    }, error => {
+      this.loading = false;
+      this.error = error;
+    });
+  }
+
+  goToAddLibrary(): void {
+    this.router.navigate(['admin/add-library']);
   }
 
 }

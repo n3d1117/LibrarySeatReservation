@@ -12,10 +12,12 @@ export class AuthenticationService {
 
   private currentUserSubject: BehaviorSubject<User | null>;
   public currentUser: Observable<User | null>;
+  private readonly url;
 
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User | null>(JSON.parse(<string>localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
+    this.url = `${environment.REST_API_URL}/users`;
   }
 
   public get currentUserValue(): User {
@@ -23,7 +25,7 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string): Observable<User> {
-    return this.http.post<User>(`${environment.REST_API_URL}/users/login?email=${email}&password=${password}`, {})
+    return this.http.post<User>(`${this.url}/login?email=${email}&password=${password}`, {})
       .pipe(map(user => {
         user.authData = window.btoa(email + ':' + password);
         localStorage.setItem('currentUser', JSON.stringify(user));
@@ -36,12 +38,8 @@ export class AuthenticationService {
     const options = { headers: {'Content-Type': 'application/json'} };
     const roles: string[] = admin ? ['BASIC', 'ADMIN'] : ['BASIC'];
     const user = { email: email, name: name, surname: surname, password: password, roles: roles };
-    return this.http.post<User>(`${environment.REST_API_URL}/users/signup`, user, options);
+    return this.http.post<User>(`${this.url}/signup`, user, options);
   }
-
-  // all(): Observable<User[]> {
-  //   return this.http.get<User[]>(`${environment.REST_API_URL}/users/`)
-  // }
 
   logout(): void {
     localStorage.removeItem('currentUser');

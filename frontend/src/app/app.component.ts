@@ -26,7 +26,11 @@ export class AppComponent {
   }
 
   myReservations(): void {
-    this.router.navigate(['my-reservations']);
+    if (this.isAdmin()) {
+      // todo
+    } else {
+      this.router.navigate(['my-reservations']);
+    }
   }
 
   logout(): void {
