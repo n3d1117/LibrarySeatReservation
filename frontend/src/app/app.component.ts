@@ -19,6 +19,16 @@ export class AppComponent {
     this.authenticationService.currentUser.subscribe(user => this.currentUser = user);
   }
 
+  isAdmin(): boolean {
+    if (!this.currentUser)
+      return false
+    return this.currentUser?.roles.includes('ADMIN');
+  }
+
+  myReservations(): void {
+    this.router.navigate(['my-reservations']);
+  }
+
   logout(): void {
     this.authenticationService.logout();
     this.router.navigate(['/login']);

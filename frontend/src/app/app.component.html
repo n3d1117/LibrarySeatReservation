@@ -9,10 +9,14 @@
     <span class="toolbar-spacer"></span>
 
     <button *ngIf="currentUser; else elseBlock" mat-button [matMenuTriggerFor]="menu" aria-label="User menu">
-      <span>{{currentUser.name}} {{currentUser.surname}}</span>
+      <span>{{currentUser.name}} {{currentUser.surname}} {{isAdmin() ? " (Admin)" : ""}}</span>
       <mat-icon>arrow_drop_down</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
+      <button mat-menu-item aria-label="Le mie prenotazioni" (click)="myReservations()">
+        <mat-icon>event_seat</mat-icon>
+        <span>Le mie prenotazioni</span>
+      </button>
       <button mat-menu-item aria-label="Logout" (click)="logout()">
         <mat-icon>logout</mat-icon>
         <span>Logout</span>

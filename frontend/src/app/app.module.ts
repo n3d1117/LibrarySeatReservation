@@ -21,14 +21,18 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatListModule} from "@angular/material/list";
 import {MatGridListModule} from "@angular/material/grid-list";
 import { SignupComponent } from './components/signup/signup.component';
-import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MyReservationsComponent } from './components/my-reservations/my-reservations.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    SignupComponent
+    SignupComponent,
+    MyReservationsComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
