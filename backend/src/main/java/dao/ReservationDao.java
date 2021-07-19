@@ -62,4 +62,12 @@ public class ReservationDao {
         entityManager.remove(toDelete);
     }
 
+    public void enableTimescalePostgresExtensionIfNeeded() {
+        entityManager.createNativeQuery("CREATE EXTENSION IF NOT EXISTS timescaledb;").executeUpdate();
+    }
+
+    public void setupHypertable() {
+        entityManager.createNativeQuery("SELECT create_hypertable('reservations', 'datetime')").getFirstResult();
+    }
+
 }

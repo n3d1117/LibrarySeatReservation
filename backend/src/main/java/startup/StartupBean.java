@@ -32,6 +32,9 @@ public class StartupBean {
     @Transactional
     public void init() {
 
+        reservationDao.enableTimescalePostgresExtensionIfNeeded();
+        reservationDao.setupHypertable();
+
         User adminUser = createUser("admin@email.com", "Admin", "Admin", "password");
         adminUser.setRoles(Arrays.asList(Role.BASIC, Role.ADMIN));
         userDao.save(adminUser);
