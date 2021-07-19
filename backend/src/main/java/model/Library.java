@@ -1,7 +1,8 @@
 package model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "libraries")
@@ -11,6 +12,9 @@ public class Library extends BaseEntity {
     private String address;
 
     private Integer capacity;
+
+    @OneToMany(mappedBy = "library", cascade = CascadeType.ALL)
+    protected Set<Reservation> reservations = new HashSet<>();
 
     public Library() { }
 
@@ -50,4 +54,13 @@ public class Library extends BaseEntity {
         this.capacity = capacity;
     }
 
+    @Override
+    public String toString() {
+        return "Library{" +
+                "name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", capacity=" + capacity +
+                ", reservations=" + reservations +
+                '}';
+    }
 }

@@ -13,4 +13,8 @@ public class ModelFactory {
     public static Library initializeLibrary() {
         return new Library(UUID.randomUUID().toString());
     }
+
+    public static Reservation initializeReservation() {
+        return new Reservation(UUID.randomUUID().toString());
+    }
 }

@@ -1,21 +1,24 @@
 package model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
 
-    @Column(unique = true)
     private String email;
-
     private String name;
     private String surname;
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    protected Set<Reservation> reservations = new HashSet<>();
 
     public User() { }
 
@@ -71,5 +74,17 @@ public class User extends BaseEntity {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                ", reservations=" + reservations +
+                '}';
     }
 }

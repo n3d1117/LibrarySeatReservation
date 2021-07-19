@@ -24,7 +24,7 @@ public class UserTest {
         u2.setName("Cersei");
         u2.setSurname("Stark");
         u2.setPassword("pass2");
-        u1.setRoles(Collections.singletonList(Role.BASIC));
+        u2.setRoles(Collections.singletonList(Role.BASIC));
 
         u1.copy(u2);
 

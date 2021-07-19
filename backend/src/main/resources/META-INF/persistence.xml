@@ -7,6 +7,7 @@
         <jta-data-source>java:jboss/datasources/PostgresDS</jta-data-source>
         <class>model.User</class>
         <class>model.Library</class>
+        <class>model.Reservation</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
             <property name="hibernate.hbm2ddl.auto" value="create"/>
