@@ -18,7 +18,7 @@ Vedi https://stackoverflow.com/a/68217510
 public class Reservation {
 
     @Id
-    @SequenceGenerator(name="seq", sequenceName="sample_reservations_seq", allocationSize=1)
+    @SequenceGenerator(name="seq", sequenceName="lsr-db_reservations_seq", allocationSize=1)
     @GeneratedValue(generator = "seq")
     @Column(updatable = false, nullable = false)
     private Long id;

@@ -11,7 +11,7 @@ services:
     environment:
       - WILDFLY_USER=admin
       - WILDFLY_PASS=password
-      - DB_NAME=sample
+      - DB_NAME=lsr-db
       - DB_USER=postgres
       - DB_PASS=postgres
       - DB_HOST=db
@@ -29,7 +29,7 @@ services:
     container_name: "db"
     image: "timescale/timescaledb:latest-pg13"
     environment:
-      - POSTGRES_DB=sample
+      - POSTGRES_DB=lsr-db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:

@@ -7,7 +7,7 @@ ENV WILDFLY_PASS password
 ENV JBOSS_CLI /opt/jboss/wildfly/bin/jboss-cli.sh
 ENV DEPLOYMENT_DIR /opt/jboss/wildfly/standalone/deployments/
 
-ENV DB_NAME sample
+ENV DB_NAME lsr-db
 ENV DB_USER postgres
 ENV DB_PASS postgres
 ENV DB_HOST db

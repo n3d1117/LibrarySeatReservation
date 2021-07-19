@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class ReservationCompositeKey implements Serializable {
+
     private Long id;
     private LocalDateTime datetime;
 
