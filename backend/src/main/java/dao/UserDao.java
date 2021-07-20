@@ -1,14 +1,22 @@
 package dao;
 
+import auth.PasswordHasher;
 import model.User;
 
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
+import javax.transaction.Transactional;
 
 public class UserDao extends BaseDao<User> {
 
     public UserDao() {
         super(User.class);
+    }
+
+    @Override @Transactional
+    public void save(User entity) {
+        entity.setPassword(PasswordHasher.hashPassword(entity.getPassword()));
+        super.save(entity);
     }
 
     public User findByEmail(String email) {
@@ -29,7 +37,7 @@ public class UserDao extends BaseDao<User> {
     }
 
     public User login(String email, String password) {
-        if (verify(email, password))
+        if (verify(email, PasswordHasher.hashPassword(password)))
             return findByEmail(email);
         else
             throw new EntityNotFoundException();

@@ -94,7 +94,7 @@ public class UserRestServices {
         } catch (PersistenceException e) {
             return Response
                     .status(Response.Status.NOT_ACCEPTABLE)
-                    .entity("Email già esistente")
+                    .entity(e.getMessage())
                     .build();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);

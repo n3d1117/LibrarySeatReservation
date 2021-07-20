@@ -53,7 +53,7 @@ public class SecurityRequestFilter implements ContainerRequestFilter {
             String[] tmp = credentials.split(":", 2);
             email = tmp[0];
             String password = tmp[1];
-            if (!userDao.verify(email, password)) {
+            if (!userDao.verify(email, PasswordHasher.hashPassword(password))) {
                 requestContext.abortWith(
                         Response.status(Response.Status.UNAUTHORIZED).entity("Unauthorized").type("text/plain").build()
                 );

@@ -1,5 +1,6 @@
 package dao;
 
+import auth.PasswordHasher;
 import model.ModelFactory;
 import model.Role;
 import model.User;
@@ -24,7 +25,7 @@ public class UserDaoTest extends JPATest {
         user.setEmail("some@email.com");
         user.setName("name");
         user.setSurname("surname");
-        user.setPassword("secret");
+        user.setPassword(PasswordHasher.hashPassword("secret"));
         user.setRoles(Arrays.asList(Role.BASIC, Role.ADMIN));
         entityManager.persist(user);
         dao = new UserDao();
@@ -87,7 +88,7 @@ public class UserDaoTest extends JPATest {
         entityToPersist.setEmail("another@email.com");
         entityToPersist.setName("name");
         entityToPersist.setSurname("surname");
-        entityToPersist.setPassword("password");
+        entityToPersist.setPassword(PasswordHasher.hashPassword("password"));
 
         dao.save(entityToPersist);
 
@@ -133,6 +134,7 @@ public class UserDaoTest extends JPATest {
 
     @Test
     public void testVerify() {
+        System.out.println(user.getPassword());
         assertTrue(dao.verify(user.getEmail(), user.getPassword()));
         assertFalse(dao.verify("another@email.com", user.getPassword()));
         assertFalse(dao.verify(user.getEmail(), "another"));
