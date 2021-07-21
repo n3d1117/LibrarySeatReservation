@@ -8,11 +8,14 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ReservationDao {
 
     @PersistenceContext(unitName = "default")
     protected EntityManager entityManager;
+
+    private static final Logger LOGGER = Logger.getLogger(ReservationDao.class.getName());
 
     public List<ReservationDto> all() {
         return entityManager.createQuery(
@@ -63,11 +66,18 @@ public class ReservationDao {
     }
 
     public void enableTimescalePostgresExtensionIfNeeded() {
+        LOGGER.info("Enabling timescale extension...");
         entityManager.createNativeQuery("CREATE EXTENSION IF NOT EXISTS timescaledb;").executeUpdate();
     }
 
     public void setupHypertable() {
-        entityManager.createNativeQuery("SELECT create_hypertable('reservations', 'datetime')").getFirstResult();
+        LOGGER.info("Setting up hypertable...");
+
+        String result = entityManager.createNativeQuery(
+                "SELECT create_hypertable('reservations', 'datetime')"
+        ).getSingleResult().toString();
+
+        LOGGER.info(String.format("Result: %s", result));
     }
 
 }

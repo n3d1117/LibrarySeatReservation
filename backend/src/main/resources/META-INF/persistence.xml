@@ -9,7 +9,7 @@
         <class>model.Library</class>
         <class>model.Reservation</class>
         <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
+            <property name="hibernate.dialect" value="startup.CustomPostgreSQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
