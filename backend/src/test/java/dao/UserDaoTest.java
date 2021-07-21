@@ -134,7 +134,6 @@ public class UserDaoTest extends JPATest {
 
     @Test
     public void testVerify() {
-        System.out.println(user.getPassword());
         assertTrue(dao.verify(user.getEmail(), user.getPassword()));
         assertFalse(dao.verify("another@email.com", user.getPassword()));
         assertFalse(dao.verify(user.getEmail(), "another"));
@@ -143,8 +142,8 @@ public class UserDaoTest extends JPATest {
 
     @Test
     public void testLogin() {
-        assertEquals(user, dao.login(user.getEmail(), user.getPassword()));
-        assertThrows(EntityNotFoundException.class, () -> dao.login("another@email.com", user.getPassword()));
+        assertEquals(user, dao.login(user.getEmail(), "secret"));
+        assertThrows(EntityNotFoundException.class, () -> dao.login("another@email.com", "secret"));
         assertThrows(EntityNotFoundException.class, () -> dao.login(user.getEmail(), "another"));
         assertThrows(EntityNotFoundException.class, () -> dao.login("another@email.com", "another"));
     }
