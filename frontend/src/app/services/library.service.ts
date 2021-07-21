@@ -19,6 +19,10 @@ export class LibraryService {
     return this.http.get<Library[]>(this.url)
   }
 
+  find(id: number): Observable<Library> {
+    return this.http.get<Library>(this.url + `/${id}`)
+  }
+
   add(name: string, address: string, capacity: number): Observable<Library> {
     const options = { headers: {'Content-Type': 'application/json'} };
     const library = { name: name, address: address, capacity: capacity };

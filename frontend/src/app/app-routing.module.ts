@@ -8,12 +8,15 @@ import {MyReservationsComponent} from "./components/my-reservations/my-reservati
 import {PageNotFoundComponent} from "./components/page-not-found/page-not-found.component";
 import {AddLibraryComponent} from "./components/add-library/add-library.component";
 import {AdminOnly} from "./auth/admin-only";
+import {LibraryComponent} from "./components/library/library.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'libraries/:id', component: LibraryComponent},
   { path: 'my-reservations', component: MyReservationsComponent, canActivate: [LoginProtected] },
+
   { path: 'admin/add-library', component: AddLibraryComponent, canActivate: [AdminOnly] },
 
   { path: '', redirectTo: 'home', pathMatch: 'full'},

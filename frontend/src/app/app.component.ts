@@ -13,20 +13,14 @@ export class AppComponent {
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    public authenticationService: AuthenticationService
   ) {
     this.currentUser = null;
     this.authenticationService.currentUser.subscribe(user => this.currentUser = user);
   }
 
-  isAdmin(): boolean {
-    if (!this.currentUser)
-      return false
-    return this.currentUser?.roles.includes('ADMIN');
-  }
-
   myReservations(): void {
-    if (this.isAdmin()) {
+    if (this.authenticationService.isAdmin()) {
       // todo
     } else {
       this.router.navigate(['my-reservations']);

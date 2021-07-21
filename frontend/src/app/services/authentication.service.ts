@@ -24,6 +24,12 @@ export class AuthenticationService {
     return <User>this.currentUserSubject.value;
   }
 
+  isAdmin(): boolean {
+    if (!this.currentUserValue)
+      return false;
+    return this.currentUserValue.roles.includes('ADMIN');
+  }
+
   login(email: string, password: string): Observable<User> {
     return this.http.post<User>(`${this.url}/login?email=${email}&password=${password}`, {})
       .pipe(map(user => {

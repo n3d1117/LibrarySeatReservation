@@ -3,6 +3,7 @@ import {first} from "rxjs/operators";
 import {Library} from "../../models/library.model";
 import {LibraryService} from "../../services/library.service";
 import {Router} from "@angular/router";
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,11 @@ export class HomeComponent implements OnInit {
   libraries: Library[] = [];
   error = '';
 
-  constructor(private router: Router, private libraryService: LibraryService) { }
+  constructor(
+    private router: Router,
+    public authenticationService: AuthenticationService,
+    private libraryService: LibraryService
+  ) { }
 
   ngOnInit(): void {
     this.loading = true;

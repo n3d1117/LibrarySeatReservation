@@ -13,5 +13,4 @@ export class User {
     this.surname = surname;
     this.roles = roles;
   }
-
 }

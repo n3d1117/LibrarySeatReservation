@@ -25,6 +25,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MyReservationsComponent } from './components/my-reservations/my-reservations.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AddLibraryComponent } from './components/add-library/add-library.component';
+import { LibraryComponent } from './components/library/library.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AddLibraryComponent } from './components/add-library/add-library.compon
     SignupComponent,
     MyReservationsComponent,
     PageNotFoundComponent,
-    AddLibraryComponent
+    AddLibraryComponent,
+    LibraryComponent
   ],
   imports: [
     BrowserModule,

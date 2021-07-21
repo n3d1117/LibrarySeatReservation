@@ -1,0 +1,14 @@
+<mat-spinner *ngIf="loading"></mat-spinner>
+
+<p *ngIf="error">{{error}}</p>
+
+<div *ngIf="library">
+  <h2>{{ library.name }}</h2>
+
+  <mat-nav-list *ngIf="reservations.length > 0">
+    <a mat-list-item *ngFor="let reservation of reservations">
+      {{ reservation.id }} - {{ reservation.userId }} - {{ reservation.libraryId }} - {{ reservation.userName }} - {{ reservation.datetime }}
+    </a>
+  </mat-nav-list>
+
+</div>
