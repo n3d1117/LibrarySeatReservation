@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
       this.libraries = libraries;
     }, error => {
       this.loading = false;
-      this.error = error;
+      this.error = error.message || error;
     });
   }
 

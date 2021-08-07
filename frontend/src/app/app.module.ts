@@ -26,6 +26,8 @@ import { MyReservationsComponent } from './components/my-reservations/my-reserva
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AddLibraryComponent } from './components/add-library/add-library.component';
 import { LibraryComponent } from './components/library/library.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { LibraryComponent } from './components/library/library.component';
     MatListModule,
     MatGridListModule,
     MatSnackBarModule
+    MapComponent,
   ],
+        LeafletModule,
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
