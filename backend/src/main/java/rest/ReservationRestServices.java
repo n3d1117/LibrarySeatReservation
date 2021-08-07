@@ -7,6 +7,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.Month;
+import java.time.Year;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -60,10 +62,10 @@ public class ReservationRestServices {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listByUserId(@PathParam("id") Long id) {
         try {
-            LOGGER.log(Level.INFO, String.format("Listing reservation for user with id %s", id));
-            String reservationJson = reservationController.findByUser(id);
+            LOGGER.log(Level.INFO, String.format("Listing reservations for user with id %s", id));
+            String reservationsJson = reservationController.findByUser(id);
             return Response
-                    .ok(reservationJson, MediaType.APPLICATION_JSON)
+                    .ok(reservationsJson, MediaType.APPLICATION_JSON)
                     .build();
         } catch (EntityNotFoundException e) {
             return Response
@@ -81,15 +83,36 @@ public class ReservationRestServices {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listByLibraryId(@PathParam("id") Long id) {
         try {
-            LOGGER.log(Level.INFO, String.format("Listing reservation for library with id %s", id));
-            String reservationJson = reservationController.findByLibrary(id);
+            LOGGER.log(Level.INFO, String.format("Listing reservations for library with id %s", id));
+            String reservationsJson = reservationController.findByLibrary(id);
             return Response
-                    .ok(reservationJson, MediaType.APPLICATION_JSON)
+                    .ok(reservationsJson, MediaType.APPLICATION_JSON)
                     .build();
         } catch (EntityNotFoundException e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
                     .entity(String.format("Prenotazioni per biblioteca con id %s non trovate", id))
+                    .build();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
+            throw new InternalServerErrorException(e.getLocalizedMessage());
+        }
+    }
+
+    @GET
+    @Path("/library/{id}/{year}/{month}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listByLibraryIdAndDate(@PathParam("id") Long id, @PathParam("month") Integer month, @PathParam("year") Integer year) {
+        try {
+            LOGGER.log(Level.INFO, String.format("Listing reservations for library with id %s for %s/%s", id, month, year));
+            String reservationsJson = reservationController.findByLibraryAndDate(id, Month.of(month), Year.of(year));
+            return Response
+                    .ok(reservationsJson, MediaType.APPLICATION_JSON)
+                    .build();
+        } catch (EntityNotFoundException e) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity(String.format("Prenotazioni per biblioteca con id %s per %s/%s non trovate", id, month, year))
                     .build();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);

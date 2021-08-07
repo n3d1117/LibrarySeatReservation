@@ -11,6 +11,8 @@ import model.Reservation;
 import model.User;
 
 import javax.inject.Inject;
+import java.time.Month;
+import java.time.Year;
 import java.util.List;
 
 public class ReservationController {
@@ -44,6 +46,11 @@ public class ReservationController {
 
     public String findByLibrary(Long libraryId) {
         List<ReservationDto> reservationDtoList = reservationDao.findByLibraryId(libraryId);
+        return new Gson().toJson(reservationDtoList);
+    }
+
+    public String findByLibraryAndDate(Long libraryId, Month month, Year year) {
+        List<ReservationDto> reservationDtoList = reservationDao.findByLibraryIdAndDate(libraryId, month, year);
         return new Gson().toJson(reservationDtoList);
     }
 

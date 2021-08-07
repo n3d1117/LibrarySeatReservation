@@ -6,7 +6,10 @@ import model.Reservation;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
+import java.time.Month;
+import java.time.Year;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -51,8 +54,35 @@ public class ReservationDao {
                 .getResultList();
     }
 
-    @Transactional
+    public List<ReservationDto> findByLibraryIdAndDate(Long id, Month month, Year year) {
+        return entityManager
+                .createQuery("SELECT NEW dto.ReservationDto(r.id, r.user.id, CONCAT(r.user.name, ' ', r.user.surname), r.user.email, r.library.id,  r.datetime) " +
+                        "FROM Reservation r WHERE r.library.id = :id " +
+                        "AND EXTRACT(MONTH FROM datetime) = :month AND EXTRACT(YEAR FROM datetime) = :year",
+                        ReservationDto.class)
+                .setParameter("id", id)
+                .setParameter("month", month.getValue())
+                .setParameter("year", year.getValue())
+                .getResultList();
+    }
+
     public void save(Reservation entity) {
+        long count = (long)entityManager.createQuery(
+                "SELECT count(r.id) FROM Reservation r WHERE r.library.id = :id AND r.datetime = :date")
+                .setParameter("id", entity.getLibrary().getId())
+                .setParameter("date", entity.getDatetime())
+                .getSingleResult();
+        if (entity.getLibrary().getCapacity() <= count) {
+            throw new PersistenceException("Capacità piena");
+        } else {
+            _transactionalSave(entity);
+        }
+    }
+
+    // Helper transactional method to avoid "IJ031070: Transaction cannot proceed: STATUS_MARKED_ROLLBACK"
+    // when capacity is full
+    @Transactional
+    public void _transactionalSave(Reservation entity) {
         entityManager.persist(entity);
     }
 

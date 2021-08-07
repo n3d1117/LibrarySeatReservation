@@ -14,6 +14,7 @@ import org.mockito.ArgumentCaptor;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.Year;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -120,6 +121,14 @@ public class ReservationControllerTest {
     public void testFindByLibraryId() {
         when(dao.findByLibraryId(1L)).thenReturn(Collections.singletonList(dto));
         assertEquals(controller.findByLibrary(1L), new Gson().toJson(Collections.singletonList(dto)));
+    }
+
+    @Test
+    public void testFindByLibraryAndDate() {
+        Month month = reservation.getDatetime().getMonth();
+        Year year = Year.of(reservation.getDatetime().getYear());
+        when(dao.findByLibraryIdAndDate(1L, month, year)).thenReturn(Collections.singletonList(dto));
+        assertEquals(controller.findByLibraryAndDate(1L, month, year), new Gson().toJson(Collections.singletonList(dto)));
     }
 
     @Test

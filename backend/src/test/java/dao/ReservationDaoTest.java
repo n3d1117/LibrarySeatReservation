@@ -7,7 +7,10 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceException;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.Year;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -116,16 +119,38 @@ public class ReservationDaoTest extends JPATest {
     }
 
     @Test
-    public void testFindByLibraryIdThrowsWhenLibraryNotFound() {
+    public void testFindByLibraryIdReturnsEmptyWhenLibraryNotFound() {
         List<ReservationDto> results = dao.findByLibraryId(2L);
         assertEquals(Collections.emptyList(), results);
+    }
+
+    @Test
+    public void testFindByLibraryAndDate() {
+        List<ReservationDto> results = dao.findByLibraryIdAndDate(
+                library.getId(), reservation.getDatetime().getMonth(), Year.of(reservation.getDatetime().getYear())
+        );
+        assertEquals(results.size(), 1);
+        ReservationDto result = results.get(0);
+        assertEquals(reservation.getId(), result.getId());
+        assertEquals(ReservationMapper.dateToString(reservation.getDatetime()), result.getDatetime());
+        assertEquals(reservation.getUser().getId(), result.getUserId());
+        assertEquals(reservation.getLibrary().getId(), result.getLibraryId());
+    }
+
+    @Test
+    public void testFindByLibraryAndDateReturnsEmptyWhenNotFound() {
+        List<ReservationDto> results = dao.findByLibraryIdAndDate(2L, LocalDateTime.now().getMonth(), Year.now());
+        assertEquals(Collections.emptyList(), results);
+
+        List<ReservationDto> results2 = dao.findByLibraryIdAndDate(library.getId(), Month.APRIL, Year.of(1996));
+        assertEquals(Collections.emptyList(), results2);
     }
 
     @Test
     public void testSave() {
         Reservation anotherReservation = ModelFactory.initializeReservation();
         anotherReservation.setUser(null);
-        anotherReservation.setLibrary(null);
+        anotherReservation.setLibrary(library);
         anotherReservation.setDatetime(LocalDateTime.now());
 
         dao.save(anotherReservation);
@@ -135,6 +160,17 @@ public class ReservationDaoTest extends JPATest {
                 .getSingleResult();
 
         assertEquals(anotherReservation, retrieved);
+    }
+
+    @Test
+    public void testSaveShouldThrowWhenCapacityIsFull() {
+        library.setCapacity(1);
+        Reservation anotherReservation = ModelFactory.initializeReservation();
+        anotherReservation.setUser(null);
+        anotherReservation.setLibrary(library);
+        anotherReservation.setDatetime(reservation.getDatetime());
+
+        assertThrows(PersistenceException.class, () -> dao.save(anotherReservation));
     }
 
     @Test
