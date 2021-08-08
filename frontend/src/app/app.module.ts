@@ -26,8 +26,14 @@ import { MyReservationsComponent } from './components/my-reservations/my-reserva
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AddLibraryComponent } from './components/add-library/add-library.component';
 import { LibraryComponent } from './components/library/library.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MapComponent } from './components/map/map.component';
+import { ReservationsBoxComponent } from './components/reservations-box/reservations-box.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {CalendarHeader} from "./components/calendar/calendar.header.component";
 
 @NgModule({
   declarations: [
@@ -38,29 +44,36 @@ import { MapComponent } from './components/map/map.component';
     MyReservationsComponent,
     PageNotFoundComponent,
     AddLibraryComponent,
-    LibraryComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
-    ReactiveFormsModule,
-    MatToolbarModule,
-    MatMenuModule,
-    MatProgressSpinnerModule,
-    MatListModule,
-    MatGridListModule,
-    MatSnackBarModule
+    LibraryComponent,
+    CalendarComponent,
+    CalendarHeader,
     MapComponent,
+    ReservationsBoxComponent
   ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatButtonModule,
+        MatCardModule,
+        ReactiveFormsModule,
+        MatToolbarModule,
+        MatMenuModule,
+        MatProgressSpinnerModule,
+        MatListModule,
+        MatGridListModule,
+        MatSnackBarModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
         LeafletModule,
+        MatCheckboxModule
+    ],
   providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],

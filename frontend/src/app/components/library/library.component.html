@@ -8,5 +8,7 @@
 
   <p>{{ library.name }}<br>{{ library.address }}</p>
   <app-map [library]="library"></app-map>
+  <app-calendar [library]="library" (dayReservations)="dayReservations=$event"></app-calendar>
+  <app-reservations-box [library]="library" [dayReservations]="dayReservations"></app-reservations-box>
 
 </div>

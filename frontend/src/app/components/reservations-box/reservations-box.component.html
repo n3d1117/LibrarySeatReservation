@@ -1,0 +1,30 @@
+<mat-card>
+  <mat-card-content>
+
+    <div *ngIf="dayReservations; else elseBlock">
+
+      <p>{{dayReservations.length}}</p>
+
+      <p>Occupazione mattina: {{morningReservations().length}}/{{library.capacity}}</p>
+      <p>Occupazione pomeriggio: {{afternoonReservations().length}}/{{library.capacity}}</p>
+
+      <section [formGroup]="reservationsSelectionForm">
+        <p><mat-checkbox formControlName="morning">Fascia 8.00 - 13.00</mat-checkbox></p>
+        <p><mat-checkbox formControlName="afternoon">Fascia 13.00 - 19.00</mat-checkbox></p>
+      </section>
+
+      <button mat-raised-button
+              class="add-button"
+              color="primary"
+              [disabled]="!reservationsSelectionForm.errors?.atLeastOneCheckboxSelected"
+              type="submit">
+        Prenota
+      </button>
+    </div>
+
+    <ng-template #elseBlock>
+      <p>Seleziona una data da prenotare.</p>
+    </ng-template>
+
+  </mat-card-content>
+</mat-card>

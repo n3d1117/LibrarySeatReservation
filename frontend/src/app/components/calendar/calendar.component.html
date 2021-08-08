@@ -1,0 +1,8 @@
+<mat-card class="calendar-card">
+  <mat-calendar
+    [dateClass]="dateClass"
+    (selectedChange)="onDateSelected($event)"
+    [headerComponent]="calendarHeader"
+    (monthSelected)="onMonthChange($event)"
+  ></mat-calendar>
+</mat-card>

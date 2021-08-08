@@ -27,4 +27,8 @@ export class ReservationService {
     return this.http.get<Reservation[]>(this.url + `/library/${libraryId}`)
   }
 
+  allByLibraryAndDate(libraryId: number, year: number, month: number): Observable<Reservation[]> {
+    return this.http.get<Reservation[]>(this.url + `/library/${libraryId}/${year}/${month}`)
+  }
+
 }
