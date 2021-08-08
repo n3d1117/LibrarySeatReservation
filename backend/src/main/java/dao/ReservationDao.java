@@ -66,23 +66,24 @@ public class ReservationDao {
                 .getResultList();
     }
 
+    @Transactional
     public void save(Reservation entity) {
         long count = (long)entityManager.createQuery(
                 "SELECT count(r.id) FROM Reservation r WHERE r.library.id = :id AND r.datetime = :date")
                 .setParameter("id", entity.getLibrary().getId())
                 .setParameter("date", entity.getDatetime())
                 .getSingleResult();
-        if (entity.getLibrary().getCapacity() <= count) {
+        if (count >= entity.getLibrary().getCapacity()) {
+            LOGGER.info(String.format("Reached full capacity for library %s on %s", entity.getLibrary().getName(), entity.getDatetime()));
             throw new PersistenceException("Capacità piena");
         } else {
-            _transactionalSave(entity);
+            entityManager.persist(entity);
         }
     }
 
-    // Helper transactional method to avoid "IJ031070: Transaction cannot proceed: STATUS_MARKED_ROLLBACK"
-    // when capacity is full
+    // Only used in StartupBean for faster insertion
     @Transactional
-    public void _transactionalSave(Reservation entity) {
+    public void saveSkippingCapacityCheck(Reservation entity) {
         entityManager.persist(entity);
     }
 

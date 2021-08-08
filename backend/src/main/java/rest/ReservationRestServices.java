@@ -4,6 +4,7 @@ import controller.ReservationController;
 
 import javax.inject.Inject;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -135,6 +136,11 @@ public class ReservationRestServices {
             return Response
                     .status(Response.Status.NOT_FOUND)
                     .entity("Utente o libreria non esistenti")
+                    .build();
+        } catch (PersistenceException e) {
+            return Response
+                    .status(Response.Status.NOT_ACCEPTABLE)
+                    .entity(e.getLocalizedMessage())
                     .build();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);

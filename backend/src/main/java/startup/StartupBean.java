@@ -11,9 +11,11 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Singleton
 @Startup
@@ -39,21 +41,37 @@ public class StartupBean {
         adminUser.setRoles(Arrays.asList(Role.BASIC, Role.ADMIN));
         userDao.save(adminUser);
 
-        User regularUser = createUser("user@email.com", "User", "User", "pass");
+        User regularUser = createUser("user@email.com", "Nome", "Cognome", "pass");
         regularUser.setRoles(Collections.singletonList(Role.BASIC));
         userDao.save(regularUser);
 
-        Library bandino = createLibrary("Biblioteca Villa Bandini", "Via del Paradiso, 5", 50);
-        libraryDao.save(bandino);
+        List<Library> libraries = Arrays.asList(
+                createLibrary("Biblioteca Villa Bandini", "Via del Paradiso, 5, Firenze", 50),
+                createLibrary("Biblioteca Mario Luzi", "Via Ugo Schiff, 8, Firenze", 70)
+        );
+        libraries.forEach(library -> libraryDao.save(library));
 
-        Library luzi = createLibrary("Biblioteca Mario Luzi", "Via Ugo Schiff, 8 (ang. via Gabriele D'Annunzio)", 70);
-        libraryDao.save(luzi);
 
-        Reservation r = createReservation(bandino, regularUser);
-        reservationDao.save(r);
+        Random random = new Random();
 
-        Reservation r2 = createReservation(luzi, regularUser);
-        reservationDao.save(r2);
+        // for every library
+        for (Library library: libraries) {
+            // for every month
+            for (int i=8; i<11; i++) {
+                // for every day
+                for (int j=1; j<31; j++) {
+                    // for every time slot
+                    for (int hour : Arrays.asList(8, 13)) {
+                        int fillAmount = random.nextBoolean() ? library.getCapacity() : ThreadLocalRandom.current().nextInt(1, library.getCapacity());
+                        // fill reservations
+                        for (int z=0; z<fillAmount; z++) {
+                            LocalDateTime date = LocalDateTime.of(2021, i, j, hour, 0);
+                            reservationDao.saveSkippingCapacityCheck(createReservation(library, regularUser, date));
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private User createUser(String email, String name, String surname, String password) {
@@ -74,11 +92,11 @@ public class StartupBean {
         return library;
     }
 
-    private Reservation createReservation(Library library, User user) {
+    private Reservation createReservation(Library library, User user, LocalDateTime dateTime) {
         Reservation reservation = ModelFactory.initializeReservation();
         reservation.setLibrary(library);
         reservation.setUser(user);
-        reservation.setDatetime(LocalDateTime.of(2021, Month.JULY, 18, 16, 41));
+        reservation.setDatetime(dateTime);
         return reservation;
     }
 }
