@@ -7,8 +7,19 @@
   <h2>{{ library.name }}</h2>
 
   <p>{{ library.name }}<br>{{ library.address }}</p>
+
   <app-map [library]="library"></app-map>
-  <app-calendar [library]="library" (dayReservations)="dayReservations=$event"></app-calendar>
-  <app-reservations-box [library]="library" [dayReservations]="dayReservations"></app-reservations-box>
+
+  <app-calendar
+    [library]="library"
+    (dayReservations)="dayReservations=$event"
+    (selectedDate)="selectedDate=$event"
+  ></app-calendar>
+
+  <app-reservations-box
+    [library]="library"
+    [dayReservations]="dayReservations"
+    [selectedDate]="selectedDate"
+  ></app-reservations-box>
 
 </div>

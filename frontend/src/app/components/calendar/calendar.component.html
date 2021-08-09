@@ -1,6 +1,7 @@
 <mat-card class="calendar-card">
   <mat-calendar
     [dateClass]="dateClass"
+    [minDate]="todayDate"
     (selectedChange)="onDateSelected($event)"
     [headerComponent]="calendarHeader"
     (monthSelected)="onMonthChange($event)"

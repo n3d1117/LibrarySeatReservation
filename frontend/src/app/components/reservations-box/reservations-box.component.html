@@ -3,10 +3,18 @@
 
     <div *ngIf="dayReservations; else elseBlock">
 
-      <p>{{dayReservations.length}}</p>
+      <h2>{{dateStringTitle()}}</h2>
 
-      <p>Occupazione mattina: {{morningReservations().length}}/{{library.capacity}}</p>
-      <p>Occupazione pomeriggio: {{afternoonReservations().length}}/{{library.capacity}}</p>
+      <p>Disponibilità mattina:
+        <mat-chip-list>
+          <mat-chip selected color="{{morningReservations().length==library.capacity ? 'warn' : 'primary'}}">{{morningReservations().length}}/{{library.capacity}}</mat-chip>
+        </mat-chip-list>
+      </p>
+      <p>Disponibilità pomeriggio:
+        <mat-chip-list>
+          <mat-chip selected color="{{afternoonReservations().length==library.capacity ? 'warn' : 'primary'}}">{{afternoonReservations().length}}/{{library.capacity}}</mat-chip>
+        </mat-chip-list>
+      </p>
 
       <section [formGroup]="reservationsSelectionForm">
         <p><mat-checkbox formControlName="morning">Fascia 8.00 - 13.00</mat-checkbox></p>
@@ -16,10 +24,14 @@
       <button mat-raised-button
               class="add-button"
               color="primary"
-              [disabled]="!reservationsSelectionForm.errors?.atLeastOneCheckboxSelected"
+              [class.spinner]="loading"
+              [disabled]="loading || !reservationsSelectionForm.errors?.canEnable"
+              (click)="addReservation()"
               type="submit">
         Prenota
       </button>
+
+      <span *ngIf="error" class="error">{{ error }}</span>
     </div>
 
     <ng-template #elseBlock>

@@ -34,6 +34,7 @@ import { MapComponent } from './components/map/map.component';
 import { ReservationsBoxComponent } from './components/reservations-box/reservations-box.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {CalendarHeader} from "./components/calendar/calendar.header.component";
+import {MatChipsModule} from "@angular/material/chips";
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import {CalendarHeader} from "./components/calendar/calendar.header.component";
         MatDatepickerModule,
         MatNativeDateModule,
         LeafletModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatChipsModule
     ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },

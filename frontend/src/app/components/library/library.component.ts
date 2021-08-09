@@ -15,7 +15,8 @@ export class LibraryComponent implements OnInit {
   loading = false;
   library: Library | undefined;
   error = '';
-  dayReservations!: Reservation[] | null;
+  dayReservations!: Reservation[];
+  selectedDate!: Date;
 
   constructor(
     private route: ActivatedRoute,

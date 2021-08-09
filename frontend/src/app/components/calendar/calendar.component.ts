@@ -19,7 +19,10 @@ export class CalendarComponent implements OnInit {
   reservationsByMonth: Reservation[] = [];
   @Input() library!: Library;
 
-  @Output() dayReservations = new EventEmitter<Reservation[] | null>();
+  @Output() selectedDate = new EventEmitter<Date>();
+  @Output() dayReservations = new EventEmitter<Reservation[]>();
+
+  todayDate = new Date();
 
   constructor(private reservationService: ReservationService) { }
 
@@ -28,7 +31,7 @@ export class CalendarComponent implements OnInit {
   }
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate) => {
-    if (this.reservationsByMonth.length == 0) { return '' }
+    if (this.reservationsByMonth.length == 0 || cellDate < new Date(Date.now() - 86400000)) { return '' } // yesterday
     const daysReservations = this.reservationsByMonth.filter(r => this.stringToDate(r.datetime).getDate() == cellDate.getDate());
     const morningReservations = daysReservations.filter(r => this.stringToDate(r.datetime).getHours() == 8);
     const afternoonReservations = daysReservations.filter(r => this.stringToDate(r.datetime).getHours() == 13);
@@ -50,12 +53,14 @@ export class CalendarComponent implements OnInit {
   }
 
   onDateSelected(date: Date | null): void {
-    if (!date)
+    if (!date) {
       this.dayReservations.emit([]);
-    else
+    } else {
+      this.selectedDate.emit(date);
       this.dayReservations.emit(
         this.reservationsByMonth.filter(r => this.stringToDate(r.datetime).getDate() == date.getDate())
       );
+    }
   }
 
   stringToDate(date: string): Date {

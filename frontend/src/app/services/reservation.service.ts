@@ -31,4 +31,10 @@ export class ReservationService {
     return this.http.get<Reservation[]>(this.url + `/library/${libraryId}/${year}/${month}`)
   }
 
+  add(userId: number, libraryId: number, datetime: string): Observable<Reservation> {
+    const options = { headers: {'Content-Type': 'application/json'} };
+    const reservation = { userId: userId, libraryId: libraryId, datetime: datetime };
+    return this.http.post<Reservation>(`${this.url}/add`, reservation, options);
+  }
+
 }
