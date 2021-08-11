@@ -40,6 +40,9 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSliderModule} from "@angular/material/slider";
+import {QRCodeModule} from "angularx-qrcode";
+import { QrcodeComponent } from './components/qrcode/qrcode.component';
+import {MatBottomSheet, MatBottomSheetModule} from "@angular/material/bottom-sheet";
 
 @NgModule({
   declarations: [
@@ -55,36 +58,39 @@ import {MatSliderModule} from "@angular/material/slider";
     CalendarHeader,
     MapComponent,
     ReservationsBoxComponent,
-    AdminReservationsBoxComponent
+    AdminReservationsBoxComponent,
+    QrcodeComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
-    ReactiveFormsModule,
-    MatToolbarModule,
-    MatMenuModule,
-    MatProgressSpinnerModule,
-    MatListModule,
-    MatGridListModule,
-    MatSnackBarModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    LeafletModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatTabsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSliderModule,
-    FormsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatButtonModule,
+        MatCardModule,
+        ReactiveFormsModule,
+        MatToolbarModule,
+        MatMenuModule,
+        MatProgressSpinnerModule,
+        MatListModule,
+        MatGridListModule,
+        MatSnackBarModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        LeafletModule,
+        MatCheckboxModule,
+        MatChipsModule,
+        MatTabsModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatSliderModule,
+        FormsModule,
+        QRCodeModule,
+        MatBottomSheetModule
+    ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },

@@ -6,6 +6,8 @@ import {ReservationService} from "../../services/reservation.service";
 import {AuthenticationService} from "../../services/authentication.service";
 import {PageEvent} from "@angular/material/paginator";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import {QrcodeComponent} from "../qrcode/qrcode.component";
 
 @Component({
   selector: 'app-my-reservations',
@@ -18,7 +20,7 @@ export class MyReservationsComponent implements OnInit {
   reservations: Reservation[] = [];
   error = '';
 
-  displayedColumns: string[] = ['hour', 'datetime', 'libraryName', 'action'];
+  displayedColumns: string[] = ['hour', 'datetime', 'libraryName', 'qr', 'action'];
   lowValue = 0;
   highValue = 5;
 
@@ -26,7 +28,8 @@ export class MyReservationsComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private reservationService: ReservationService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private bottomSheet: MatBottomSheet
   ) { }
 
   pastReservations(): Reservation[] {
@@ -85,6 +88,12 @@ export class MyReservationsComponent implements OnInit {
     ).split(' ')
       .map(word => word.charAt(0).toUpperCase() + word.substring(1))
       .join(' ');
+  }
+
+  openQrCodeBottomSheet(reservation: Reservation): void {
+      this.bottomSheet.open(QrcodeComponent, {
+        data: { reservation: reservation }
+      });
   }
 
 }
