@@ -28,4 +28,8 @@ export class LibraryService {
     const library = { name: name, address: address, capacity: capacity };
     return this.http.post<Library>(`${this.url}/add`, library, options);
   }
+
+  delete(libraryId: number) {
+    return this.http.delete(`${this.url}/delete/${libraryId}`);
+  }
 }

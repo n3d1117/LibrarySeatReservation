@@ -37,4 +37,8 @@ export class ReservationService {
     return this.http.post<Reservation>(`${this.url}/add`, reservation, options);
   }
 
+  delete(reservationId: number) {
+    return this.http.delete(`${this.url}/delete/${reservationId}`)
+  }
+
 }

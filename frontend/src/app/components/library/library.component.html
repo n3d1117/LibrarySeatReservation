@@ -17,9 +17,27 @@
   ></app-calendar>
 
   <app-reservations-box
+    *ngIf="!authenticationService.isAdmin(); else adminBox"
     [library]="library"
     [dayReservations]="dayReservations"
     [selectedDate]="selectedDate"
   ></app-reservations-box>
+
+  <ng-template #adminBox>
+    <app-admin-reservations-box
+      [library]="library"
+      [dayReservations]="dayReservations"
+      [selectedDate]="selectedDate"
+    ></app-admin-reservations-box>
+
+    <button
+      mat-raised-button color="warn"
+      (click)="deleteLibrary(library.id)"
+      [class.spinner]="isDeleting"
+      [disabled]="isDeleting"
+    >
+      Elimina biblioteca
+    </button>
+  </ng-template>
 
 </div>

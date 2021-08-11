@@ -5,12 +5,12 @@
 
       <h2>{{dateStringTitle()}}</h2>
 
-      <p>Disponibilità mattina:
+      <p>Occupazione mattina:
         <mat-chip-list>
           <mat-chip selected color="{{morningReservations().length==library.capacity ? 'warn' : 'primary'}}">{{morningReservations().length}}/{{library.capacity}}</mat-chip>
         </mat-chip-list>
       </p>
-      <p>Disponibilità pomeriggio:
+      <p>Occupazione pomeriggio:
         <mat-chip-list>
           <mat-chip selected color="{{afternoonReservations().length==library.capacity ? 'warn' : 'primary'}}">{{afternoonReservations().length}}/{{library.capacity}}</mat-chip>
         </mat-chip-list>

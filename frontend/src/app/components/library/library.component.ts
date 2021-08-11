@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {LibraryService} from "../../services/library.service";
 import {first} from "rxjs/operators";
 import {Library} from "../../models/library.model";
 import {Reservation} from "../../models/reservation.model";
+import {AuthenticationService} from "../../services/authentication.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-library',
@@ -13,14 +15,18 @@ import {Reservation} from "../../models/reservation.model";
 export class LibraryComponent implements OnInit {
 
   loading = false;
+  isDeleting = false;
   library: Library | undefined;
   error = '';
   dayReservations!: Reservation[];
   selectedDate!: Date;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
-    private libraryService: LibraryService
+    public authenticationService: AuthenticationService,
+    private libraryService: LibraryService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -31,6 +37,20 @@ export class LibraryComponent implements OnInit {
       this.loading = false;
       this.error = error;
     });
+  }
+
+  deleteLibrary(libraryId: number): void {
+    this.isDeleting = true;
+    this.libraryService.delete(libraryId)
+      .pipe(first())
+      .subscribe(() => {
+        this.isDeleting = false;
+        this.snackBar.open('Biblioteca eliminata correttamente!', '', {duration: 3000});
+        this.router.navigate(['home']);
+      }, error => {
+        console.log(error);
+        this.isDeleting = false;
+      });
   }
 
 }

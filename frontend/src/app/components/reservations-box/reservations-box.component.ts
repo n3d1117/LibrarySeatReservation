@@ -99,7 +99,6 @@ export class ReservationsBoxComponent implements OnInit {
       .pipe(first())
       .subscribe(reservation => {
         if (reservation) {
-          console.log(reservation)
           this.snackBar.open('Prenotazione per "' + this.library.name + '" in data ' + this.dateStringTitle() + ' effettuata correttamente!', '', {duration: 5000});
           this.router.navigate(['/my-reservations']);
         }

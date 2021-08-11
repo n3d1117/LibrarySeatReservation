@@ -19,12 +19,12 @@ export class AppComponent {
     this.authenticationService.currentUser.subscribe(user => this.currentUser = user);
   }
 
+  home(): void {
+    this.router.navigate(['home']);
+  }
+
   myReservations(): void {
-    if (this.authenticationService.isAdmin()) {
-      // todo
-    } else {
-      this.router.navigate(['my-reservations']);
-    }
+    this.router.navigate(['my-reservations']);
   }
 
   logout(): void {

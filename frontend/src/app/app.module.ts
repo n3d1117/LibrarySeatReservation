@@ -35,6 +35,10 @@ import { ReservationsBoxComponent } from './components/reservations-box/reservat
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {CalendarHeader} from "./components/calendar/calendar.header.component";
 import {MatChipsModule} from "@angular/material/chips";
+import { AdminReservationsBoxComponent } from './components/admin-reservations-box/admin-reservations-box.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatTableModule} from "@angular/material/table";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -49,31 +53,35 @@ import {MatChipsModule} from "@angular/material/chips";
     CalendarComponent,
     CalendarHeader,
     MapComponent,
-    ReservationsBoxComponent
+    ReservationsBoxComponent,
+    AdminReservationsBoxComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatButtonModule,
-        MatCardModule,
-        ReactiveFormsModule,
-        MatToolbarModule,
-        MatMenuModule,
-        MatProgressSpinnerModule,
-        MatListModule,
-        MatGridListModule,
-        MatSnackBarModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        LeafletModule,
-        MatCheckboxModule,
-        MatChipsModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    ReactiveFormsModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatProgressSpinnerModule,
+    MatListModule,
+    MatGridListModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    LeafletModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatTabsModule,
+    MatTableModule,
+    MatPaginatorModule
+  ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
