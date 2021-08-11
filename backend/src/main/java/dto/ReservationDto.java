@@ -12,16 +12,18 @@ public class ReservationDto {
     private String userName;
     private String userEmail;
     private long libraryId;
+    private String libraryName;
     private String datetime;
 
     public ReservationDto() { }
 
-    public ReservationDto(long id, long userId, String userName, String userEmail, long libraryId, LocalDateTime datetime) {
+    public ReservationDto(long id, long userId, String userName, String userEmail, long libraryId, String libraryName, LocalDateTime datetime) {
         this.id = id;
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
         this.libraryId = libraryId;
+        this.libraryName = libraryName;
         this.datetime = ReservationMapper.dateToString(datetime);
     }
 
@@ -65,6 +67,14 @@ public class ReservationDto {
         this.libraryId = libraryId;
     }
 
+    public String getLibraryName() {
+        return libraryName;
+    }
+
+    public void setLibraryName(String libraryName) {
+        this.libraryName = libraryName;
+    }
+
     public String getDatetime() {
         return datetime;
     }
@@ -81,6 +91,7 @@ public class ReservationDto {
                 ", userName='" + userName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", libraryId=" + libraryId +
+                ", libraryName=" + libraryName +
                 ", datetime='" + datetime + '\'' +
                 '}';
     }
@@ -90,7 +101,7 @@ public class ReservationDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ReservationDto that = (ReservationDto) o;
-        return id == that.id && userId == that.userId && libraryId == that.libraryId && Objects.equals(userName, that.userName) && Objects.equals(userEmail, that.userEmail) && Objects.equals(datetime, that.datetime);
+        return id == that.id && userId == that.userId && libraryId == that.libraryId && Objects.equals(userName, that.userName) && Objects.equals(userEmail, that.userEmail) && Objects.equals(libraryName, that.libraryName) && Objects.equals(datetime, that.datetime);
     }
 
     @Override

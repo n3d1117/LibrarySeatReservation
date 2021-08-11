@@ -22,14 +22,14 @@ public class ReservationDao {
 
     public List<ReservationDto> all() {
         return entityManager.createQuery(
-                "SELECT NEW dto.ReservationDto(r.id, r.user.id, CONCAT(r.user.name, ' ', r.user.surname), r.user.email, r.library.id,  r.datetime) " +
+                "SELECT NEW dto.ReservationDto(r.id, r.user.id, CONCAT(r.user.name, ' ', r.user.surname), r.user.email, r.library.id, r.library.name, r.datetime) " +
                         "FROM Reservation r", ReservationDto.class).getResultList();
     }
 
     public ReservationDto findById(Long id) {
         try {
             return entityManager
-                    .createQuery("SELECT NEW dto.ReservationDto(r.id, r.user.id, CONCAT(r.user.name, ' ', r.user.surname), r.user.email, r.library.id,  r.datetime) " +
+                    .createQuery("SELECT NEW dto.ReservationDto(r.id, r.user.id, CONCAT(r.user.name, ' ', r.user.surname), r.user.email, r.library.id, r.library.name, r.datetime) " +
                             "FROM Reservation r WHERE r.id = :id", ReservationDto.class)
                     .setParameter("id", id)
                     .getSingleResult();
@@ -40,7 +40,7 @@ public class ReservationDao {
 
     public List<ReservationDto> findByUserId(Long id) {
         return entityManager
-                .createQuery("SELECT NEW dto.ReservationDto(r.id, r.user.id, CONCAT(r.user.name, ' ', r.user.surname), r.user.email, r.library.id,  r.datetime) " +
+                .createQuery("SELECT NEW dto.ReservationDto(r.id, r.user.id, CONCAT(r.user.name, ' ', r.user.surname), r.user.email, r.library.id, r.library.name, r.datetime) " +
                         "FROM Reservation r WHERE r.user.id = :id", ReservationDto.class)
                 .setParameter("id", id)
                 .getResultList();
@@ -48,7 +48,7 @@ public class ReservationDao {
 
     public List<ReservationDto> findByLibraryId(Long id) {
         return entityManager
-                .createQuery("SELECT NEW dto.ReservationDto(r.id, r.user.id, CONCAT(r.user.name, ' ', r.user.surname), r.user.email, r.library.id,  r.datetime) " +
+                .createQuery("SELECT NEW dto.ReservationDto(r.id, r.user.id, CONCAT(r.user.name, ' ', r.user.surname), r.user.email, r.library.id, r.library.name, r.datetime) " +
                         "FROM Reservation r WHERE r.library.id = :id", ReservationDto.class)
                 .setParameter("id", id)
                 .getResultList();
@@ -56,7 +56,7 @@ public class ReservationDao {
 
     public List<ReservationDto> findByLibraryIdAndDate(Long id, Month month, Year year) {
         return entityManager
-                .createQuery("SELECT NEW dto.ReservationDto(r.id, r.user.id, CONCAT(r.user.name, ' ', r.user.surname), r.user.email, r.library.id,  r.datetime) " +
+                .createQuery("SELECT NEW dto.ReservationDto(r.id, r.user.id, CONCAT(r.user.name, ' ', r.user.surname), r.user.email, r.library.id, r.library.name, r.datetime) " +
                         "FROM Reservation r WHERE r.library.id = :id " +
                         "AND EXTRACT(MONTH FROM datetime) = :month AND EXTRACT(YEAR FROM datetime) = :year",
                         ReservationDto.class)

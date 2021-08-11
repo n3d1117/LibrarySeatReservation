@@ -83,6 +83,7 @@ public class ReservationDaoTest extends JPATest {
         assertEquals(ReservationMapper.dateToString(reservation.getDatetime()), result.getDatetime());
         assertEquals(reservation.getUser().getId(), result.getUserId());
         assertEquals(reservation.getLibrary().getId(), result.getLibraryId());
+        assertEquals(reservation.getLibrary().getName(), result.getLibraryName());
     }
 
     @Test
@@ -99,6 +100,7 @@ public class ReservationDaoTest extends JPATest {
         assertEquals(ReservationMapper.dateToString(reservation.getDatetime()), result.getDatetime());
         assertEquals(reservation.getUser().getId(), result.getUserId());
         assertEquals(reservation.getLibrary().getId(), result.getLibraryId());
+        assertEquals(reservation.getLibrary().getName(), result.getLibraryName());
     }
 
     @Test
@@ -116,6 +118,7 @@ public class ReservationDaoTest extends JPATest {
         assertEquals(ReservationMapper.dateToString(reservation.getDatetime()), result.getDatetime());
         assertEquals(reservation.getUser().getId(), result.getUserId());
         assertEquals(reservation.getLibrary().getId(), result.getLibraryId());
+        assertEquals(reservation.getLibrary().getName(), result.getLibraryName());
     }
 
     @Test

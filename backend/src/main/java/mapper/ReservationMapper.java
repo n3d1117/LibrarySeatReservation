@@ -15,6 +15,7 @@ public class ReservationMapper {
         reservationDto.setId(reservation.getId());
         reservationDto.setDatetime(dateToString(reservation.getDatetime()));
         reservationDto.setLibraryId(reservation.getLibrary().getId());
+        reservationDto.setLibraryName(reservation.getLibrary().getName());
         reservationDto.setUserId(reservation.getUser().getId());
         reservationDto.setUserName(reservation.getUser().getName() + " " + reservation.getUser().getSurname());
         reservationDto.setUserEmail(reservation.getUser().getEmail());

@@ -51,6 +51,7 @@ public class ReservationMapperTest {
         reservationDto.setId(1L);
         reservationDto.setUserId(1L);
         reservationDto.setLibraryId(1L);
+        reservationDto.setLibraryName(library.getName());
         reservationDto.setUserEmail(user.getEmail());
         reservationDto.setUserName(user.getName() + " " + user.getSurname());
         reservationDto.setDatetime("2021-07-18 16:41:00");
@@ -67,6 +68,7 @@ public class ReservationMapperTest {
         assertEquals(reservationDto.getId(), generated.getId());
         assertEquals(reservationDto.getDatetime(), generated.getDatetime());
         assertEquals(reservationDto.getLibraryId(), generated.getLibraryId());
+        assertEquals(reservationDto.getLibraryName(), generated.getLibraryName());
         assertEquals(reservationDto.getUserEmail(), generated.getUserEmail());
         assertEquals(reservationDto.getUserId(), generated.getUserId());
         assertEquals(reservationDto.getUserName(), generated.getUserName());
