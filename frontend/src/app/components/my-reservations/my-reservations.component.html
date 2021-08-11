@@ -1,11 +1,79 @@
 <h2>Le mie prenotazioni</h2>
 
-<mat-spinner *ngIf="loading"></mat-spinner>
+<mat-spinner *ngIf="loading; else readyBlock"></mat-spinner>
 
 <p *ngIf="error">{{error}}</p>
 
-<mat-nav-list *ngIf="reservations.length > 0">
-  <a mat-list-item *ngFor="let reservation of reservations">
-    {{ reservation.id }} - {{ reservation.userId }} - {{ reservation.libraryId }} - {{ reservation.userName }} - {{ reservation.datetime }}
-  </a>
-</mat-nav-list>
+<ng-template #readyBlock>
+  <mat-card>
+    <mat-card-content>
+      <mat-tab-group>
+
+        <mat-tab label="Future">
+          <table mat-table [dataSource]="futureReservations() | slice: lowValue : highValue">
+            <ng-container matColumnDef="datetime">
+              <th mat-header-cell *matHeaderCellDef> Data </th>
+              <td mat-cell *matCellDef="let element"> {{this.humanReadableDate(this.stringToDate(element.datetime))}} </td>
+            </ng-container>
+            <ng-container matColumnDef="hour">
+              <th mat-header-cell *matHeaderCellDef> Ora </th>
+              <td mat-cell *matCellDef="let element"> {{this.stringToDate(element.datetime).getHours()}}:00 </td>
+            </ng-container>
+            <ng-container matColumnDef="libraryName">
+              <th mat-header-cell *matHeaderCellDef> Biblioteca </th>
+              <td mat-cell *matCellDef="let element"> {{element.libraryName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="warn" (click)="deleteReservation(element.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator
+            [length]="futureReservations().length" pageSize=5
+            (page)="getPaginatorData($event)" [pageSizeOptions]="[5, 10, 20]"
+            showFirstLastButtons>
+          </mat-paginator>
+        </mat-tab>
+
+        <mat-tab label="Passate">
+          <table mat-table [dataSource]="pastReservations() | slice: lowValue : highValue">
+            <ng-container matColumnDef="datetime">
+              <th mat-header-cell *matHeaderCellDef> Data </th>
+              <td mat-cell *matCellDef="let element"> {{this.humanReadableDate(this.stringToDate(element.datetime))}} </td>
+            </ng-container>
+            <ng-container matColumnDef="hour">
+              <th mat-header-cell *matHeaderCellDef> Ora </th>
+              <td mat-cell *matCellDef="let element"> {{this.stringToDate(element.datetime).getHours()}}:00 </td>
+            </ng-container>
+            <ng-container matColumnDef="libraryName">
+              <th mat-header-cell *matHeaderCellDef> Biblioteca </th>
+              <td mat-cell *matCellDef="let element"> {{element.libraryName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="warn" (click)="deleteReservation(element.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator
+            [length]="pastReservations().length" pageSize=5
+            (page)="getPaginatorData($event)" [pageSizeOptions]="[5, 10, 20]"
+            showFirstLastButtons>
+          </mat-paginator>
+        </mat-tab>
+
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
