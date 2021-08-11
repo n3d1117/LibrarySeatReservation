@@ -30,6 +30,28 @@
       [selectedDate]="selectedDate"
     ></app-admin-reservations-box>
 
+    <mat-card>
+      <mat-card-content>
+        <h2>Modifica capacità biblioteca</h2>
+        <p>Valore: {{sliderValue}}</p>
+        <mat-slider
+          [max]="200"
+          [min]="10"
+          [step]="1"
+          [thumbLabel]="true"
+          [tickInterval]="1"
+          [(ngModel)]="sliderValue">
+        </mat-slider>
+        <button
+          mat-raised-button color="primary"
+          [disabled]="this.library.capacity == sliderValue"
+          (click)="updateLibraryCapacity()"
+        >
+          Modifica
+        </button>
+      </mat-card-content>
+    </mat-card>
+
     <button
       mat-raised-button color="warn"
       (click)="deleteLibrary(library.id)"

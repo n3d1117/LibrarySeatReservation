@@ -32,4 +32,8 @@ export class LibraryService {
   delete(libraryId: number) {
     return this.http.delete(`${this.url}/delete/${libraryId}`);
   }
+
+  update(library: Library) {
+    return this.http.put(`${this.url}/update`, library);
+  }
 }

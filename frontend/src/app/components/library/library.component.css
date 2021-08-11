@@ -17,3 +17,7 @@
   border-top-color: #000000;
   animation: spinner .8s linear infinite;
 }
+
+mat-slider {
+  width: 100%;
+}

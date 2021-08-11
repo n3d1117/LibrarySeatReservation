@@ -21,6 +21,8 @@ export class LibraryComponent implements OnInit {
   dayReservations!: Reservation[];
   selectedDate!: Date;
 
+  sliderValue = 10;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -33,6 +35,7 @@ export class LibraryComponent implements OnInit {
     const libraryId = this.route.snapshot.params['id'];
     this.libraryService.find(libraryId).pipe(first()).subscribe(library => {
       this.library = library;
+      this.sliderValue = this.library.capacity;
     }, error => {
       this.loading = false;
       this.error = error;
@@ -51,6 +54,20 @@ export class LibraryComponent implements OnInit {
         console.log(error);
         this.isDeleting = false;
       });
+  }
+
+  updateLibraryCapacity(): void {
+    if (this.library) {
+      this.library.capacity = this.sliderValue;
+      this.libraryService.update(this.library)
+        .pipe(first())
+        .subscribe(() => {
+          this.snackBar.open('Capacità aggiornata correttamente!', '', {duration: 3000});
+        }, error => {
+          console.log(error);
+        });
+
+    }
   }
 
 }

@@ -10,7 +10,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {MatCardModule} from "@angular/material/card";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HomeComponent } from './components/home/home.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {BasicAuthInterceptor} from "./auth/basic-http-auth.interceptor";
@@ -39,6 +39,7 @@ import { AdminReservationsBoxComponent } from './components/admin-reservations-b
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatSliderModule} from "@angular/material/slider";
 
 @NgModule({
   declarations: [
@@ -80,7 +81,9 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     MatChipsModule,
     MatTabsModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSliderModule,
+    FormsModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },
