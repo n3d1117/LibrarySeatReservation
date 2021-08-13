@@ -1,0 +1,6 @@
+/.idea
+/gateway.iml
+/target
+/deploy.sh
+.DS_Store
+/workdir
