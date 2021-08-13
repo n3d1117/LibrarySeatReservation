@@ -43,7 +43,6 @@ export class MapComponent implements OnInit {
       })];
 
       this.showMap = true;
-
       }, error => {
         console.log(error);
     });

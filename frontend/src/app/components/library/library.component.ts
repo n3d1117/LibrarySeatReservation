@@ -37,7 +37,6 @@ export class LibraryComponent implements OnInit {
       this.library = library;
       this.sliderValue = this.library.capacity;
     }, error => {
-      this.loading = false;
       this.error = error;
     });
   }

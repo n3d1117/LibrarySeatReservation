@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_BOTTOM_SHEET_DATA} from "@angular/material/bottom-sheet";
 import {Reservation} from "../../models/reservation.model";
+import {DateUtilityService} from "../../services/date-utility.service";
 
 @Component({
   selector: 'app-qrcode',
@@ -9,20 +10,27 @@ import {Reservation} from "../../models/reservation.model";
 })
 export class QrcodeComponent implements OnInit {
 
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: {reservation: Reservation}) { }
+  constructor(
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: {reservation: Reservation},
+    private dateService: DateUtilityService
+  ) { }
 
   ngOnInit(): void {
   }
 
-  stringToDate(date: string): Date {
-    return new Date(date.replace(' ', 'T'));
+  libraryName(): string {
+    return this.data.reservation.libraryName;
   }
 
-  humanReadableDate(date: Date): string {
-    return date.toLocaleDateString('it',
-      {weekday: "long", month: "long", day: "numeric"}
-    ).split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.substring(1))
-      .join(' ');
+  humanReadableDate(): string {
+    return this.dateService.dateToHumanReadableString(
+      this.dateService.stringToDate(this.data.reservation.datetime)
+    )
+  }
+
+  humanReadableHours(): string {
+    return this.dateService.dateToHumanReadableHourString(
+      this.dateService.stringToDate(this.data.reservation.datetime)
+    )
   }
 }

@@ -22,9 +22,11 @@ export class LoginComponent implements OnInit {
   submitted = false;
   error = '';
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private authenticationService: AuthenticationService) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
@@ -36,7 +38,6 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  // convenience getter for easy access to form fields
   get f() { return this.form.controls; }
 
   onLogin(): void {

@@ -1,5 +1,6 @@
-
 <div class="container">
-  <h2>{{humanReadableDate(this.stringToDate(data.reservation.datetime))}} - ore {{stringToDate(data.reservation.datetime).getHours()}}:00<br>{{data.reservation.libraryName}}</h2>
+  <h2>{{humanReadableDate()}} - ore {{humanReadableHours()}}
+    <br>{{libraryName()}}
+  </h2>
   <qrcode [qrdata]="data.reservation.id.toString()" [width]="350" [errorCorrectionLevel]="'M'"></qrcode>
 </div>

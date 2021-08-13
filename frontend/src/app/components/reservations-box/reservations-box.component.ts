@@ -7,6 +7,7 @@ import {ReservationService} from "../../services/reservation.service";
 import {AuthenticationService} from "../../services/authentication.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
+import {DateUtilityService} from "../../services/date-utility.service";
 
 @Component({
   selector: 'app-reservations-box',
@@ -28,7 +29,8 @@ export class ReservationsBoxComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     private reservationService: ReservationService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dateService: DateUtilityService
   ) { }
 
   ngOnInit(): void {
@@ -39,24 +41,19 @@ export class ReservationsBoxComponent implements OnInit {
   }
 
   dateStringTitle(): string {
-    return this.selectedDate.toLocaleDateString('it',
-      {weekday: "long", month: "long", day: "numeric"}
-    )
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.substring(1))
-      .join(' ');
+    return this.dateService.dateToHumanReadableString(this.selectedDate)
   }
 
   morningReservations(): Reservation[] {
     if (!this.dayReservations)
       return []
-    return this.dayReservations.filter(r => this.stringToDate(r.datetime).getHours() == 8);
+    return this.dayReservations.filter(r => this.dateService.stringToDate(r.datetime).getHours() == 8);
   }
 
   afternoonReservations(): Reservation[] {
     if (!this.dayReservations)
       return []
-    return this.dayReservations.filter(r => this.stringToDate(r.datetime).getHours() == 13);
+    return this.dayReservations.filter(r => this.dateService.stringToDate(r.datetime).getHours() == 13);
   }
 
   checkboxValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -65,31 +62,21 @@ export class ReservationsBoxComponent implements OnInit {
     const atLeastOneCheckboxSelected = ((morning?.value || afternoon?.value) && (morning?.value != afternoon?.value));
     const fullMorning = this.morningReservations().length >= this.library.capacity;
     const fullAfteroon = this.afternoonReservations().length >= this.library.capacity;
-    const canEnable = atLeastOneCheckboxSelected && ((morning?.value && !fullMorning) || (afternoon?.value && !fullAfteroon))
+    const canEnable = atLeastOneCheckboxSelected && ((morning?.value && !fullMorning) || (afternoon?.value && !fullAfteroon));
     return { canEnable: canEnable };
   };
 
-  stringToDate(date: string): Date {
-    return new Date(date.replace(' ', 'T'));
-  }
-
   createStringFromDate(morning: boolean): string {
-    //yyyy-MM-dd HH:mm:ss
     const date = this.selectedDate;
-    date.setHours(morning ? 8 : 13);
-    return new Date(
-      date.getTime() - (date.getTimezoneOffset() * 60000 )
-    ).toISOString().replace('T', ' ').split('.')[0];
+    return this.dateService.prepareDateForBackend(date, morning);
   }
 
   addReservation(): void {
-
     if (!this.authenticationService.currentUserValue) {
       this.snackBar.open('Devi essere autenticato per prenotarti.', '', {duration: 3000});
-      this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url } });
+      this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
       return;
     }
-
     this.loading = true;
     this.reservationService.add(
       this.authenticationService.currentUserValue.id,
@@ -98,6 +85,7 @@ export class ReservationsBoxComponent implements OnInit {
     )
       .pipe(first())
       .subscribe(reservation => {
+        this.loading = false;
         if (reservation) {
           this.snackBar.open('Prenotazione per "' + this.library.name + '" in data ' + this.dateStringTitle() + ' effettuata correttamente!', '', {duration: 5000});
           this.router.navigate(['/my-reservations']);

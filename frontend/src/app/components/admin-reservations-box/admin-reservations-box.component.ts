@@ -5,6 +5,7 @@ import {PageEvent} from "@angular/material/paginator";
 import {ReservationService} from "../../services/reservation.service";
 import {first} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {DateUtilityService} from "../../services/date-utility.service";
 
 @Component({
   selector: 'app-admin-reservations-box',
@@ -23,7 +24,8 @@ export class AdminReservationsBoxComponent implements OnInit {
 
   constructor(
     private reservationService: ReservationService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dateService: DateUtilityService
   ) { }
 
   ngOnInit(): void {
@@ -35,29 +37,16 @@ export class AdminReservationsBoxComponent implements OnInit {
     return event;
   }
 
-  dateStringTitle(): string {
-    return this.selectedDate.toLocaleDateString('it',
-      {weekday: "long", month: "long", day: "numeric"}
-    )
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.substring(1))
-      .join(' ');
-  }
-
   morningReservations(): Reservation[] {
     if (!this.dayReservations)
       return []
-    return this.dayReservations.filter(r => this.stringToDate(r.datetime).getHours() == 8);
+    return this.dayReservations.filter(r => this.dateService.stringToDate(r.datetime).getHours() == 8);
   }
 
   afternoonReservations(): Reservation[] {
     if (!this.dayReservations)
       return []
-    return this.dayReservations.filter(r => this.stringToDate(r.datetime).getHours() == 13);
-  }
-
-  stringToDate(date: string): Date {
-    return new Date(date.replace(' ', 'T'));
+    return this.dayReservations.filter(r => this.dateService.stringToDate(r.datetime).getHours() == 13);
   }
 
   deleteReservation(reservationId: number): void {
@@ -68,5 +57,9 @@ export class AdminReservationsBoxComponent implements OnInit {
       }, error => {
         console.log(error);
       });
+  }
+
+  dateStringTitle(): string {
+    return this.dateService.dateToHumanReadableString(this.selectedDate);
   }
 }

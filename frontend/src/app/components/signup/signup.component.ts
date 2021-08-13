@@ -24,10 +24,12 @@ export class SignupComponent implements OnInit {
   submitted = false;
   error = '';
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private authenticationService: AuthenticationService,
-              private snackBar: MatSnackBar) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private snackBar: MatSnackBar
+  ) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);

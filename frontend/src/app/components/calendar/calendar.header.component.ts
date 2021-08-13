@@ -48,7 +48,8 @@ export class CalendarHeader<D> implements OnDestroy {
 
   constructor(
     private _calendar: MatCalendar<D>, private _dateAdapter: DateAdapter<D>,
-    @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats, cdr: ChangeDetectorRef) {
+    @Inject(MAT_DATE_FORMATS) private _dateFormats: MatDateFormats, cdr: ChangeDetectorRef
+  ) {
     _calendar.stateChanges
       .pipe(takeUntil(this._destroyed))
       .subscribe(() => cdr.markForCheck());

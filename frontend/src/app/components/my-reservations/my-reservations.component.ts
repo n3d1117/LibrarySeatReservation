@@ -8,6 +8,7 @@ import {PageEvent} from "@angular/material/paginator";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {QrcodeComponent} from "../qrcode/qrcode.component";
+import {DateUtilityService} from "../../services/date-utility.service";
 
 @Component({
   selector: 'app-my-reservations',
@@ -29,24 +30,23 @@ export class MyReservationsComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private reservationService: ReservationService,
     private snackBar: MatSnackBar,
-    private bottomSheet: MatBottomSheet
+    private bottomSheet: MatBottomSheet,
+    private dateService: DateUtilityService
   ) { }
 
   pastReservations(): Reservation[] {
-    const yesterday = new Date(Date.now() - 86400000);
     return this.reservations.filter((item) => {
-      return this.stringToDate(item.datetime) < yesterday;
+      return this.dateService.isOlderThanToday(item.datetime);
     }).sort((a, b) => {
-      return this.stringToDate(a.datetime).getTime() - this.stringToDate(b.datetime).getTime();
+      return this.dateService.sort(a.datetime, b.datetime);
     })
   }
 
   futureReservations(): Reservation[] {
-    const yesterday = new Date(Date.now() - 86400000);
     return this.reservations.filter((item) => {
-      return this.stringToDate(item.datetime) >= yesterday;
+      return !this.dateService.isOlderThanToday(item.datetime);
     }).sort((a, b) => {
-      return this.stringToDate(a.datetime).getTime() - this.stringToDate(b.datetime).getTime();
+      return this.dateService.sort(a.datetime, b.datetime);
     })
   }
 
@@ -60,10 +60,6 @@ export class MyReservationsComponent implements OnInit {
       this.loading = false;
       this.error = error;
     });
-  }
-
-  stringToDate(date: string): Date {
-    return new Date(date.replace(' ', 'T'));
   }
 
   public getPaginatorData(event: PageEvent): PageEvent {
@@ -82,18 +78,22 @@ export class MyReservationsComponent implements OnInit {
       });
   }
 
-  humanReadableDate(date: Date): string {
-    return date.toLocaleDateString('it',
-      {weekday: "long", month: "long", day: "numeric"}
-    ).split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.substring(1))
-      .join(' ');
-  }
-
   openQrCodeBottomSheet(reservation: Reservation): void {
       this.bottomSheet.open(QrcodeComponent, {
         data: { reservation: reservation }
       });
+  }
+
+  humanReadable(date: string): string {
+    return this.dateService.dateToHumanReadableString(
+      this.dateService.stringToDate(date)
+    )
+  }
+
+  humanReadableHours(date: string): string {
+    return this.dateService.dateToHumanReadableHourString(
+      this.dateService.stringToDate(date)
+    )
   }
 
 }

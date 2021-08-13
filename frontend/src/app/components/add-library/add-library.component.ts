@@ -15,17 +15,21 @@ export class AddLibraryComponent implements OnInit {
   form: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
     address: new FormControl('', [Validators.required]),
-    capacity: new FormControl('', [Validators.required, Validators.min(10), Validators.max(200)])
+    capacity: new FormControl('', [
+      Validators.required, Validators.min(10),
+      Validators.max(200)
+    ])
   });
 
   loading = false;
   submitted = false;
   error = '';
 
-  constructor(private router: Router,
-              private libraryService: LibraryService,
-              private snackBar: MatSnackBar) {
-  }
+  constructor(
+    private router: Router,
+    private libraryService: LibraryService,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void { }
 
@@ -44,6 +48,7 @@ export class AddLibraryComponent implements OnInit {
     this.libraryService.add(this.f.name.value, this.f.address.value, this.f.capacity.value)
       .pipe(first())
       .subscribe(library => {
+        this.loading = false;
         if (library) {
           this.snackBar.open('Biblioteca "' + library.name + '" aggiunta correttamente!', '', { duration: 3000 });
           this.router.navigate(['/home']);
