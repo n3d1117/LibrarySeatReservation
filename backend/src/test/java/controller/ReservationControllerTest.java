@@ -5,6 +5,7 @@ import dao.LibraryDao;
 import dao.ReservationDao;
 import dao.UserDao;
 import dto.ReservationDto;
+import dto.ReservationsDailyAggregateDto;
 import mapper.ReservationMapper;
 import model.*;
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -14,9 +15,9 @@ import org.mockito.ArgumentCaptor;
 
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.time.Year;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -37,7 +38,6 @@ public class ReservationControllerTest {
         controller = new ReservationController();
 
         dao = mock(ReservationDao.class);
-
 
         // Set up library
         library = spy(ModelFactory.initializeLibrary());
@@ -125,10 +125,24 @@ public class ReservationControllerTest {
 
     @Test
     public void testFindByLibraryAndDate() {
-        Month month = reservation.getDatetime().getMonth();
-        Year year = Year.of(reservation.getDatetime().getYear());
-        when(dao.findByLibraryIdAndDate(1L, month, year)).thenReturn(Collections.singletonList(dto));
-        assertEquals(controller.findByLibraryAndDate(1L, month, year), new Gson().toJson(Collections.singletonList(dto)));
+        int year = reservation.getDatetime().getYear();
+        int month = reservation.getDatetime().getMonth().getValue();
+        int day = reservation.getDatetime().getDayOfMonth();
+        when(dao.findByLibraryIdAndDate(1L, year, month, day)).thenReturn(Collections.singletonList(dto));
+        assertEquals(controller.findByLibraryAndDate(1L, year, month, day), new Gson().toJson(Collections.singletonList(dto)));
+    }
+
+    @Test
+    public void testAggregateByLibraryIdAndMonth() {
+        List<ReservationsDailyAggregateDto> stats = Collections.singletonList(
+                new ReservationsDailyAggregateDto(reservation.getDatetime(), 1)
+        );
+        when(dao.dailyAggregateByLibraryIdAndMonth(library.getId(), reservation.getDatetime().getYear(), reservation.getDatetime().getMonth().getValue()))
+                .thenReturn(stats);
+        String result = controller.dailyAggregateByMonth(
+                library.getId(), reservation.getDatetime().getYear(), reservation.getDatetime().getMonth().getValue()
+        );
+        assertEquals(result, new Gson().toJson(stats));
     }
 
     @Test

@@ -1,8 +1,23 @@
 package model;
 
+import dto.ReservationsDailyAggregateDto;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+// Questa annotazione (SqlResultSetMapping) appartiene al DTO ReservationsDailyAggregateDto
+// ma l'entity manager non la può trovare a meno che non sia annotata in una @Entity
+// (altrimenti viene lanciata l'eccezione "org.hibernate.MappingException: Unknown SqlResultSetMapping"
+// Per questo è stata messa nella classe Reservation
+// (vedi https://stackoverflow.com/questions/26831893/createnativequery-mapping-to-pojo-non-entity)
+@SqlResultSetMapping(name = "ReservationsDailyAggregateResult", classes = {
+        @ConstructorResult(targetClass = ReservationsDailyAggregateDto.class,
+                columns = {
+                        @ColumnResult(name = "date", type = LocalDateTime.class),
+                        @ColumnResult(name = "count", type = Integer.class)
+                })
+})
 
 /*
 Due problemi:
@@ -11,7 +26,6 @@ Due problemi:
 Per questo Reservation non può estendere BaseEntity e c'è bisogno di usare @SequenceGenerator
 Vedi https://stackoverflow.com/a/68217510
  */
-
 @Entity
 @Table(name = "reservations")
 @IdClass(ReservationCompositeKey.class)

@@ -56,10 +56,10 @@ public class StartupBean {
 
         // for every library
         for (Library library: libraries) {
-            // for every month
+            // for every month (just aug-oct)
             for (int i=8; i<11; i++) {
                 // for every day
-                for (int j=1; j<31; j++) {
+                for (int j=1; j<Month.of(i).length(false) + 1; j++) {
                     // for every time slot
                     for (int hour : Arrays.asList(8, 13)) {
                         int fillAmount = random.nextBoolean() ? library.getCapacity() : ThreadLocalRandom.current().nextInt(1, library.getCapacity());

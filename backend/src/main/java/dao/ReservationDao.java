@@ -1,6 +1,7 @@
 package dao;
 
 import dto.ReservationDto;
+import dto.ReservationsDailyAggregateDto;
 import model.Reservation;
 
 import javax.persistence.EntityManager;
@@ -8,8 +9,6 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
-import java.time.Month;
-import java.time.Year;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -54,15 +53,36 @@ public class ReservationDao {
                 .getResultList();
     }
 
-    public List<ReservationDto> findByLibraryIdAndDate(Long id, Month month, Year year) {
+    public List<ReservationDto> findByLibraryIdAndDate(Long libraryId, int year, int month, int day) {
         return entityManager
                 .createQuery("SELECT NEW dto.ReservationDto(r.id, r.user.id, CONCAT(r.user.name, ' ', r.user.surname), r.user.email, r.library.id, r.library.name, r.datetime) " +
-                        "FROM Reservation r WHERE r.library.id = :id " +
-                        "AND EXTRACT(MONTH FROM datetime) = :month AND EXTRACT(YEAR FROM datetime) = :year",
+                        "FROM Reservation r WHERE r.library.id = :libraryId " +
+                        "AND EXTRACT(DAY FROM datetime) = :day " +
+                        "AND EXTRACT(MONTH FROM datetime) = :month " +
+                        "AND EXTRACT(YEAR FROM datetime) = :year",
                         ReservationDto.class)
-                .setParameter("id", id)
-                .setParameter("month", month.getValue())
-                .setParameter("year", year.getValue())
+                .setParameter("libraryId", libraryId)
+                .setParameter("day", day)
+                .setParameter("month", month)
+                .setParameter("year", year)
+                .getResultList();
+    }
+
+    // Usa il time_bucket di TimescaleDB per aggregare il numero di prenotazioni per ogni giorno del mese specificato
+    // NB: Utilizza l'SqlResultSetMapping definito nella classe Reservation
+    public List<ReservationsDailyAggregateDto> dailyAggregateByLibraryIdAndMonth(Long libraryId, int year, int month) {
+        return (List<ReservationsDailyAggregateDto>) entityManager
+                .createNativeQuery("SELECT time_bucket('1 day', datetime) AS date, COUNT(*) AS count " +
+                        "FROM reservations " +
+                        "WHERE library_id = :libraryId " +
+                        "AND EXTRACT(MONTH FROM datetime) = :month " +
+                        "AND EXTRACT(YEAR FROM datetime) = :year " +
+                        "GROUP BY date " +
+                        "ORDER BY date ASC",
+                        "ReservationsDailyAggregateResult")
+                .setParameter("libraryId", libraryId )
+                .setParameter("month", month)
+                .setParameter("year", year)
                 .getResultList();
     }
 

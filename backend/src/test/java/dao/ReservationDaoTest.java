@@ -1,6 +1,7 @@
 package dao;
 
 import dto.ReservationDto;
+import dto.ReservationsDailyAggregateDto;
 import mapper.ReservationMapper;
 import model.*;
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -10,7 +11,6 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceException;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.time.Year;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -130,9 +130,12 @@ public class ReservationDaoTest extends JPATest {
     @Test
     public void testFindByLibraryAndDate() {
         List<ReservationDto> results = dao.findByLibraryIdAndDate(
-                library.getId(), reservation.getDatetime().getMonth(), Year.of(reservation.getDatetime().getYear())
+                library.getId(),
+                reservation.getDatetime().getYear(),
+                reservation.getDatetime().getMonth().getValue(),
+                reservation.getDatetime().getDayOfMonth()
         );
-        assertEquals(results.size(), 1);
+        assertEquals(1, results.size());
         ReservationDto result = results.get(0);
         assertEquals(reservation.getId(), result.getId());
         assertEquals(ReservationMapper.dateToString(reservation.getDatetime()), result.getDatetime());
@@ -142,12 +145,22 @@ public class ReservationDaoTest extends JPATest {
 
     @Test
     public void testFindByLibraryAndDateReturnsEmptyWhenNotFound() {
-        List<ReservationDto> results = dao.findByLibraryIdAndDate(2L, LocalDateTime.now().getMonth(), Year.now());
+
+        // check with wrong id
+        LocalDateTime now = LocalDateTime.now();
+        List<ReservationDto> results = dao.findByLibraryIdAndDate(
+                2L, now.getMonth().getValue(), now.getYear(), now.getDayOfMonth()
+        );
         assertEquals(Collections.emptyList(), results);
 
-        List<ReservationDto> results2 = dao.findByLibraryIdAndDate(library.getId(), Month.APRIL, Year.of(1996));
+        // check with wrong date
+        List<ReservationDto> results2 = dao.findByLibraryIdAndDate(
+                library.getId(), Month.APRIL.getValue(), 1996, 12
+        );
         assertEquals(Collections.emptyList(), results2);
     }
+
+    // NB: il test di dailyAggregateByLibraryIdAndMonth non può essere eseguito perchè H2 non supporta time_bucket
 
     @Test
     public void testSave() {

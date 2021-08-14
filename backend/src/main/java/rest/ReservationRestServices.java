@@ -8,8 +8,6 @@ import javax.persistence.PersistenceException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.time.Month;
-import java.time.Year;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -101,19 +99,44 @@ public class ReservationRestServices {
     }
 
     @GET
-    @Path("/library/{id}/{year}/{month}")
+    @Path("/library/{id}/{year}/{month}/{day}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listByLibraryIdAndDate(@PathParam("id") Long id, @PathParam("month") Integer month, @PathParam("year") Integer year) {
+    public Response listByLibraryIdAndDate(
+            @PathParam("id") Long id,
+            @PathParam("year") Integer year,
+            @PathParam("month") Integer month,
+            @PathParam("day") Integer day
+    ) {
         try {
-            LOGGER.log(Level.INFO, String.format("Listing reservations for library with id %s for %s/%s", id, month, year));
-            String reservationsJson = reservationController.findByLibraryAndDate(id, Month.of(month), Year.of(year));
+            LOGGER.log(Level.INFO, String.format("Listing reservations for library with id %s for %s/%s/%s", id, year, month, day));
+            String reservationsJson = reservationController.findByLibraryAndDate(id, year, month, day);
             return Response
                     .ok(reservationsJson, MediaType.APPLICATION_JSON)
                     .build();
         } catch (EntityNotFoundException e) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity(String.format("Prenotazioni per biblioteca con id %s per %s/%s non trovate", id, month, year))
+                    .entity(String.format("Prenotazioni per biblioteca con id %s per %s/%s/%s non trovate", id, year, month, day))
+                    .build();
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
+            throw new InternalServerErrorException(e.getLocalizedMessage());
+        }
+    }
+
+    @GET
+    @Path("/stats/library/{id}/{year}/{month}/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listAggregationsByLibraryIdAndMonth(
+            @PathParam("id") Long id,
+            @PathParam("year") Integer year,
+            @PathParam("month") Integer month
+    ) {
+        try {
+            LOGGER.log(Level.INFO, String.format("Listing aggregate reservations for library with id %s for %s/%s", id, year, month));
+            String reservationsAggregateJson = reservationController.dailyAggregateByMonth(id, year, month);
+            return Response
+                    .ok(reservationsAggregateJson, MediaType.APPLICATION_JSON)
                     .build();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, e.getLocalizedMessage(), e);
