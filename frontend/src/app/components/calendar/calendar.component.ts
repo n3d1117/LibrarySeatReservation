@@ -7,6 +7,7 @@ import {Library} from "../../models/library.model";
 import {first} from "rxjs/operators";
 import { EventEmitter } from '@angular/core';
 import {DateUtilityService} from "../../services/date-utility.service";
+import {ReservationsDailyAggregate} from "../../models/reservations_daily_aggregate";
 
 @Component({
   selector: 'app-calendar',
@@ -17,7 +18,7 @@ export class CalendarComponent implements OnInit {
 
   @ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
   calendarHeader = CalendarHeader;
-  reservationsByMonth: Reservation[] = [];
+  aggregateReservationsByMonth: ReservationsDailyAggregate[] = [];
   @Input() library!: Library;
 
   @Output() selectedDate = new EventEmitter<Date>();
@@ -35,29 +36,26 @@ export class CalendarComponent implements OnInit {
   }
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate) => {
-    if (this.reservationsByMonth.length == 0 || cellDate < this.dateService.yesterday()) {
+    if (this.aggregateReservationsByMonth.length == 0 || cellDate < this.dateService.yesterday()) {
       return ''
     }
-    const daysReservations = this.reservationsByMonth.filter(r =>
-      this.dateService.stringToDate(r.datetime).getDate() == cellDate.getDate()
+    const dayReservations = this.aggregateReservationsByMonth.filter(stat =>
+      this.dateService.stringToDate(stat.date).getDate() == cellDate.getDate()
     );
-    const morningReservations = daysReservations.filter(r =>
-      this.dateService.stringToDate(r.datetime).getHours() == 8
-    );
-    const afternoonReservations = daysReservations.filter(r =>
-      this.dateService.stringToDate(r.datetime).getHours() == 13
-    );
-    if (morningReservations.length >= this.library.capacity && afternoonReservations.length >= this.library.capacity)
+    if (dayReservations.length == 0)
+      return ''
+    const count = dayReservations[0].count;
+    if (count >= this.library.capacity * 2) // morning + afternoon
       return 'full'
     return 'available';
   }
 
   onMonthChange(date: Date): void {
-    this.reservationsByMonth = [];
+    this.aggregateReservationsByMonth = [];
     const year = date.getFullYear();
     const month = date.getMonth() + 1; // In Typescript, months start from 0
-    this.reservationService.allByLibraryAndDate(this.library.id, year, month).pipe(first()).subscribe(reservations => {
-      this.reservationsByMonth = reservations;
+    this.reservationService.aggregateByLibraryAndMonth(this.library.id, year, month).pipe(first()).subscribe(stats => {
+      this.aggregateReservationsByMonth = stats;
       this.calendar.updateTodaysDate();
     }, error => {
       console.log(error);
@@ -68,12 +66,15 @@ export class CalendarComponent implements OnInit {
     if (!date) {
       this.dayReservations.emit([]);
     } else {
-      this.selectedDate.emit(date);
-      this.dayReservations.emit(
-        this.reservationsByMonth.filter(r =>
-          this.dateService.stringToDate(r.datetime).getDate() == date.getDate()
-        )
-      );
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1; // In Typescript, months start from 0
+      const day = date.getDate();
+      this.reservationService.allByLibraryAndDate(this.library.id, year, month, day).pipe(first()).subscribe(reservations => {
+        this.selectedDate.emit(date);
+        this.dayReservations.emit(reservations);
+      }, error => {
+        console.log(error);
+      });
     }
   }
 
