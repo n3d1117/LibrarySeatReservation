@@ -11,6 +11,7 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -47,7 +48,8 @@ public class StartupBean {
 
         List<Library> libraries = Arrays.asList(
                 createLibrary("Biblioteca Villa Bandini", "Via del Paradiso, 5, Firenze", 50),
-                createLibrary("Biblioteca Mario Luzi", "Via Ugo Schiff, 8, Firenze", 70)
+                createLibrary("Biblioteca Mario Luzi", "Via Ugo Schiff, 8, Firenze", 70),
+                createLibrary("Biblioteca Mario Rossi", "Via delle Molina, 7, San Mauro a Signa", 10)
         );
         libraries.forEach(library -> libraryDao.save(library));
 
@@ -59,7 +61,7 @@ public class StartupBean {
             // for every month (just aug-oct)
             for (int i=8; i<11; i++) {
                 // for every day
-                for (int j=1; j<Month.of(i).length(false) + 1; j++) {
+                for (int j = 1; j< Month.of(i).length(false) + 1; j++) {
                     // for every time slot
                     for (int hour : Arrays.asList(8, 13)) {
                         int fillAmount = random.nextBoolean() ? library.getCapacity() : ThreadLocalRandom.current().nextInt(1, library.getCapacity());

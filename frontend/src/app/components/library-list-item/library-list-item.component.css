@@ -1,0 +1,10 @@
+:host {
+    height: 500px;
+    width: 500px;
+    display: block;
+    border: 1px solid black;
+}
+
+mat-grid-tile {
+    background: lightsalmon;
+}

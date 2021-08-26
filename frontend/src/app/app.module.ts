@@ -43,6 +43,7 @@ import {MatSliderModule} from "@angular/material/slider";
 import {QRCodeModule} from "angularx-qrcode";
 import { QrcodeComponent } from './components/qrcode/qrcode.component';
 import {MatBottomSheet, MatBottomSheetModule} from "@angular/material/bottom-sheet";
+import { LibraryListItemComponent } from './components/library-list-item/library-list-item.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import {MatBottomSheet, MatBottomSheetModule} from "@angular/material/bottom-she
     MapComponent,
     ReservationsBoxComponent,
     AdminReservationsBoxComponent,
-    QrcodeComponent
+    QrcodeComponent,
+    LibraryListItemComponent
   ],
     imports: [
         BrowserModule,

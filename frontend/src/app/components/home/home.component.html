@@ -1,12 +1,8 @@
-<mat-spinner *ngIf="loading"></mat-spinner>
-
-<p *ngIf="error">{{error}}</p>
-
-<mat-nav-list *ngIf="libraries.length > 0">
+<!--<mat-nav-list *ngIf="libraries.length > 0">
   <a mat-list-item *ngFor="let library of libraries" routerLink="/libraries/{{library.id}}">
     {{ library.id }} - {{ library.name }} - {{ library.address }} - {{ library.capacity }}
   </a>
-</mat-nav-list>
+</mat-nav-list>-->
 
 <button
   mat-raised-button color="primary"
@@ -15,5 +11,4 @@
   Aggiungi nuova biblioteca
 </button>
 
-
-
+<app-library-list-item></app-library-list-item>

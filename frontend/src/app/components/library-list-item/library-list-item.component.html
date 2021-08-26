@@ -1,0 +1,11 @@
+<p *ngIf="error">{{error}}</p>
+
+<mat-spinner *ngIf="loading"></mat-spinner>
+
+<mat-grid-list cols="2" rowHeight="2:1" *ngIf="libraries.length > 0">
+    <mat-grid-tile *ngFor="let library of libraries" routerLink="/libraries/{{library.id}}">
+        {{ library.id }} - {{ library.name }}
+        {{ library.address }}
+        {{ library.capacity }}
+    </mat-grid-tile>
+</mat-grid-list> 
