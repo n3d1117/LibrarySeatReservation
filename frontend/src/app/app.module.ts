@@ -45,6 +45,7 @@ import { QrcodeComponent } from './components/qrcode/qrcode.component';
 import {MatBottomSheet, MatBottomSheetModule} from "@angular/material/bottom-sheet";
 import { LibraryListItemComponent } from './components/library-list-item/library-list-item.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ReservationsBoxComponent,
     AdminReservationsBoxComponent,
     QrcodeComponent,
-    LibraryListItemComponent
+    LibraryListItemComponent,
+    SearchBarComponent
   ],
     imports: [
         BrowserModule,

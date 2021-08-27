@@ -1,32 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { first } from 'rxjs/internal/operators/first';
+import { Component, Input, OnInit } from '@angular/core';
 import { Library } from 'src/app/models/library.model';
-import {LibraryService} from "../../services/library.service";
-
 @Component({
   selector: 'app-library-list-item',
   templateUrl: './library-list-item.component.html',
   styleUrls: ['./library-list-item.component.css']
 })
-export class LibraryListItemComponent implements OnInit {
-  
-  error = '';
-  loading = false;
-  libraries: Library[] = [];
+export class LibraryListItemComponent implements OnInit{
 
-  ngOnInit(): void {
-    this.loading = true;
-    this.libraryService.all().pipe(first()).subscribe(libraries => {
-      this.loading = false;
-      this.libraries = libraries;
-    }, error => {
-      this.loading = false;
-      this.error = error.message || error;
-    });
-  }
+  @Input() libraries! : Library[]; 
+  @Input() searchValue! : String;
 
-  constructor(
-    private libraryService: LibraryService,
-  ) { }
+  constructor() { }
+
+  ngOnInit(): void {}
 
 }
