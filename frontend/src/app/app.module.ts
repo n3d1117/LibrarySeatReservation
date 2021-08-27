@@ -44,6 +44,7 @@ import {QRCodeModule} from "angularx-qrcode";
 import { QrcodeComponent } from './components/qrcode/qrcode.component';
 import {MatBottomSheet, MatBottomSheetModule} from "@angular/material/bottom-sheet";
 import { LibraryListItemComponent } from './components/library-list-item/library-list-item.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { LibraryListItemComponent } from './components/library-list-item/library
         MatSliderModule,
         FormsModule,
         QRCodeModule,
-        MatBottomSheetModule
+        MatBottomSheetModule,
+        FlexLayoutModule
     ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },

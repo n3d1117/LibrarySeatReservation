@@ -49,7 +49,13 @@ public class StartupBean {
         List<Library> libraries = Arrays.asList(
                 createLibrary("Biblioteca Villa Bandini", "Via del Paradiso, 5, Firenze", 50),
                 createLibrary("Biblioteca Mario Luzi", "Via Ugo Schiff, 8, Firenze", 70),
-                createLibrary("Biblioteca Mario Rossi", "Via delle Molina, 7, San Mauro a Signa", 10)
+                createLibrary("Biblioteca Mario Rossi", "Via delle Molina, 7, San Mauro a Signa", 10),
+                createLibrary("Biblioteca Mario Rossi", "Via delle Molina, 7, San Mauro a Signa", 10),
+                createLibrary("Biblioteca Mario Rossi", "Via delle Molina, 7, San Mauro a Signa", 10),
+                createLibrary("Biblioteca Mario Rossi", "Via delle Molina, 7, San Mauro a Signa", 10),
+                createLibrary("Biblioteca Mario Rossi", "Via delle Molina, 7, San Mauro a Signa", 10),
+                createLibrary("Biblioteca Mario Rossi", "Via delle Molina, 7, San Mauro a Signa", 10),
+                createLibrary("Biblioteca Mario Luzi", "Via Ugo Schiff, 8, Firenze", 70)
         );
         libraries.forEach(library -> libraryDao.save(library));
 
