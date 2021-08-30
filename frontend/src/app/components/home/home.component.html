@@ -1,4 +1,8 @@
-<app-search-bar (searchBarValue)="searchBarValueHome=$event"></app-search-bar>
+<div class="searchHeader">
+  <h2>Prenota il tuo posto in biblioteca</h2>
+  <app-search-bar (searchBarValue)="searchBarValueHome=$event"></app-search-bar>
+</div>
+
 <button
   mat-raised-button color="primary"
   *ngIf="authenticationService.isAdmin()"
@@ -6,4 +10,12 @@
   Aggiungi nuova biblioteca
 </button>
 
+<div *ngIf="filterLibraries().length!=0; else elseblock">
 <app-library-list-item [libraries]="filterLibraries()"></app-library-list-item>
+</div>
+
+<ng-template #elseblock>
+  <div id="NoLibraryMessage">
+    <h2>Nessuna biblioteca trovata</h2>
+  </div>
+</ng-template>

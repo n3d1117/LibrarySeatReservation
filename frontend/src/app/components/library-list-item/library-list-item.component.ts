@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
 import { Library } from 'src/app/models/library.model';
 @Component({
   selector: 'app-library-list-item',
@@ -10,9 +10,7 @@ export class LibraryListItemComponent implements OnInit{
   @Input() libraries! : Library[]; 
   //@Input() searchBarValueLibrary! : String;
 
-  constructor() { }
-
-
+  constructor() {}
 
   ngOnInit(): void {}
 

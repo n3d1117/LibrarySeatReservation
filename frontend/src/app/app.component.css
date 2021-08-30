@@ -8,10 +8,10 @@
 }
 
 .content {
-  display: flex;
+  display: block;
+  text-align: center;
   margin: auto;
-  max-width: 960px;
-  flex-direction: column;
+  max-width: 900px;
   align-items: center;
 }
 

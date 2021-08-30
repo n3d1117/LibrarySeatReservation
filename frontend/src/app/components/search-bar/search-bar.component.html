@@ -1,4 +1,4 @@
-<mat-form-field class="example-form-field" appearance="fill">
+<mat-form-field class="form-field" appearance="fill">
     <mat-label>Cerca biblioteca...</mat-label>
     <input #searchBar matInput (input)="onSearchChange($event.target)" type="text">
     <button *ngIf="searchBarValue; else elseblock" matSuffix mat-icon-button aria-label="Clear" (click)="resetSearchBar()">

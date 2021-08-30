@@ -1,3 +1,4 @@
+import { MaterialElevationDirective } from './components/library-list-item/material-elevation.directive';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -64,7 +65,8 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
     AdminReservationsBoxComponent,
     QrcodeComponent,
     LibraryListItemComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    MaterialElevationDirective
   ],
     imports: [
         BrowserModule,
