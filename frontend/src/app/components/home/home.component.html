@@ -5,6 +5,5 @@
   (click)="goToAddLibrary()">
   Aggiungi nuova biblioteca
 </button>
-<p>Search bar: {{ searchBarValueHome }}</p>
 
-<app-library-list-item [libraries]="libraries" [searchBarValueLibrary]="searchBarValueHome"></app-library-list-item>
+<app-library-list-item [libraries]="filterLibraries()"></app-library-list-item>

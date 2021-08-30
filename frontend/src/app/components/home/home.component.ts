@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 
   error = '';
   
-  searchBarValueHome = 'ooooo';
+  searchBarValueHome = '';
   loading = false;
   libraries: Library[] = [];
 
@@ -27,6 +27,13 @@ export class HomeComponent implements OnInit {
       this.loading = false;
       this.error = error.message || error;
     });
+  }
+
+  filterLibraries(): Library[] {
+    return this.libraries.filter(library => {
+      return library.name.toLowerCase().includes(this.searchBarValueHome.toLowerCase()) 
+      || library.address.toLowerCase().includes(this.searchBarValueHome.toLowerCase());
+    })
   }
 
   constructor(

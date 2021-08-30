@@ -8,9 +8,11 @@ import { Library } from 'src/app/models/library.model';
 export class LibraryListItemComponent implements OnInit{
 
   @Input() libraries! : Library[]; 
-  @Input() searchBarValueLibrary! : String;
+  //@Input() searchBarValueLibrary! : String;
 
   constructor() { }
+
+
 
   ngOnInit(): void {}
 
