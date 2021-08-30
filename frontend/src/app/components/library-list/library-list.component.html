@@ -2,7 +2,7 @@
 
 <mat-spinner *ngIf="loading"></mat-spinner>-->
 
-<mat-grid-list *ngIf="libraries.length > 0">
+<mat-grid-list cols="2" *ngIf="libraries.length > 0">
 <div  class='content'>
     <div fxLayout="row wrap" fxLayoutGap="16px grid">
         <div fxFlex.xl="25%" fxFlex.lg="25%" fxFlex.md="33%" fxFlex.sm="50%" fxFlex.xs="100%" *ngFor="let library of libraries">
@@ -21,11 +21,11 @@
             <p>
                 Capacità: {{library.capacity}} posti
             </p>
-        </mat-card-content>  
+        </mat-card-content>
         </mat-card>
       </div>
     </div>
     </div>
 </div>
 
-</mat-grid-list> 
+</mat-grid-list>
