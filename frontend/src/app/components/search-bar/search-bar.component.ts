@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-search-bar',
@@ -6,11 +6,23 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./search-bar.component.css']
 })
 export class SearchBarComponent implements OnInit {
-  value = '';
 
+  //value = ''
   @Output() searchBarValue = new EventEmitter<string>();
+  @ViewChild('searchBar') searchBar!: ElementRef;
 
-  constructor() { }
+  constructor() {}
+
+  onSearchChange(searchValue: EventTarget | null): void {
+    const target = searchValue as HTMLTextAreaElement;
+    console.log(target.value);
+    this.searchBarValue.emit(target.value)
+  }
+
+  resetSearchBar() {
+    this.searchBar.nativeElement.value = '';
+    this.searchBarValue.emit("");
+  }
 
   ngOnInit(): void {
   }

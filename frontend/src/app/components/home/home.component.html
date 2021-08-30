@@ -1,10 +1,10 @@
-<app-search-bar (searchBarValue)="searchValue=$event"></app-search-bar>
-
+<app-search-bar (searchBarValue)="searchBarValueHome=$event"></app-search-bar>
 <button
   mat-raised-button color="primary"
   *ngIf="authenticationService.isAdmin()"
   (click)="goToAddLibrary()">
   Aggiungi nuova biblioteca
 </button>
+<p>Search bar: {{ searchBarValueHome }}</p>
 
-<app-library-list-item [libraries]="libraries" [searchValue]="searchValue"></app-library-list-item>
+<app-library-list-item [libraries]="libraries" [searchBarValueLibrary]="searchBarValueHome"></app-library-list-item>
