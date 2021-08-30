@@ -1,3 +1,4 @@
+import { MaterialElevationDirective } from './components/library-list-item/material-elevation.directive';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -43,6 +44,9 @@ import {MatSliderModule} from "@angular/material/slider";
 import {QRCodeModule} from "angularx-qrcode";
 import { QrcodeComponent } from './components/qrcode/qrcode.component';
 import {MatBottomSheet, MatBottomSheetModule} from "@angular/material/bottom-sheet";
+import { LibraryListItemComponent } from './components/library-list-item/library-list-item.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +63,10 @@ import {MatBottomSheet, MatBottomSheetModule} from "@angular/material/bottom-she
     MapComponent,
     ReservationsBoxComponent,
     AdminReservationsBoxComponent,
-    QrcodeComponent
+    QrcodeComponent,
+    LibraryListItemComponent,
+    SearchBarComponent,
+    MaterialElevationDirective
   ],
     imports: [
         BrowserModule,
@@ -89,7 +96,8 @@ import {MatBottomSheet, MatBottomSheetModule} from "@angular/material/bottom-she
         MatSliderModule,
         FormsModule,
         QRCodeModule,
-        MatBottomSheetModule
+        MatBottomSheetModule,
+        FlexLayoutModule
     ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },

@@ -1,0 +1,31 @@
+<!--<p *ngIf="error">{{error}}</p>
+
+<mat-spinner *ngIf="loading"></mat-spinner>-->
+
+<mat-grid-list *ngIf="libraries.length > 0">
+<div  class='content'>
+    <div fxLayout="row wrap" fxLayoutGap="16px grid">
+        <div fxFlex.xl="25%" fxFlex.lg="25%" fxFlex.md="33%" fxFlex.sm="50%" fxFlex.xs="100%" *ngFor="let library of libraries">
+      <div routerLink="/libraries/{{library.id}}" class="content">
+        <mat-card appMaterialElevation fxFlexAlign="stretch" class="mat-elevation-z4 libraryCard">
+          <mat-card-header>
+            <mat-card-title>{{library.name}}</mat-card-title>
+          </mat-card-header>
+          <img mat-card-image src="./../assets/images/mountains.jpg">
+          <mat-card-content>
+            <p>
+                {{library.address}}
+            </p>
+          </mat-card-content>
+          <mat-card-content>
+            <p>
+                Capacità: {{library.capacity}} posti
+            </p>
+        </mat-card-content>  
+        </mat-card>
+      </div>
+    </div>
+    </div>
+</div>
+
+</mat-grid-list> 

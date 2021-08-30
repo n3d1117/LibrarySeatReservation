@@ -1,12 +1,7 @@
-<mat-spinner *ngIf="loading"></mat-spinner>
-
-<p *ngIf="error">{{error}}</p>
-
-<mat-nav-list *ngIf="libraries.length > 0">
-  <a mat-list-item *ngFor="let library of libraries" routerLink="/libraries/{{library.id}}">
-    {{ library.id }} - {{ library.name }} - {{ library.address }} - {{ library.capacity }}
-  </a>
-</mat-nav-list>
+<div class="searchHeader">
+  <h2>Prenota il tuo posto in biblioteca</h2>
+  <app-search-bar (searchBarValue)="searchBarValueHome=$event"></app-search-bar>
+</div>
 
 <button
   mat-raised-button color="primary"
@@ -15,5 +10,12 @@
   Aggiungi nuova biblioteca
 </button>
 
+<div *ngIf="filterLibraries().length!=0; else elseblock">
+<app-library-list-item [libraries]="filterLibraries()"></app-library-list-item>
+</div>
 
-
+<ng-template #elseblock>
+  <div id="NoLibraryMessage">
+    <h2>Nessuna biblioteca trovata</h2>
+  </div>
+</ng-template>
