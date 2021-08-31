@@ -1,5 +1,5 @@
 .calendar-card {
-  width: 350px;
+  margin: 5%;
 }
 
 ::ng-deep.mat-calendar-body-cell {

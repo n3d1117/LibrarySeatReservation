@@ -3,8 +3,13 @@
   color: red;
 }
 
-mat-chip {
-  max-width: 500px;
+.mat-card {
+  min-height: 84.1%;
+  margin: 5%;
+}
+
+::ng-deep.mat-chip-list-wrapper {
+  display: block !important;
 }
 
 @keyframes spinner {
@@ -25,4 +30,22 @@ mat-chip {
   border: 2px solid #ffffff;
   border-top-color: #000000;
   animation: spinner .8s linear infinite;
+}
+
+.text-select-date {
+  margin-bottom: 0px !important;
+}
+
+
+.reservation-box-component{
+  margin-top: 15%;
+  margin-bottom: 15%;
+}
+
+.date-text{
+  margin-top: 5%;
+}
+
+.add-button {
+  margin-top: 5%;
 }
