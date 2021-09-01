@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  REST_API_URL: 'http://localhost:8080/lsr/api'
+  REST_API_URL: 'http://localhost:8080/lsr/api',
+  GATEWAY_API_URL: 'http://localhost:8080/gateway/api'
 };
 
 /*

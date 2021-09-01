@@ -17,7 +17,7 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User | null>(JSON.parse(<string>localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
-    this.url = `${environment.REST_API_URL}/users`;
+    this.url = `${environment.GATEWAY_API_URL}/users`;
   }
 
   public get currentUserValue(): User {

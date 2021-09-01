@@ -12,7 +12,7 @@ export class LibraryService {
   private readonly url;
 
   constructor(private http: HttpClient) {
-    this.url = `${environment.REST_API_URL}/libraries`;
+    this.url = `${environment.GATEWAY_API_URL}/libraries`;
   }
 
   all(): Observable<Library[]> {

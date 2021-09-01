@@ -64,8 +64,8 @@ public class StartupBean {
 
         // for every library
         for (Library library: libraries) {
-            // for every month (just aug-oct)
-            for (int i=8; i<11; i++) {
+            // for every month (just sep-dec)
+            for (int i=9; i<12; i++) {
                 // for every day
                 for (int j = 1; j< Month.of(i).length(false) + 1; j++) {
                     // for every time slot

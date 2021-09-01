@@ -13,7 +13,7 @@ export class ReservationService {
   private readonly url;
 
   constructor(private http: HttpClient) {
-    this.url = `${environment.REST_API_URL}/reservations`;
+    this.url = `${environment.GATEWAY_API_URL}/reservations`;
   }
 
   all(): Observable<Reservation[]> {
