@@ -1,7 +1,7 @@
 <mat-form-field class="form-field" appearance="outline">
     <mat-label>Cerca biblioteca...</mat-label>
     <input #searchBar matInput (input)="onSearchChange($event.target)" type="text">
-    <button *ngIf="searchBarValue; else elseblock" matSuffix mat-icon-button aria-label="Clear" (click)="resetSearchBar()">
+    <button *ngIf="searchBar.value != ''; else elseblock" matSuffix mat-icon-button aria-label="Clear" (click)="resetSearchBar()">
       <mat-icon>close</mat-icon>
     </button>
     <ng-template #elseblock>

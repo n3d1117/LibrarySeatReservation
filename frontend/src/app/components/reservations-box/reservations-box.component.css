@@ -4,7 +4,7 @@
 }
 
 .mat-card {
-  min-height: 84.1%;
+  min-height: 84%;
   margin: 5%;
 }
 
@@ -13,7 +13,9 @@
 }
 
 @keyframes spinner {
-  to {transform: rotate(360deg);}
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .spinner:before {
@@ -33,16 +35,15 @@
 }
 
 .text-select-date {
-  margin-bottom: 0px !important;
+  margin-bottom: 0 !important;
 }
 
-
-.reservation-box-component{
-  margin-top: 15%;
-  margin-bottom: 15%;
+.reservation-box-component {
+  margin-top: 10%;
+  margin-bottom: 10%;
 }
 
-.date-text{
+.date-text {
   margin-top: 5%;
 }
 

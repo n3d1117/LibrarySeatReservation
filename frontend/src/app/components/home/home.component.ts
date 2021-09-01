@@ -13,7 +13,7 @@ import { AuthenticationService } from "../../services/authentication.service";
 export class HomeComponent implements OnInit {
 
   error = '';
-  
+
   searchBarValueHome = '';
   loading = false;
   libraries: Library[] = [];
@@ -29,18 +29,18 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  filterLibraries(): Library[] {
-    return this.libraries.filter(library => {
-      return library.name.toLowerCase().includes(this.searchBarValueHome.toLowerCase()) 
-      || library.address.toLowerCase().includes(this.searchBarValueHome.toLowerCase());
-    })
-  }
-
   constructor(
     private libraryService: LibraryService,
     private router: Router,
     public authenticationService: AuthenticationService,
   ) { }
+
+  filterLibraries(): Library[] {
+    return this.libraries.filter(library => {
+      return library.name.toLowerCase().includes(this.searchBarValueHome.toLowerCase())
+      || library.address.toLowerCase().includes(this.searchBarValueHome.toLowerCase());
+    })
+  }
 
   goToAddLibrary(): void {
     this.router.navigate(['admin/add-library']);

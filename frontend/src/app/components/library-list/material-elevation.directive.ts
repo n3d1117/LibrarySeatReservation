@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input, Renderer2, OnChanges, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, HostListener, Renderer2, OnChanges, SimpleChanges } from '@angular/core';
 
 @Directive({
   selector: '[appMaterialElevation]'
@@ -16,21 +16,21 @@ export class MaterialElevationDirective implements OnChanges {
     this.setElevation(this.defaultElevation);
   }
 
-  ngOnChanges(_changes: SimpleChanges) {
+  ngOnChanges(_changes: SimpleChanges): void {
     this.setElevation(this.defaultElevation);
   }
 
   @HostListener('mouseenter')
-  onMouseEnter() {
+  onMouseEnter(): void {
     this.setElevation(this.raisedElevation);
   }
 
   @HostListener('mouseleave')
-  onMouseLeave() {
+  onMouseLeave(): void {
     this.setElevation(this.defaultElevation);
   }
 
-  setElevation(amount: number) {
+  setElevation(amount: number): void {
     // remove all elevation classes
     const classesToRemove = Array.from((<HTMLElement>this.element.nativeElement).classList).filter(c => c.startsWith('mat-elevation-z'));
     classesToRemove.forEach((c) => {

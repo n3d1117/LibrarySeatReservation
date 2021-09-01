@@ -1,7 +1,8 @@
-.content {
-    border: 3px solid brown;
+.grid-container {
+  margin: 5%;
 }
 
 .libraryCard {
-    cursor: pointer;
+  cursor: pointer;
+  outline: none;
 }

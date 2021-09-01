@@ -3,6 +3,10 @@
   <app-search-bar (searchBarValue)="searchBarValueHome=$event"></app-search-bar>
 </div>
 
+<mat-spinner *ngIf="loading; else readyBlock"></mat-spinner>
+
+<p *ngIf="error">{{error}}</p>
+
 <button
   mat-raised-button color="primary"
   *ngIf="authenticationService.isAdmin()"
@@ -10,12 +14,16 @@
   Aggiungi nuova biblioteca
 </button>
 
-<div *ngIf="filterLibraries().length!=0; else elseblock">
-<app-library-list-item [libraries]="filterLibraries()"></app-library-list-item>
-</div>
+<ng-template #readyBlock>
 
-<ng-template #elseblock>
-  <div id="NoLibraryMessage">
-    <h2>Nessuna biblioteca trovata</h2>
+  <div *ngIf="filterLibraries().length != 0; else elseblock">
+    <app-library-list [libraries]="filterLibraries()"></app-library-list>
   </div>
+
+  <ng-template #elseblock>
+    <div id="NoLibraryMessage">
+      <h2>Nessuna biblioteca trovata</h2>
+    </div>
+  </ng-template>
+
 </ng-template>

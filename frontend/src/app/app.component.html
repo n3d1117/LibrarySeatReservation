@@ -17,7 +17,8 @@
         <mat-icon>home</mat-icon>
         <span>Home</span>
       </button>
-      <button mat-menu-item aria-label="Prenotazioni" (click)="myReservations()" *ngIf="!authenticationService.isAdmin()">
+      <button mat-menu-item aria-label="Prenotazioni" (click)="myReservations()"
+              *ngIf="!authenticationService.isAdmin()">
         <mat-icon>event_seat</mat-icon>
         <span>Le mie prenotazioni</span>
       </button>
@@ -39,3 +40,10 @@
 <div class="content" role="main">
   <router-outlet></router-outlet>
 </div>
+
+<!-- Footer -->
+<mat-toolbar class="footer">
+  <span class="toolbar-spacer"></span>
+  <p class="copyright">© Copyright LSR 2021.</p>
+  <span class="toolbar-spacer"></span>
+</mat-toolbar>

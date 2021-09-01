@@ -11,10 +11,19 @@
   display: block;
   text-align: center;
   margin: auto;
-  max-width: 900px;
+  max-width: 960px;
   align-items: center;
 }
 
 .toolbar-spacer {
   flex: 1 1 auto;
+}
+
+.footer {
+  margin-top: 30px;
+}
+
+.copyright {
+  font-size: 15px;
+  margin: 10px;
 }
