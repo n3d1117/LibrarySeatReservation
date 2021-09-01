@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="mat-elevation-z6">
 
   <mat-card-title>Aggiungi Biblioteca</mat-card-title>
 
@@ -29,7 +29,9 @@
           <span *ngIf="error" class="error">{{ error }}</span>
         </mat-grid-tile>
         <mat-grid-tile>
-          <button mat-raised-button class="add-button" color="primary" [class.spinner]="loading" [disabled]="loading || !form.valid" type="submit">Aggiungi</button>
+          <button mat-raised-button class="add-button" color="primary" [class.spinner]="loading"
+                  [disabled]="loading || !form.valid" type="submit">Aggiungi
+          </button>
         </mat-grid-tile>
       </mat-grid-list>
 

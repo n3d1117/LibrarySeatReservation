@@ -28,7 +28,7 @@
 
     <div *ngIf="!authenticationService.isAdmin(); else adminBox" fxFlex="50" class="reservationComponent">
       <app-reservations-box
-        
+
         [library]="library"
         [dayReservations]="dayReservations"
         [selectedDate]="selectedDate"
@@ -38,48 +38,49 @@
     <ng-template #adminBox>
       <div fxFlex="50" class="reservation-component">
         <app-admin-reservations-box
-        [library]="library"
-        [dayReservations]="dayReservations"
-        [selectedDate]="selectedDate"
+          [library]="library"
+          [dayReservations]="dayReservations"
+          [selectedDate]="selectedDate"
         ></app-admin-reservations-box>
       </div>
     </ng-template>
 
   </div>
 
-  
+
   <div *ngIf="authenticationService.isAdmin()" class="content" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
-    <div fxFlex="100" class="editCapacity-component">
-    <mat-card>
-      <mat-card-content>
-        <h2>Modifica capacità biblioteca</h2>
-        <p>Valore: {{sliderValue}}</p>
-        <mat-slider
-          [max]="200"
-          [min]="10"
-          [step]="1"
-          [thumbLabel]="true"
-          [tickInterval]="1"
-          [(ngModel)]="sliderValue">
-        </mat-slider>
-        <button
-          mat-raised-button color="primary"
-          [disabled]="this.library.capacity == sliderValue"
-          (click)="updateLibraryCapacity()"
-        >
-          Modifica
-        </button>
-      </mat-card-content>
-    </mat-card>
+    <div fxFlex="100">
+      <mat-card class="mat-elevation-z6 editCapacity-component">
+        <mat-card-content>
+          <h2>Modifica capacità biblioteca</h2>
+          <p>Valore: {{sliderValue}}</p>
+          <mat-slider
+            [max]="200"
+            [min]="10"
+            [step]="1"
+            [thumbLabel]="true"
+            [tickInterval]="1"
+            [(ngModel)]="sliderValue">
+          </mat-slider>
+          <button
+            mat-raised-button color="primary"
+            [disabled]="this.library.capacity == sliderValue"
+            (click)="updateLibraryCapacity()"
+          >
+            Modifica
+          </button>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 
   <div *ngIf="authenticationService.isAdmin()" class="delete-library-button">
-  <button
+    <button
       mat-raised-button color="warn"
       (click)="deleteLibrary(library.id)"
       [class.spinner]="isDeleting"
       [disabled]="isDeleting"
+      style="margin-top: 20px"
     >
       Elimina biblioteca
     </button>

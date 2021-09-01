@@ -1,5 +1,7 @@
 @keyframes spinner {
-  to {transform: rotate(360deg);}
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .spinner:before {
@@ -33,4 +35,8 @@ mat-slider {
 
 .library-name {
   margin: 3%;
+}
+
+.editCapacity-component {
+  margin: 5%;
 }

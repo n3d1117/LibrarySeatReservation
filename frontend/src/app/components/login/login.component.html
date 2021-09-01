@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="mat-elevation-z6">
 
   <mat-card-title>Login</mat-card-title>
 
@@ -15,7 +15,8 @@
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
         <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Nascondi password'" [attr.aria-pressed]="hide">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Nascondi password'"
+                [attr.aria-pressed]="hide">
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
         <mat-error *ngIf="f.password.errors">Password non valida</mat-error>
@@ -26,7 +27,9 @@
           <span *ngIf="error" class="error">{{ error }}</span>
         </mat-grid-tile>
         <mat-grid-tile>
-          <button mat-raised-button class="login-button" color="primary" [class.spinner]="loading" [disabled]="loading || !form.valid" type="submit">Login</button>
+          <button mat-raised-button class="login-button" color="primary" [class.spinner]="loading"
+                  [disabled]="loading || !form.valid" type="submit">Login
+          </button>
         </mat-grid-tile>
       </mat-grid-list>
 

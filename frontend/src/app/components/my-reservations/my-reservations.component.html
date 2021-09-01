@@ -5,7 +5,7 @@
 <p *ngIf="error">{{error}}</p>
 
 <ng-template #readyBlock>
-  <mat-card>
+  <mat-card class="mat-elevation-z6">
     <mat-card-content>
 
       <mat-tab-group>
@@ -13,15 +13,15 @@
         <mat-tab label="Future">
           <table mat-table [dataSource]="futureReservations() | slice: lowValue : highValue">
             <ng-container matColumnDef="datetime">
-              <th mat-header-cell *matHeaderCellDef> Data </th>
+              <th mat-header-cell *matHeaderCellDef> Data</th>
               <td mat-cell *matCellDef="let element"> {{humanReadable(element.datetime)}} </td>
             </ng-container>
             <ng-container matColumnDef="hour">
-              <th mat-header-cell *matHeaderCellDef> Ora </th>
+              <th mat-header-cell *matHeaderCellDef> Ora</th>
               <td mat-cell *matCellDef="let element"> {{humanReadableHours(element.datetime)}} </td>
             </ng-container>
             <ng-container matColumnDef="libraryName">
-              <th mat-header-cell *matHeaderCellDef> Biblioteca </th>
+              <th mat-header-cell *matHeaderCellDef> Biblioteca</th>
               <td mat-cell *matCellDef="let element"> {{element.libraryName}} </td>
             </ng-container>
             <ng-container matColumnDef="action">
@@ -53,15 +53,15 @@
         <mat-tab label="Passate">
           <table mat-table [dataSource]="pastReservations() | slice: lowValue : highValue">
             <ng-container matColumnDef="datetime">
-              <th mat-header-cell *matHeaderCellDef> Data </th>
+              <th mat-header-cell *matHeaderCellDef> Data</th>
               <td mat-cell *matCellDef="let element"> {{humanReadable(element.datetime)}} </td>
             </ng-container>
             <ng-container matColumnDef="hour">
-              <th mat-header-cell *matHeaderCellDef> Ora </th>
+              <th mat-header-cell *matHeaderCellDef> Ora</th>
               <td mat-cell *matCellDef="let element"> {{humanReadableHours(element.datetime)}} </td>
             </ng-container>
             <ng-container matColumnDef="libraryName">
-              <th mat-header-cell *matHeaderCellDef> Biblioteca </th>
+              <th mat-header-cell *matHeaderCellDef> Biblioteca</th>
               <td mat-cell *matCellDef="let element"> {{element.libraryName}} </td>
             </ng-container>
             <ng-container matColumnDef="action">

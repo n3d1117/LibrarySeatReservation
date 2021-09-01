@@ -5,3 +5,12 @@ table {
 .mat-card {
   margin: 5%
 }
+
+::ng-deep.mat-chip-list-wrapper p {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+::ng-deep.mat-chip-list-wrapper {
+  display: block !important;
+}
