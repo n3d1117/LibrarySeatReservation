@@ -11,3 +11,7 @@ h1 {
   margin: 4%;
   color: #3f51b5;
 }
+
+mat-card {
+  margin-bottom: 15%;
+}
