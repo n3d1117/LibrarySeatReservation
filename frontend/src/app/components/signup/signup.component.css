@@ -1,8 +1,7 @@
 :host {
   display: flex;
   justify-content: center;
-  margin: 20% 20%;
-  /*max-width: 500px;*/
+  margin: 15% 20%;
 }
 
 .mat-form-field {
@@ -32,8 +31,15 @@ mat-card-title {
   right: 0;
 }
 
+.alreadyRegistered {
+  color: #575757;
+  margin-top: 10px;
+}
+
 @keyframes spinner {
-  to {transform: rotate(360deg);}
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .spinner:before {

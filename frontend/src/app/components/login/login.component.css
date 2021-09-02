@@ -31,8 +31,15 @@ mat-card-title {
   right: 0;
 }
 
+.notRegistered {
+  color: #575757;
+  margin-top: 10px;
+}
+
 @keyframes spinner {
-  to {transform: rotate(360deg);}
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .spinner:before {
