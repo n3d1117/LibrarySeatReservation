@@ -14,7 +14,6 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class LibraryComponent implements OnInit {
 
-  loading = false;
   isDeleting = false;
   library: Library | undefined;
   error = '';

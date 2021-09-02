@@ -48,8 +48,9 @@ public class Proxy {
         return redirect(uri, request);
     }
 
-    private Response redirect(UriInfo uri, @Context HttpServletRequest request) {
+    private Response redirect(UriInfo uri, HttpServletRequest request) {
         String redirectUrl = apiUrl + uri.getPath();
+        // if there are params in the request
         if (request.getQueryString() != null)
             redirectUrl += "?" + request.getQueryString();
         return Response

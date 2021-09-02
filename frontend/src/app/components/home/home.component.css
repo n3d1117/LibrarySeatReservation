@@ -1,3 +1,5 @@
+
+
 .searchHeader {
   margin-top: 7%;
   padding: 3%;
@@ -14,4 +16,8 @@
   margin-bottom: 25%;
   height: 100%;
   width: 100%;
+}
+
+mat-spinner {
+  margin:10% auto;
 }

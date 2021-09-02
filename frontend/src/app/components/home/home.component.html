@@ -3,7 +3,7 @@
   <app-search-bar (searchBarValue)="searchBarValueHome=$event"></app-search-bar>
 </div>
 
-<mat-spinner *ngIf="loading; else readyBlock"></mat-spinner>
+<mat-spinner diameter="50" *ngIf="loading; else readyBlock"></mat-spinner>
 
 <p *ngIf="error">{{error}}</p>
 

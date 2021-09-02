@@ -3,9 +3,13 @@
   color: red;
 }
 
-.mat-card {
-  min-height: 84%;
+mat-card {
+  min-height: 82.5%;
   margin: 5%;
+}
+
+::ng-deep.mat-card-content {
+  min-height: 40px;
 }
 
 ::ng-deep.mat-chip-list-wrapper {
@@ -50,3 +54,12 @@
 .add-button {
   margin-top: 5%;
 }
+
+h3{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
