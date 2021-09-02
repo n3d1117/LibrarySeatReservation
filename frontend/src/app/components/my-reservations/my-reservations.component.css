@@ -5,3 +5,9 @@ table {
 mat-spinner {
   margin: 10% auto;
 }
+
+h1 {
+  font-weight: 500;
+  margin: 4%;
+  color: #3f51b5;
+}
