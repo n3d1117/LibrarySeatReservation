@@ -20,12 +20,23 @@
 }
 
 .footer {
-  margin-top: 30px;
-  padding-top: 50px;
+  height: max-content;
+  align-content: center;
+  margin-top: 15px;
+  padding-top: 30px;
   padding-bottom: 50px;
 }
 
 .copyright {
+  width: fit-content;
   font-size: 15px;
-  margin: 10px;
+}
+
+.img-box {
+  width: fit-content;
+  padding-right: 10%;
+  padding-left: 10%;
+  display: flex;
+  align-items: center;
+  justify-content:flex-end;
 }

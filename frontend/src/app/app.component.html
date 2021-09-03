@@ -43,8 +43,12 @@
 
 <!-- Footer -->
 <mat-toolbar class="footer">
-  <span class="toolbar-spacer"></span>
-  <img src="assets/images/mountains.jpg" height="50" alt="Library Seat Reservations logo">
-  <p class="copyright">© Copyright LibrarySeatReservation 2021</p>
-  <span class="toolbar-spacer"></span>
+  <div style="width:100%" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center center">
+    <div class="img-box" fxFlex="50">
+      <img src="assets/images/mountains.jpg" height="50" alt="Library Seat Reservations logo">
+    </div>
+    <div fxFlex="50">
+      <h5 class="copyright">© Copyright LibrarySeatReservation 2021</h5>
+    </div>
+  </div>
 </mat-toolbar>
