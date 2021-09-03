@@ -47,7 +47,7 @@
 
 
   <div *ngIf="authenticationService.isAdmin()" class="content" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
-    <div fxFlex="100">
+    <div fxFlex="50">
       <mat-card class="mat-elevation-z6 editCapacity-component">
         <mat-card-content>
           <h2>Modifica capacità biblioteca</h2>
@@ -70,18 +70,24 @@
         </mat-card-content>
       </mat-card>
     </div>
-  </div>
 
-  <div *ngIf="authenticationService.isAdmin()" class="delete-library-button">
-    <button
-      mat-raised-button color="warn"
-      (click)="deleteLibrary(library.id)"
-      [class.spinner]="isDeleting"
-      [disabled]="isDeleting"
-      style="margin-top: 20px"
-    >
-      Elimina biblioteca
-    </button>
+    <div fxFlex="50">
+      <mat-card class="mat-elevation-z6 editCapacity-component">
+        <mat-card-content>
+          <h2>Elimina biblioteca</h2>
+          <p style="margin: 5%">Verranno eliminate anche tutte le prenotazioni per questa biblioteca.</p>
+          <button
+            mat-raised-button color="warn"
+            (click)="deleteLibrary(library)"
+            [class.spinner]="isDeleting"
+            [disabled]="isDeleting"
+            style="margin-top: 20px"
+          >
+            Elimina biblioteca
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 
 </div>

@@ -3,7 +3,12 @@ table {
 }
 
 .mat-card {
-  margin: 5%
+  margin: 5%;
+  min-height: 82.5%;
+}
+
+::ng-deep.mat-card-content {
+  min-height: 40px;
 }
 
 ::ng-deep.mat-chip-list-wrapper p {
@@ -13,4 +18,32 @@ table {
 
 ::ng-deep.mat-chip-list-wrapper {
   display: block !important;
+}
+
+td.mat-cell, th.mat-header-cell {
+  text-align: left;
+  justify-content: left;
+}
+
+.mat-table {
+  overflow-x: scroll;
+}
+
+.mat-cell, .mat-header-cell {
+  display: table-cell;
+  padding: 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.mat-row, .mat-header-row {
+  display: table-row;
+}
+
+.text-select-date {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

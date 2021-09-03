@@ -2,7 +2,7 @@
   <mat-card-content>
 
     <div *ngIf="dayReservations; else elseBlock">
-      <h2>{{dateStringTitle()}}</h2>
+      <h2>Prenotazioni per {{dateStringTitle()}}</h2>
 
       <mat-tab-group>
         <mat-tab label="Mattina (8.00-13.00)">
@@ -25,7 +25,7 @@
               <td mat-cell *matCellDef="let element"> {{element.userEmail}} </td>
             </ng-container>
             <ng-container matColumnDef="action">
-              <th mat-header-cell *matHeaderCellDef></th>
+              <th mat-header-cell *matHeaderCellDef> Elimina</th>
               <td mat-cell *matCellDef="let element">
                 <button mat-icon-button color="warn" (click)="deleteReservation(element.id)">
                   <mat-icon>delete</mat-icon>
@@ -62,7 +62,7 @@
               <td mat-cell *matCellDef="let element"> {{element.userEmail}} </td>
             </ng-container>
             <ng-container matColumnDef="action">
-              <th mat-header-cell *matHeaderCellDef></th>
+              <th mat-header-cell *matHeaderCellDef> Elimina</th>
               <td mat-cell *matCellDef="let element">
                 <button mat-icon-button color="warn" (click)="deleteReservation(element.id)">
                   <mat-icon>delete</mat-icon>
@@ -80,7 +80,7 @@
     </div>
 
     <ng-template #elseBlock>
-      <p>Seleziona una data da monitorare</p>
+      <h3 class="text-select-date">Seleziona una data da monitorare.</h3>
     </ng-template>
 
   </mat-card-content>

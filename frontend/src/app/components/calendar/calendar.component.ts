@@ -5,7 +5,7 @@ import {Reservation} from "../../models/reservation.model";
 import {ReservationService} from "../../services/reservation.service";
 import {Library} from "../../models/library.model";
 import {first} from "rxjs/operators";
-import { EventEmitter } from '@angular/core';
+import {EventEmitter} from '@angular/core';
 import {DateUtilityService} from "../../services/date-utility.service";
 import {ReservationsDailyAggregate} from "../../models/reservations_daily_aggregate";
 
@@ -29,7 +29,8 @@ export class CalendarComponent implements OnInit {
   constructor(
     private reservationService: ReservationService,
     private dateService: DateUtilityService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.onMonthChange(new Date());

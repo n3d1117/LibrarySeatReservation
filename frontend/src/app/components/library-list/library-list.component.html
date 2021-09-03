@@ -7,13 +7,9 @@
                   routerLink="/libraries/{{library.id}}">
           <mat-card-header>
             <mat-card-title>{{library.name}}</mat-card-title>
+            <mat-card-subtitle>{{library.address}}</mat-card-subtitle>
           </mat-card-header>
-          <img mat-card-image src="assets/images/mountains.jpg" alt="{{library.name}}">
-          <mat-card-content>
-            <p>
-              {{library.address}}
-            </p>
-          </mat-card-content>
+          <img mat-card-image src="assets/images/biblio.jpg" alt="{{library.name}}">
           <mat-card-content>
             <p>
               Capacità: {{library.capacity}} posti

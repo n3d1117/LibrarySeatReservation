@@ -39,7 +39,11 @@ mat-card {
 }
 
 .text-select-date {
-  margin-bottom: 0 !important;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .reservation-box-component {
@@ -53,13 +57,5 @@ mat-card {
 
 .add-button {
   margin-top: 5%;
-}
-
-h3{
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 

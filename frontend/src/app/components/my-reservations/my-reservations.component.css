@@ -15,3 +15,23 @@ h1 {
 mat-card {
   margin-bottom: 15%;
 }
+
+td.mat-cell, th.mat-header-cell {
+  text-align: left;
+  justify-content: left;
+}
+
+.mat-table {
+  overflow-x: scroll;
+}
+
+.mat-cell, .mat-header-cell {
+  display: table-cell;
+  padding: 0 10px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.mat-row, .mat-header-row {
+  display: table-row;
+}

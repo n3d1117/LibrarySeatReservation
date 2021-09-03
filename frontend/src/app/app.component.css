@@ -24,19 +24,17 @@
   align-content: center;
   margin-top: 15px;
   padding-top: 30px;
-  padding-bottom: 50px;
+  padding-bottom: 30px;
 }
 
 .copyright {
-  width: fit-content;
   font-size: 15px;
 }
 
 .img-box {
-  width: fit-content;
   padding-right: 10%;
   padding-left: 10%;
   display: flex;
   align-items: center;
-  justify-content:flex-end;
+  justify-content: flex-end;
 }
