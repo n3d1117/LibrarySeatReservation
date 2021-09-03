@@ -12,10 +12,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Singleton
@@ -38,24 +35,30 @@ public class StartupBean {
         reservationDao.enableTimescalePostgresExtensionIfNeeded();
         reservationDao.setupHypertable();
 
-        User adminUser = createUser("admin@email.com", "Admin", "Admin", "password");
-        adminUser.setRoles(Arrays.asList(Role.BASIC, Role.ADMIN));
-        userDao.save(adminUser);
+        List<User> users = new ArrayList<>();
+        users.add(createUser("admin@email.com", "Admin", "Admin", "password", true));
 
-        User regularUser = createUser("user@email.com", "Nome", "Cognome", "pass");
-        regularUser.setRoles(Collections.singletonList(Role.BASIC));
-        userDao.save(regularUser);
+        for (int i=0; i<10000; i++) {
+            users.add(
+                    createUser("user" + i + "@email.com", "Utente", "" + i, "pass", false)
+            );
+        }
+        users.forEach(user -> userDao.save(user));
 
         List<Library> libraries = Arrays.asList(
                 createLibrary("Biblioteca Villa Bandini", "Via del Paradiso, 5, Firenze", 50),
                 createLibrary("Biblioteca Mario Luzi", "Via Ugo Schiff, 8, Firenze", 70),
-                createLibrary("Biblioteca Mario Rossi", "Via delle Molina, 7, San Mauro a Signa", 10),
-                createLibrary("Biblioteca Mario Rossi", "Via delle Molina, 7, San Mauro a Signa", 10),
-                createLibrary("Biblioteca Mario Rossi", "Via delle Molina, 7, San Mauro a Signa", 10),
-                createLibrary("Biblioteca Mario Rossi", "Via delle Molina, 7, San Mauro a Signa", 10),
-                createLibrary("Biblioteca Mario Rossi", "Via delle Molina, 7, San Mauro a Signa", 10),
-                createLibrary("Biblioteca Mario Rossi", "Via delle Molina, 7, San Mauro a Signa", 10),
-                createLibrary("Biblioteca Mario Luzi", "Via Ugo Schiff, 8, Firenze", 70)
+                createLibrary("Biblioteca delle Oblate", "Via dell’Oriuolo, 24, Firenze", 60),
+                createLibrary("Biblioteca Palagio di Parte Guelfa", "Piazza della Parte Guelfa, Firenze", 30),
+                createLibrary("Biblioteca Pietro Thouar", "Piazza Torquato Tasso 3, Firenze", 40),
+                createLibrary("Biblioteca Fabrizio De André", "Via delle Carra, 2, Firenze", 70),
+                createLibrary("Biblioteca dei ragazzi", "Via Tripoli, 34, Firenze", 20),
+                createLibrary("Biblioteca Dino Pieraccioni", "Via Nicolodi, 2, Firenze", 60),
+                createLibrary("Biblioteca del Galluzzo", "Via Senese, 206, Firenze", 70),
+                createLibrary("BiblioteCaNova Isolotto", "Via Chiusi, 50142 Firenze", 30),
+                createLibrary("Biblioteca Filippo Buonarroti", "Viale Guidoni, 188, Firenze", 50),
+                createLibrary("Biblioteca Orticoltura", "Via Vittorio Emanuele II, 4, Firenze", 40),
+                createLibrary("Biblioteca ISIS Leonardo da Vinci", "Via del Terzolle, 91, Firenze", 60)
         );
         libraries.forEach(library -> libraryDao.save(library));
 
@@ -74,7 +77,8 @@ public class StartupBean {
                         // fill reservations
                         for (int z=0; z<fillAmount; z++) {
                             LocalDateTime date = LocalDateTime.of(2021, i, j, hour, 0);
-                            reservationDao.saveSkippingCapacityCheck(createReservation(library, regularUser, date));
+                            User randomUser = users.get(ThreadLocalRandom.current().nextInt(1, users.size()-1));
+                            reservationDao.saveSkippingCapacityCheck(createReservation(library, randomUser, date));
                         }
                     }
                 }
@@ -82,13 +86,13 @@ public class StartupBean {
         }
     }
 
-    private User createUser(String email, String name, String surname, String password) {
+    private User createUser(String email, String name, String surname, String password, Boolean isAdmin) {
         User user = ModelFactory.initializeUser();
         user.setEmail(email);
         user.setName(name);
         user.setSurname(surname);
         user.setPassword(password);
-        user.setRoles(Arrays.asList(Role.BASIC, Role.ADMIN));
+        user.setRoles(isAdmin ? Arrays.asList(Role.BASIC, Role.ADMIN) : Collections.singletonList(Role.BASIC));
         return user;
     }
 
