@@ -39,6 +39,7 @@
           [library]="library"
           [dayReservations]="dayReservations"
           [selectedDate]="selectedDate"
+          (onReservationDeleted)="refreshReservations()"
         ></app-admin-reservations-box>
       </div>
     </ng-template>

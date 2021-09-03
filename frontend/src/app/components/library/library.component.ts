@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {LibraryService} from "../../services/library.service";
 import {first} from "rxjs/operators";
@@ -24,6 +24,9 @@ export class LibraryComponent implements OnInit {
   selectedDate!: Date;
 
   sliderValue = 10;
+
+  @ViewChild(CalendarComponent)
+  private calendarComponent!: CalendarComponent;
 
   constructor(
     private router: Router,
@@ -88,7 +91,8 @@ export class LibraryComponent implements OnInit {
     });
   }
 
-    }
+  refreshReservations(): void {
+    this.calendarComponent.onDateSelected(this.selectedDate);
   }
 
 }

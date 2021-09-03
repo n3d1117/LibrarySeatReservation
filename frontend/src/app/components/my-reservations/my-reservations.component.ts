@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {first} from "rxjs/operators";
 import {Reservation} from "../../models/reservation.model";
@@ -71,6 +71,13 @@ export class MyReservationsComponent implements OnInit {
     this.lowValue = event.pageIndex * event.pageSize;
     this.highValue = this.lowValue + event.pageSize;
     return event;
+  }
+
+  private refreshReservations(): void {
+    this.reservationService.allByUser(this.authenticationService.currentUserValue.id)
+      .pipe(first()).subscribe(reservations => {
+      this.reservations = reservations;
+    });
   }
 
   deleteReservation(reservationId: number): void {
