@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Library} from "../../models/library.model";
 import {Reservation} from "../../models/reservation.model";
 import {PageEvent} from "@angular/material/paginator";
@@ -6,6 +6,8 @@ import {ReservationService} from "../../services/reservation.service";
 import {first} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {DateUtilityService} from "../../services/date-utility.service";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: 'app-admin-reservations-box',
@@ -25,8 +27,10 @@ export class AdminReservationsBoxComponent implements OnInit {
   constructor(
     private reservationService: ReservationService,
     private snackBar: MatSnackBar,
-    private dateService: DateUtilityService
-  ) { }
+    private dateService: DateUtilityService,
+    private dialog: MatDialog
+  ) {
+  }
 
   ngOnInit(): void {
   }
@@ -50,13 +54,23 @@ export class AdminReservationsBoxComponent implements OnInit {
   }
 
   deleteReservation(reservationId: number): void {
-    this.reservationService.delete(reservationId)
-      .pipe(first())
-      .subscribe(() => {
-        this.snackBar.open('Prenotazione cancellata!', '', {duration: 5000});
-      }, error => {
-        console.log(error);
-      });
+    const dialogData = new ConfirmDialogModel("Conferma azione", `Sei sicuro di voler eliminare questa prenotazione?`);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.reservationService.delete(reservationId)
+          .pipe(first())
+          .subscribe(() => {
+            this.snackBar.open('Prenotazione cancellata!', '', {duration: 5000});
+            this.onReservationDeleted.emit();
+          }, error => {
+            console.log(error);
+          });
+      }
+    });
   }
 
   dateStringTitle(): string {

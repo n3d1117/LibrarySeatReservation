@@ -29,6 +29,8 @@ import {SearchBarComponent} from './components/search-bar/search-bar.component';
 import {MAT_DATE_LOCALE} from '@angular/material/core';
 import {MaterialModule} from './material/material.module';
 import {AdminSkipQueueInterceptor} from "./auth/admin-skip-queue.interceptor";
+import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import {AdminSkipQueueInterceptor} from "./auth/admin-skip-queue.interceptor";
     LibraryListComponent,
     SearchBarComponent,
     MaterialElevationDirective,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,

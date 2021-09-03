@@ -8,6 +8,8 @@ import {AuthenticationService} from "../../services/authentication.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Router} from "@angular/router";
 import {DateUtilityService} from "../../services/date-utility.service";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: 'app-reservations-box',
@@ -30,14 +32,16 @@ export class ReservationsBoxComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private reservationService: ReservationService,
     private snackBar: MatSnackBar,
-    private dateService: DateUtilityService
-  ) { }
+    private dateService: DateUtilityService,
+    private dialog: MatDialog
+  ) {
+  }
 
   ngOnInit(): void {
     this.reservationsSelectionForm = this.formBuilder.group({
       morning: false,
       afternoon: false
-    }, { validators: this.checkboxValidator });
+    }, {validators: this.checkboxValidator});
   }
 
   dateStringTitle(): string {
@@ -63,7 +67,7 @@ export class ReservationsBoxComponent implements OnInit {
     const fullMorning = this.morningReservations().length >= this.library.capacity;
     const fullAfteroon = this.afternoonReservations().length >= this.library.capacity;
     const canEnable = atLeastOneCheckboxSelected && ((morning?.value && !fullMorning) || (afternoon?.value && !fullAfteroon));
-    return { canEnable: canEnable };
+    return {canEnable: canEnable};
   };
 
   createStringFromDate(morning: boolean): string {
@@ -72,28 +76,40 @@ export class ReservationsBoxComponent implements OnInit {
   }
 
   addReservation(): void {
+    
     if (!this.authenticationService.currentUserValue) {
       this.snackBar.open('Devi essere autenticato per prenotarti.', '', {duration: 3000});
       this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
       return;
     }
-    this.loading = true;
-    this.reservationService.add(
-      this.authenticationService.currentUserValue.id,
-      this.library.id,
-      this.createStringFromDate(this.reservationsSelectionForm.controls.morning.value)
-    )
-      .pipe(first())
-      .subscribe(reservation => {
-        this.loading = false;
-        if (reservation) {
-          this.snackBar.open('Prenotazione per "' + this.library.name + '" in data ' + this.dateStringTitle() + ' effettuata correttamente!', '', {duration: 5000});
-          this.router.navigate(['/my-reservations']);
-        }
-      }, error => {
-        this.error = error;
-        this.loading = false;
-      });
+
+    const isMorning = this.reservationsSelectionForm.controls.morning.value;
+    const dialogData = new ConfirmDialogModel("Conferma prenotazione", `Sei sicuro di voler prenotare per ${this.library.name} in data ${this.dateStringTitle()} (${isMorning ? "fascia 8.00 - 13.00" : "fascia 13:00 - 19.00"})?`);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.loading = true;
+        this.reservationService.add(
+          this.authenticationService.currentUserValue.id,
+          this.library.id,
+          this.createStringFromDate(isMorning)
+        )
+          .pipe(first())
+          .subscribe(reservation => {
+            this.loading = false;
+            if (reservation) {
+              this.snackBar.open('Prenotazione per "' + this.library.name + '" in data ' + this.dateStringTitle() + ' effettuata correttamente!', '', {duration: 5000});
+              this.router.navigate(['/my-reservations']);
+            }
+          }, error => {
+            this.error = error;
+            this.loading = false;
+          });
+      }
+    });
   }
 
 }

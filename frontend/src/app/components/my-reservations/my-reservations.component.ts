@@ -9,6 +9,9 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {QrcodeComponent} from "../qrcode/qrcode.component";
 import {DateUtilityService} from "../../services/date-utility.service";
+import {MatTable} from "@angular/material/table";
+import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/confirm-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-my-reservations',
@@ -31,8 +34,10 @@ export class MyReservationsComponent implements OnInit {
     private reservationService: ReservationService,
     private snackBar: MatSnackBar,
     private bottomSheet: MatBottomSheet,
-    private dateService: DateUtilityService
-  ) { }
+    private dateService: DateUtilityService,
+    private dialog: MatDialog
+  ) {
+  }
 
   pastReservations(): Reservation[] {
     return this.reservations.filter((item) => {
@@ -69,19 +74,29 @@ export class MyReservationsComponent implements OnInit {
   }
 
   deleteReservation(reservationId: number): void {
-    this.reservationService.delete(reservationId)
-      .pipe(first())
-      .subscribe(() => {
-        this.snackBar.open('Prenotazione cancellata!', '', {duration: 5000});
-      }, error => {
-        console.log(error);
-      });
+    const dialogData = new ConfirmDialogModel("Conferma azione", `Sei sicuro di voler eliminare questa prenotazione?`);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: "400px",
+      data: dialogData
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.reservationService.delete(reservationId)
+          .pipe(first())
+          .subscribe(() => {
+            this.snackBar.open('Prenotazione cancellata!', '', {duration: 5000});
+            this.refreshReservations()
+          }, error => {
+            console.log(error);
+          });
+      }
+    });
   }
 
   openQrCodeBottomSheet(reservation: Reservation): void {
-      this.bottomSheet.open(QrcodeComponent, {
-        data: { reservation: reservation }
-      });
+    this.bottomSheet.open(QrcodeComponent, {
+      data: {reservation: reservation}
+    });
   }
 
   humanReadable(date: string): string {
