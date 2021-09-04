@@ -19,6 +19,7 @@ import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/conf
 export class ReservationsBoxComponent implements OnInit {
 
   reservationsSelectionForm!: FormGroup;
+  selectedTime: number=1;
   @Input() library!: Library;
   @Input() selectedDate!: Date;
   @Input() dayReservations!: Reservation[];

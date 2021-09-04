@@ -17,10 +17,21 @@
         </mat-chip-list>
       </div>
 
-      <section [formGroup]="reservationsSelectionForm">
+      <!--<section [formGroup]="reservationsSelectionForm">
         <p><mat-checkbox formControlName="morning">Fascia 8.00 - 13.00</mat-checkbox></p>
         <p><mat-checkbox formControlName="afternoon">Fascia 13.00 - 19.00</mat-checkbox></p>
-      </section>
+      </section>-->
+
+      <mat-radio-group class="radio-group" aria-label="Select an option" [(ngModel)]="selectedTime">
+        <mat-radio-button class="radio-button" [value]="1">
+          Fascia 8.00 - 13.00
+        </mat-radio-button>
+        <mat-radio-button  class="radio-button" [value]="2">
+          Fascia 13.00 - 19.00
+        </mat-radio-button>
+      </mat-radio-group>
+
+      <p>{{selectedTime}}</p>
 
       <button mat-raised-button
               class="add-button"
