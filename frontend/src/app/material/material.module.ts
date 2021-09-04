@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-import { NgModule } from '@angular/core';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatTabsModule} from "@angular/material/tabs";
