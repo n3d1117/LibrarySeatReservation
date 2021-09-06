@@ -68,19 +68,7 @@ export class ReservationsBoxComponent implements OnInit {
     return this.dayReservations.filter(r => this.dateService.stringToDate(r.datetime).getHours() == 13);
   }
 
-  /*checkboxValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-    console.log("Calcolo...");
-    const morning = control.get('morning');
-    const afternoon = control.get('afternoon');
-    const atLeastOneCheckboxSelected = ((morning?.value || afternoon?.value) && (morning?.value != afternoon?.value));
-    const fullMorning = this.morningReservations().length >= this.library.capacity;
-    const fullAfteroon = this.afternoonReservations().length >= this.library.capacity;
-    const canEnable = ((this.isMorngingSelected && !fullMorning) || (!this.isMorngingSelected && !fullAfteroon));
-    return {canEnable: canEnable};
-  };*/
-
   checkIfButtonEnable() {
-    console.log("Cambio radio!");
     const fullMorning = this.morningReservations().length >= this.library.capacity;
     const fullAfteroon = this.afternoonReservations().length >= this.library.capacity;
     this.confirmButtonEnable = ((this.isMorngingSelected && !fullMorning) || (!this.isMorngingSelected && !fullAfteroon));
