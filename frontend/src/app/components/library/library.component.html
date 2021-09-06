@@ -24,9 +24,8 @@
       ></app-calendar>
     </div>
 
-    <div *ngIf="!authenticationService.isAdmin(); else adminBox" fxFlex="50" class="reservationComponent">
+    <div  *ngIf="!authenticationService.isAdmin(); else adminBox" fxFlex="50" class="reservationComponent">
       <app-reservations-box
-
         [library]="library"
         [dayReservations]="dayReservations"
         [selectedDate]="selectedDate"

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn} from "@angular/forms";
 import {Reservation} from "../../models/reservation.model";
 import {Library} from "../../models/library.model";
@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 import {DateUtilityService} from "../../services/date-utility.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/confirm-dialog.component";
+import { MatRadioChange } from '@angular/material/radio';
 
 @Component({
   selector: 'app-reservations-box',
@@ -19,7 +20,8 @@ import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/conf
 export class ReservationsBoxComponent implements OnInit {
 
   reservationsSelectionForm!: FormGroup;
-  selectedTime: number=1;
+  isMorngingSelected = true;
+  confirmButtonEnable: boolean = false;
   @Input() library!: Library;
   @Input() selectedDate!: Date;
   @Input() dayReservations!: Reservation[];
@@ -39,10 +41,15 @@ export class ReservationsBoxComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checkIfButtonEnable();
     this.reservationsSelectionForm = this.formBuilder.group({
       morning: false,
       afternoon: false
-    }, {validators: this.checkboxValidator});
+    });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.checkIfButtonEnable();
   }
 
   dateStringTitle(): string {
@@ -61,15 +68,23 @@ export class ReservationsBoxComponent implements OnInit {
     return this.dayReservations.filter(r => this.dateService.stringToDate(r.datetime).getHours() == 13);
   }
 
-  checkboxValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  /*checkboxValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    console.log("Calcolo...");
     const morning = control.get('morning');
     const afternoon = control.get('afternoon');
     const atLeastOneCheckboxSelected = ((morning?.value || afternoon?.value) && (morning?.value != afternoon?.value));
     const fullMorning = this.morningReservations().length >= this.library.capacity;
     const fullAfteroon = this.afternoonReservations().length >= this.library.capacity;
-    const canEnable = atLeastOneCheckboxSelected && ((morning?.value && !fullMorning) || (afternoon?.value && !fullAfteroon));
+    const canEnable = ((this.isMorngingSelected && !fullMorning) || (!this.isMorngingSelected && !fullAfteroon));
     return {canEnable: canEnable};
-  };
+  };*/
+
+  checkIfButtonEnable() {
+    console.log("Cambio radio!");
+    const fullMorning = this.morningReservations().length >= this.library.capacity;
+    const fullAfteroon = this.afternoonReservations().length >= this.library.capacity;
+    this.confirmButtonEnable = ((this.isMorngingSelected && !fullMorning) || (!this.isMorngingSelected && !fullAfteroon));
+  }
 
   createStringFromDate(morning: boolean): string {
     const date = this.selectedDate;
@@ -78,25 +93,26 @@ export class ReservationsBoxComponent implements OnInit {
 
   addReservation(): void {
     
+    //check if user is logged in
     if (!this.authenticationService.currentUserValue) {
       this.snackBar.open('Devi essere autenticato per prenotarti.', '', {duration: 3000});
       this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
       return;
     }
-
-    const isMorning = this.reservationsSelectionForm.controls.morning.value;
-    const dialogData = new ConfirmDialogModel("Conferma prenotazione", `Sei sicuro di voler prenotare per ${this.library.name} in data ${this.dateStringTitle()} (${isMorning ? "fascia 8.00 - 13.00" : "fascia 13:00 - 19.00"})?`);
+    //show confirm dialog
+    const dialogData = new ConfirmDialogModel("Conferma prenotazione", `Sei sicuro di voler prenotare per ${this.library.name} in data ${this.dateStringTitle()} (${this.isMorngingSelected ? "fascia 8.00 - 13.00" : "fascia 13:00 - 19.00"})?`);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: "400px",
       data: dialogData
     });
+    //if reservation confirmed
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.loading = true;
         this.reservationService.add(
           this.authenticationService.currentUserValue.id,
           this.library.id,
-          this.createStringFromDate(isMorning)
+          this.createStringFromDate(this.isMorngingSelected)
         )
           .pipe(first())
           .subscribe(reservation => {
@@ -112,5 +128,4 @@ export class ReservationsBoxComponent implements OnInit {
       }
     });
   }
-
 }

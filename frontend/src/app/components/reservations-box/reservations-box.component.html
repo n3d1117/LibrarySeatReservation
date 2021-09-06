@@ -3,7 +3,7 @@
 
     <div *ngIf="dayReservations; else elseBlock">
 
-      <h2 class="date-text">{{dateStringTitle()}}</h2>
+      <h2 class="date-text" onchange="checkIfButtonEnable()">{{dateStringTitle()}}</h2>
       
       <div class="reservation-box-component">
         <mat-chip-list style="text-align: center;">
@@ -22,22 +22,20 @@
         <p><mat-checkbox formControlName="afternoon">Fascia 13.00 - 19.00</mat-checkbox></p>
       </section>-->
 
-      <mat-radio-group class="radio-group" aria-label="Select an option" [(ngModel)]="selectedTime">
-        <mat-radio-button class="radio-button" [value]="1">
+      <mat-radio-group class="radio-group" aria-label="Select an option" [(ngModel)]="isMorngingSelected" (change)="checkIfButtonEnable()">
+        <mat-radio-button class="radio-button" [value]="true">
           Fascia 8.00 - 13.00
         </mat-radio-button>
-        <mat-radio-button  class="radio-button" [value]="2">
+        <mat-radio-button  class="radio-button" [value]="false">
           Fascia 13.00 - 19.00
         </mat-radio-button>
       </mat-radio-group>
-
-      <p>{{selectedTime}}</p>
 
       <button mat-raised-button
               class="add-button"
               color="primary"
               [class.spinner]="loading"
-              [disabled]="loading || !reservationsSelectionForm.errors?.canEnable"
+              [disabled]="loading || !confirmButtonEnable"
               (click)="addReservation()"
               type="submit">
         Prenota
