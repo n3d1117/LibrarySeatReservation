@@ -38,7 +38,9 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  get f() { return this.form.controls; }
+  get f() {
+    return this.form.controls;
+  }
 
   onLogin(): void {
     this.submitted = true;
@@ -52,13 +54,13 @@ export class LoginComponent implements OnInit {
     this.authenticationService.login(this.f.email.value, this.f.password.value)
       .pipe(first())
       .subscribe(user => {
-          if (user) {
-            this.router.navigate([this.returnUrl]);
-          }
-        }, error => {
-          this.error = error;
-          this.loading = false;
-        });
+        if (user) {
+          this.router.navigate([this.returnUrl]);
+        }
+      }, error => {
+        this.error = error.error || error.statusText;
+        this.loading = false;
+      });
   }
 
 }

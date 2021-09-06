@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn} from "@angular/forms";
 import {Reservation} from "../../models/reservation.model";
 import {Library} from "../../models/library.model";
@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 import {DateUtilityService} from "../../services/date-utility.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/confirm-dialog.component";
-import { MatRadioChange } from '@angular/material/radio';
+import {MatRadioChange} from '@angular/material/radio';
 
 @Component({
   selector: 'app-reservations-box',
@@ -21,7 +21,7 @@ export class ReservationsBoxComponent implements OnInit {
 
   reservationsSelectionForm!: FormGroup;
   isMorngingSelected = true;
-  confirmButtonEnable: boolean = false;
+  confirmButtonEnable = false;
   @Input() library!: Library;
   @Input() selectedDate!: Date;
   @Input() dayReservations!: Reservation[];
@@ -48,7 +48,7 @@ export class ReservationsBoxComponent implements OnInit {
     });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     this.checkIfButtonEnable();
   }
 
@@ -68,7 +68,7 @@ export class ReservationsBoxComponent implements OnInit {
     return this.dayReservations.filter(r => this.dateService.stringToDate(r.datetime).getHours() == 13);
   }
 
-  checkIfButtonEnable() {
+  checkIfButtonEnable(): void {
     const fullMorning = this.morningReservations().length >= this.library.capacity;
     const fullAfteroon = this.afternoonReservations().length >= this.library.capacity;
     this.confirmButtonEnable = ((this.isMorngingSelected && !fullMorning) || (!this.isMorngingSelected && !fullAfteroon));
@@ -80,7 +80,7 @@ export class ReservationsBoxComponent implements OnInit {
   }
 
   addReservation(): void {
-    
+
     //check if user is logged in
     if (!this.authenticationService.currentUserValue) {
       this.snackBar.open('Devi essere autenticato per prenotarti.', '', {duration: 3000});
@@ -110,7 +110,7 @@ export class ReservationsBoxComponent implements OnInit {
               this.router.navigate(['/my-reservations']);
             }
           }, error => {
-            this.error = error;
+            this.error = error.error || error.statusText;
             this.loading = false;
           });
       }

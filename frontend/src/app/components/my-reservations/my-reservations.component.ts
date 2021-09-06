@@ -63,7 +63,7 @@ export class MyReservationsComponent implements OnInit {
       this.loading = false;
     }, error => {
       this.loading = false;
-      this.error = error;
+      this.error = error.error || error.statusText;
     });
   }
 

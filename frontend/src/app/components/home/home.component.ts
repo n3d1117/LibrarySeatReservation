@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
-import { first } from 'rxjs/internal/operators/first';
-import { Library } from 'src/app/models/library.model';
-import { LibraryService } from 'src/app/services/library.service';
-import { AuthenticationService } from "../../services/authentication.service";
+import {Component, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
+import {first} from 'rxjs/internal/operators/first';
+import {Library} from 'src/app/models/library.model';
+import {LibraryService} from 'src/app/services/library.service';
+import {AuthenticationService} from "../../services/authentication.service";
 
 @Component({
   selector: 'app-home',
@@ -11,8 +11,6 @@ import { AuthenticationService } from "../../services/authentication.service";
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  error = '';
 
   searchBarValueHome = '';
   loading = false;
@@ -24,21 +22,22 @@ export class HomeComponent implements OnInit {
       this.loading = false;
       this.libraries = libraries;
     }, error => {
+      console.log(error);
       this.loading = false;
-      this.error = error.message || error;
     });
   }
 
   constructor(
     private libraryService: LibraryService,
     private router: Router,
-    public authenticationService: AuthenticationService,
-  ) { }
+    public authenticationService: AuthenticationService
+  ) {
+  }
 
   filterLibraries(): Library[] {
     return this.libraries.filter(library => {
       return library.name.toLowerCase().includes(this.searchBarValueHome.toLowerCase())
-      || library.address.toLowerCase().includes(this.searchBarValueHome.toLowerCase());
+        || library.address.toLowerCase().includes(this.searchBarValueHome.toLowerCase());
     })
   }
 

@@ -5,7 +5,19 @@
 
 <mat-spinner diameter="50" *ngIf="loading; else readyBlock"></mat-spinner>
 
-<p *ngIf="error">{{error}}</p>
+<ng-template #readyBlock>
+
+  <div *ngIf="filterLibraries().length != 0; else emptyLibrariesBlock">
+    <app-library-list [libraries]="filterLibraries()"></app-library-list>
+  </div>
+
+  <ng-template #emptyLibrariesBlock>
+    <div id="NoLibraryMessage">
+      <h2>Nessuna biblioteca trovata</h2>
+    </div>
+  </ng-template>
+
+</ng-template>
 
 <button
   mat-raised-button color="primary"
@@ -13,17 +25,3 @@
   (click)="goToAddLibrary()">
   Aggiungi nuova biblioteca
 </button>
-
-<ng-template #readyBlock>
-
-  <div *ngIf="filterLibraries().length != 0; else elseblock">
-    <app-library-list [libraries]="filterLibraries()"></app-library-list>
-  </div>
-
-  <ng-template #elseblock>
-    <div id="NoLibraryMessage">
-      <h2>Nessuna biblioteca trovata</h2>
-    </div>
-  </ng-template>
-
-</ng-template>

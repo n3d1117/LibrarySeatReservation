@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {first} from "rxjs/operators";
 import {LibraryService} from "../../services/library.service";
@@ -29,12 +29,16 @@ export class AddLibraryComponent implements OnInit {
     private router: Router,
     private libraryService: LibraryService,
     private snackBar: MatSnackBar
-  ) { }
+  ) {
+  }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
   // convenience getter for easy access to form fields
-  get f() { return this.form.controls; }
+  get f() {
+    return this.form.controls;
+  }
 
   addLibrary(): void {
     this.submitted = true;
@@ -50,11 +54,11 @@ export class AddLibraryComponent implements OnInit {
       .subscribe(library => {
         this.loading = false;
         if (library) {
-          this.snackBar.open('Biblioteca "' + library.name + '" aggiunta correttamente!', '', { duration: 3000 });
+          this.snackBar.open('Biblioteca "' + library.name + '" aggiunta correttamente!', '', {duration: 3000});
           this.router.navigate(['/home']);
         }
       }, error => {
-        this.error = error;
+        this.error = error.error || error.statusText;
         this.loading = false;
       });
   }

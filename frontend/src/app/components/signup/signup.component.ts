@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../services/authentication.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -36,10 +36,13 @@ export class SignupComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
   // convenience getter for easy access to form fields
-  get f() { return this.form.controls; }
+  get f() {
+    return this.form.controls;
+  }
 
   onSignup(): void {
     this.submitted = true;
@@ -60,11 +63,12 @@ export class SignupComponent implements OnInit {
       .pipe(first())
       .subscribe(user => {
         if (user) {
-          this.snackBar.open('Utente registrato correttamente!', '', { duration: 3000 });
+          this.snackBar.open('Utente registrato correttamente!', '', {duration: 3000});
           this.router.navigate(['/login']);
         }
       }, error => {
-        this.error = error;
+        this.error = error.error || error.statusText;
+
         this.loading = false;
       });
   }
