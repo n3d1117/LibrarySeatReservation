@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {LibraryService} from "../../services/library.service";
 import {first} from "rxjs/operators";
@@ -9,6 +9,9 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {CalendarComponent} from "../calendar/calendar.component";
 import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/confirm-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {ConcurrentUsersService} from "../../services/concurrent-users.service";
+import {Subscription} from "rxjs";
+import {timer} from 'rxjs';
 
 @Component({
   selector: 'app-library',
@@ -25,6 +28,11 @@ export class LibraryComponent implements OnInit {
 
   sliderValue = 10;
 
+  subscribeTimer!: Subscription;
+  timeLeft = 120; // todo parametrize
+  progressValue = 100;
+  isSubscribedToSocket = false;
+
   @ViewChild(CalendarComponent)
   private calendarComponent!: CalendarComponent;
 
@@ -34,18 +42,67 @@ export class LibraryComponent implements OnInit {
     public authenticationService: AuthenticationService,
     private libraryService: LibraryService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private concurrentUsersService: ConcurrentUsersService
   ) {
   }
 
+  ngOnDestroy(): void {
+    if (!this.authenticationService.isAdmin() && this.isSubscribedToSocket) {
+      this.concurrentUsersService.socket$.complete();
+    }
+  }
+
   ngOnInit(): void {
+
+    if (!this.authenticationService.currentUserValue) {
+      this.snackBar.open('Devi essere autenticato per verificare la disponibilità di posti.', '', {duration: 3000});
+      this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
+      return;
+    }
+
     const libraryId = this.route.snapshot.params['id'];
     this.libraryService.find(libraryId).pipe(first()).subscribe(library => {
       this.library = library;
       this.sliderValue = this.library.capacity;
+
+
+      if (!this.authenticationService.isAdmin()) {
+        this.concurrentUsersService.socket$.subscribe(/*message => {
+          const jsonString = JSON.stringify(message);
+          const msg = JSON.parse(jsonString);
+          if (msg.action == 'expired') {
+            this.sessionExpired();
+          }
+        }*/);
+        this.isSubscribedToSocket = true;
+
+        // primo 1000: ms dopo quanto parte il timer (~1s giusto per caricare la pagina)
+        // secondo 1000: ms ogni quanto si aggiorna il timer
+        this.subscribeTimer = timer(1000, 1000).subscribe(() => {
+          if (this.timeLeft > 0) {
+            this.timeLeft--;
+            this.progressValue -= 100 / 120; // todo use parameter instead of 120
+          } else {
+            this.sessionExpired();
+          }
+        })
+      }
+
+
     }, error => {
-      this.error = error;
+      if (error.status == 429) { // 429 HTTP Too Many Requests
+        this.router.navigate(['queue'], {queryParams: {returnUrl: this.router.url}});
+      } else {
+        this.error = error.error || error.statusText;
+      }
     });
+  }
+
+  sessionExpired(): void {
+    this.subscribeTimer.unsubscribe();
+    this.router.navigate(['home']);
+    this.snackBar.open('Hai esaurito il tempo a disposizione per effettuare la prenotazione.', '', {duration: 3000});
   }
 
   deleteLibrary(library: Library): void {

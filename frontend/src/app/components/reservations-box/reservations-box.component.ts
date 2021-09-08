@@ -20,7 +20,7 @@ import {MatRadioChange} from '@angular/material/radio';
 export class ReservationsBoxComponent implements OnInit {
 
   reservationsSelectionForm!: FormGroup;
-  isMorngingSelected = true;
+  isMorningSelected = true;
   confirmButtonEnable = false;
   @Input() library!: Library;
   @Input() selectedDate!: Date;
@@ -41,14 +41,13 @@ export class ReservationsBoxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.checkIfButtonEnable();
     this.reservationsSelectionForm = this.formBuilder.group({
       morning: false,
       afternoon: false
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.checkIfButtonEnable();
   }
 
@@ -70,8 +69,8 @@ export class ReservationsBoxComponent implements OnInit {
 
   checkIfButtonEnable(): void {
     const fullMorning = this.morningReservations().length >= this.library.capacity;
-    const fullAfteroon = this.afternoonReservations().length >= this.library.capacity;
-    this.confirmButtonEnable = ((this.isMorngingSelected && !fullMorning) || (!this.isMorngingSelected && !fullAfteroon));
+    const fullAfternoon = this.afternoonReservations().length >= this.library.capacity;
+    this.confirmButtonEnable = (this.isMorningSelected && !fullMorning) || (!this.isMorningSelected && !fullAfternoon);
   }
 
   createStringFromDate(morning: boolean): string {
@@ -88,7 +87,7 @@ export class ReservationsBoxComponent implements OnInit {
       return;
     }
     //show confirm dialog
-    const dialogData = new ConfirmDialogModel("Conferma prenotazione", `Sei sicuro di voler prenotare per ${this.library.name} in data ${this.dateStringTitle()} (${this.isMorngingSelected ? "fascia 8.00 - 13.00" : "fascia 13:00 - 19.00"})?`);
+    const dialogData = new ConfirmDialogModel("Conferma prenotazione", `Sei sicuro di voler prenotare per ${this.library.name} in data ${this.dateStringTitle()} (${this.isMorningSelected ? "fascia 8.00 - 13.00" : "fascia 13:00 - 19.00"})?`);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: "400px",
       data: dialogData
@@ -100,7 +99,7 @@ export class ReservationsBoxComponent implements OnInit {
         this.reservationService.add(
           this.authenticationService.currentUserValue.id,
           this.library.id,
-          this.createStringFromDate(this.isMorngingSelected)
+          this.createStringFromDate(this.isMorningSelected)
         )
           .pipe(first())
           .subscribe(reservation => {

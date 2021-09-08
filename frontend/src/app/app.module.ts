@@ -31,6 +31,8 @@ import {MaterialModule} from './material/material.module';
 import {AdminSkipQueueInterceptor} from "./auth/admin-skip-queue.interceptor";
 import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { QueueComponent } from './components/queue/queue.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     SearchBarComponent,
     MaterialElevationDirective,
     ConfirmDialogComponent,
+    QueueComponent,
   ],
   imports: [
     BrowserModule,

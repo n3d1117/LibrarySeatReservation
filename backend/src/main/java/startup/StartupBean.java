@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Logger;
 
 @Singleton
 @Startup
@@ -28,12 +29,16 @@ public class StartupBean {
     @Inject
     private ReservationDao reservationDao;
 
+    private static final Logger LOGGER = Logger.getLogger(StartupBean.class.getName());
+
     @PostConstruct
     @Transactional
     public void init() {
 
         reservationDao.enableTimescalePostgresExtensionIfNeeded();
         reservationDao.setupHypertable();
+
+        LOGGER.info("Populating database...");
 
         List<User> users = new ArrayList<>();
         users.add(createUser("admin@email.com", "Admin", "Admin", "password", true));
@@ -84,6 +89,8 @@ public class StartupBean {
                 }
             }
         }
+
+        LOGGER.info("Finished populating database!");
     }
 
     private User createUser(String email, String name, String surname, String password, Boolean isAdmin) {

@@ -21,6 +21,7 @@ import {MatBottomSheetModule} from "@angular/material/bottom-sheet";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatRadioModule} from '@angular/material/radio';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 const MaterialComponents = [
   MatFormFieldModule,
@@ -44,7 +45,8 @@ const MaterialComponents = [
   MatSliderModule,
   MatGridListModule,
   MatRadioModule,
-  MatDialogModule
+  MatDialogModule,
+  MatProgressBarModule
 ]
 
 @NgModule({

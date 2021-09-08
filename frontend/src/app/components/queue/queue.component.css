@@ -1,0 +1,9 @@
+:host {
+  display: flex;
+  justify-content: center;
+  margin: 10% 10%;
+}
+
+mat-card {
+  width: 80%;
+}

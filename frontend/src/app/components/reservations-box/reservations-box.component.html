@@ -4,24 +4,29 @@
     <div *ngIf="dayReservations; else elseBlock">
 
       <h2 class="date-text" onchange="checkIfButtonEnable()">{{dateStringTitle()}}</h2>
-      
+
       <div class="reservation-box-component">
         <mat-chip-list style="text-align: center;">
           <p>Occupazione mattina:
-              <mat-chip selected color="{{morningReservations().length==library.capacity ? 'warn' : 'primary'}}">{{morningReservations().length}}/{{library.capacity}}</mat-chip>
+            <mat-chip selected
+                      color="{{morningReservations().length==library.capacity ? 'warn' : 'primary'}}">{{morningReservations().length}}
+              /{{library.capacity}}</mat-chip>
           </p>
 
           <p>Occupazione pomeriggio:
-            <mat-chip selected color="{{afternoonReservations().length==library.capacity ? 'warn' : 'primary'}}">{{afternoonReservations().length}}/{{library.capacity}}</mat-chip>
+            <mat-chip selected
+                      color="{{afternoonReservations().length==library.capacity ? 'warn' : 'primary'}}">{{afternoonReservations().length}}
+              /{{library.capacity}}</mat-chip>
           </p>
         </mat-chip-list>
       </div>
 
-      <mat-radio-group class="radio-group" aria-label="Select an option" [(ngModel)]="isMorngingSelected" (change)="checkIfButtonEnable()">
+      <mat-radio-group class="radio-group" aria-label="Select an option" [(ngModel)]="isMorningSelected"
+                       (change)="checkIfButtonEnable()">
         <mat-radio-button class="radio-button" [value]="true">
           Fascia 8.00 - 13.00
         </mat-radio-button>
-        <mat-radio-button  class="radio-button" [value]="false">
+        <mat-radio-button class="radio-button" [value]="false">
           Fascia 13.00 - 19.00
         </mat-radio-button>
       </mat-radio-group>
