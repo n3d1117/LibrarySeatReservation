@@ -8,11 +8,13 @@ import java.util.Objects;
 public class ReservationsDailyAggregateDto {
 
     private final String date;
-    private final Integer count;
+    private final Integer countMorning;
+    private final Integer countAfternoon;
 
-    public ReservationsDailyAggregateDto(LocalDateTime date, Integer count) {
+    public ReservationsDailyAggregateDto(LocalDateTime date, Integer countMorning, Integer countAfternoon) {
         this.date = ReservationMapper.dateToString(date);
-        this.count = count;
+        this.countMorning = countMorning;
+        this.countAfternoon = countAfternoon;
     }
 
     @Override
@@ -20,19 +22,20 @@ public class ReservationsDailyAggregateDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ReservationsDailyAggregateDto that = (ReservationsDailyAggregateDto) o;
-        return Objects.equals(date, that.date) && Objects.equals(count, that.count);
+        return Objects.equals(date, that.date) && Objects.equals(countMorning, that.countMorning) && Objects.equals(countAfternoon, that.countAfternoon);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(date, count);
+        return Objects.hash(date, countMorning, countAfternoon);
     }
 
     @Override
     public String toString() {
         return "ReservationsDailyAggregateDto{" +
                 "datetime='" + date + '\'' +
-                ", count=" + count +
+                ", countMorning=" + countMorning +
+                ", countAfternoon=" + countAfternoon +
                 '}';
     }
 }

@@ -15,7 +15,8 @@ import java.util.Objects;
         @ConstructorResult(targetClass = ReservationsDailyAggregateDto.class,
                 columns = {
                         @ColumnResult(name = "date", type = LocalDateTime.class),
-                        @ColumnResult(name = "count", type = Integer.class)
+                        @ColumnResult(name = "countMorning", type = Integer.class),
+                        @ColumnResult(name = "countAfternoon", type = Integer.class)
                 })
 })
 

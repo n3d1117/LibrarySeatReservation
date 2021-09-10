@@ -45,8 +45,9 @@ export class CalendarComponent implements OnInit {
     );
     if (dayReservations.length == 0)
       return ''
-    const count = dayReservations[0].count;
-    if (count >= this.library.capacity * 2) // morning + afternoon
+    const countMorning = dayReservations[0].countMorning;
+    const countAfternoon = dayReservations[0].countAfternoon;
+    if (countMorning >= this.library.capacity && countAfternoon >= this.library.capacity)
       return 'full'
     return 'available';
   }

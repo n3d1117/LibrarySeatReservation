@@ -72,7 +72,9 @@ public class ReservationDao {
     // NB: Utilizza l'SqlResultSetMapping definito nella classe Reservation
     public List<ReservationsDailyAggregateDto> dailyAggregateByLibraryIdAndMonth(Long libraryId, int year, int month) {
         return (List<ReservationsDailyAggregateDto>) entityManager
-                .createNativeQuery("SELECT time_bucket('1 day', datetime) AS date, COUNT(*) AS count " +
+                .createNativeQuery("SELECT time_bucket('1 day', datetime) AS date, " +
+                        "COUNT(case when EXTRACT(HOUR FROM datetime) = 8 then 1 end) AS countMorning, " +
+                        "COUNT(case when EXTRACT(HOUR FROM datetime) = 13 then 1 end) AS countAfternoon " +
                         "FROM reservations " +
                         "WHERE library_id = :libraryId " +
                         "AND EXTRACT(MONTH FROM datetime) = :month " +

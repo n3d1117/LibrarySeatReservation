@@ -135,7 +135,7 @@ public class ReservationControllerTest {
     @Test
     public void testAggregateByLibraryIdAndMonth() {
         List<ReservationsDailyAggregateDto> stats = Collections.singletonList(
-                new ReservationsDailyAggregateDto(reservation.getDatetime(), 1)
+                new ReservationsDailyAggregateDto(reservation.getDatetime(), 1, 1)
         );
         when(dao.dailyAggregateByLibraryIdAndMonth(library.getId(), reservation.getDatetime().getYear(), reservation.getDatetime().getMonth().getValue()))
                 .thenReturn(stats);

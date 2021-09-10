@@ -10,7 +10,7 @@
           <mat-chip-list>
             <p>Occupazione:
               <mat-chip selected
-                        color="{{morningReservations().length==library.capacity ? 'warn' : 'primary'}}">{{morningReservations().length}}
+                        color="{{morningReservations().length>=library.capacity ? 'warn' : 'primary'}}">{{morningReservations().length}}
                 /{{library.capacity}}</mat-chip>
             </p>
           </mat-chip-list>
@@ -47,7 +47,7 @@
           <mat-chip-list>
             <p>Occupazione:
               <mat-chip selected
-                        color="{{afternoonReservations().length==library.capacity ? 'warn' : 'primary'}}">{{afternoonReservations().length}}
+                        color="{{afternoonReservations().length>=library.capacity ? 'warn' : 'primary'}}">{{afternoonReservations().length}}
                 /{{library.capacity}}</mat-chip>
             </p>
           </mat-chip-list>

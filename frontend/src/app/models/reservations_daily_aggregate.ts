@@ -1,9 +1,11 @@
 export class ReservationsDailyAggregate {
   date: string;
-  count: number;
+  countMorning: number;
+  countAfternoon: number;
 
-  constructor(datetime: string, count: number) {
+  constructor(datetime: string, countMorning: number, countAfternoon: number) {
     this.date = datetime;
-    this.count = count;
+    this.countMorning = countMorning;
+    this.countAfternoon = countAfternoon;
   }
 }
