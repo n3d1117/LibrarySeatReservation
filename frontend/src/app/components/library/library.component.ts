@@ -48,8 +48,12 @@ export class LibraryComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    if (!this.authenticationService.isAdmin() && this.isSubscribedToSocket) {
-      this.concurrentUsersService.socket$.complete();
+    if (!this.authenticationService.isAdmin()) {
+      this.subscribeTimer?.unsubscribe();
+      if (this.isSubscribedToSocket) {
+        this.concurrentUsersService.socket$.complete();
+        this.isSubscribedToSocket = false;
+      }
     }
   }
 
@@ -66,15 +70,8 @@ export class LibraryComponent implements OnInit {
       this.library = library;
       this.sliderValue = this.library.capacity;
 
-
-      if (!this.authenticationService.isAdmin()) {
-        this.concurrentUsersService.socket$.subscribe(/*message => {
-          const jsonString = JSON.stringify(message);
-          const msg = JSON.parse(jsonString);
-          if (msg.action == 'expired') {
-            this.sessionExpired();
-          }
-        }*/);
+      if (!this.authenticationService.isAdmin() && !this.isSubscribedToSocket) {
+        this.concurrentUsersService.socket$.subscribe();
         this.isSubscribedToSocket = true;
 
         // primo 1000: ms dopo quanto parte il timer (~1s giusto per caricare la pagina)
@@ -89,7 +86,6 @@ export class LibraryComponent implements OnInit {
         })
       }
 
-
     }, error => {
       if (error.status == 429) { // 429 HTTP Too Many Requests
         this.router.navigate(['queue'], {queryParams: {returnUrl: this.router.url}});
@@ -100,9 +96,8 @@ export class LibraryComponent implements OnInit {
   }
 
   sessionExpired(): void {
-    this.subscribeTimer.unsubscribe();
-    this.router.navigate(['home']);
     this.snackBar.open('Hai esaurito il tempo a disposizione per effettuare la prenotazione.', '', {duration: 3000});
+    this.router.navigate(['home']);
   }
 
   deleteLibrary(library: Library): void {

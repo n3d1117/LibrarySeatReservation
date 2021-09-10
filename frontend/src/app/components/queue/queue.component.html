@@ -2,13 +2,19 @@
   <mat-card-content>
     <h1>Sei in coda...</h1>
     <img height="100" src="./assets/images/queue.png">
-    <h2>Ci sono</h2>
-    <h1>{{queueLength}}</h1>
-    <h2>persone prima di te</h2>
+
+    <h2 *ngIf="queueLength - 1 == 0; else elseBlock">Sei la prima persona in coda</h2>
+
+    <ng-template #elseBlock>
+      <h2>Ci sono</h2>
+      <h1>{{queueLength - 1 }}</h1>
+      <h2>persone prima di te</h2>
+    </ng-template>
+
   </mat-card-content>
 
   <mat-card-content>
-    <h3>Potrai accedere al servizio in circa {{queueLength * 2}} minuti</h3>
+    <h3>Potrai accedere al servizio in circa {{formatTime(waitTimeSeconds())}}</h3>
     <h4>Una volta terminata l'attesa, verrai reindirizzato automaticamente.</h4>
   </mat-card-content>
 </mat-card>

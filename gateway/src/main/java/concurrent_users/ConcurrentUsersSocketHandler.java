@@ -8,10 +8,9 @@ import javax.websocket.OnClose;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
-import java.util.Date;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.logging.Logger;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @ServerEndpoint(
         value = "/concurrent-users",
@@ -20,38 +19,22 @@ import java.util.logging.Logger;
 )
 public class ConcurrentUsersSocketHandler {
 
-    private static final Map<Session, Date> sessions = new ConcurrentHashMap<>();
-    private static final Logger LOGGER = Logger.getLogger(ConcurrentUsersSocketHandler.class.getName());
+    private static final Set<Session> sessions = Collections.synchronizedSet(new HashSet<>());
 
     @OnOpen
     public void onOpen(Session session) {
-        LOGGER.info("USERS: NEW USER STARTED USE CASE: " + session.getId());
-        sessions.put(session, new Date());
-        LOGGER.info("CURRENT USERS SIZE: " + sessions.size());
+        sessions.add(session);
     }
 
     @OnClose
     public void onClose(Session session) {
-        LOGGER.info("USERS: USER FINISHED USE CASE: " + session.getId());
-        endUseCase(session);
-        LOGGER.info("CURRENT USERS SIZE: " + sessions.size());
-    }
-
-    public static Boolean maxUsersReached() {
-        LOGGER.info("CHECK CURRENT USERS SIZE: " + sessions.size());
-        return sessions.size() >= 5; // todo parametrize max users number
-    }
-
-    private static void endUseCase(Session session) {
         sessions.remove(session);
-        // also notify queue socket handler to update queue
+        // also notify queue socket handler to let first in queue in
         QueueSocketHandler.userFinishedUseCase();
     }
 
-    /*private static Boolean isExpired(Date date) {
-        Date now = new Date();
-        long maxDuration = MILLISECONDS.convert(2, MINUTES); // todo parametrize minutes
-        return now.getTime() - date.getTime() >= maxDuration;
-    }*/
+    public static Boolean maxUsersReached() {
+        return sessions.size() >= 5; // todo parametrize max users number
+    }
 
 }

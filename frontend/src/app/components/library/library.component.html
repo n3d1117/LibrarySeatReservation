@@ -15,7 +15,8 @@
     </div>
   </div>
 
-  <div class="content" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
+
+  <div *ngIf="!authenticationService.isAdmin()" class="content" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
     <div fxFlex="100" style="margin: 3% 10%;">
       <h2>Tempo rimasto: {{timeLeft * 1000 | date:'m:ss'}}</h2>
       <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>

@@ -47,4 +47,27 @@ export class QueueComponent implements OnInit {
     })
   }
 
+  waitTimeSeconds(): number {
+    return this.queueLength * 15; // todo parameter
+  }
+
+  formatTime(seconds: number): string {
+    const date = new Date(seconds * 1000);
+    let str = ''
+    if (date.getUTCHours() > 0) {
+      str += date.getUTCHours() + (date.getUTCHours() == 1 ? " ora" : " ore");
+    }
+    if (date.getUTCMinutes() > 0) {
+      if (date.getUTCHours() > 0)
+        str += ", "
+      str += date.getUTCMinutes() + (date.getUTCMinutes() == 1 ? " minuto" : " minuti");
+    }
+    if (date.getUTCSeconds() > 0) {
+      if (date.getUTCMinutes() > 0)
+        str += " e "
+      str += date.getUTCSeconds() + " secondi";
+    }
+    return str;
+  }
+
 }
