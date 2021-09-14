@@ -23,9 +23,9 @@ export class LibraryService {
     return this.http.get<Library>(this.url + `/${id}`)
   }
 
-  add(name: string, address: string, capacity: number): Observable<Library> {
+  add(name: string, imgFilename: string ,address: string, capacity: number): Observable<Library> {
     const options = { headers: {'Content-Type': 'application/json'} };
-    const library = { name: name, address: address, capacity: capacity };
+    const library = { name: name, imgFilename : imgFilename ,address: address, capacity: capacity };
     return this.http.post<Library>(`${this.url}/add`, library, options);
   }
 

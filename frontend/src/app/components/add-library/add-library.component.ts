@@ -12,9 +12,11 @@ import {Router} from "@angular/router";
 })
 export class AddLibraryComponent implements OnInit {
 
+
   form: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
     address: new FormControl('', [Validators.required]),
+    imgFilename : new FormControl('', [Validators.required]),
     capacity: new FormControl('', [
       Validators.required, Validators.min(10),
       Validators.max(200)
@@ -49,7 +51,7 @@ export class AddLibraryComponent implements OnInit {
     }
 
     this.loading = true;
-    this.libraryService.add(this.f.name.value, this.f.address.value, this.f.capacity.value)
+    this.libraryService.add(this.f.name.value, this.f.imgFilename.value ,this.f.address.value, this.f.capacity.value)
       .pipe(first())
       .subscribe(library => {
         this.loading = false;
@@ -62,5 +64,4 @@ export class AddLibraryComponent implements OnInit {
         this.loading = false;
       });
   }
-
 }

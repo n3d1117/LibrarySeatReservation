@@ -37,14 +37,14 @@ export class CalendarComponent implements OnInit {
   }
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate) => {
-    if (this.aggregateReservationsByMonth.length == 0 || cellDate < this.dateService.yesterday()) {
+    if (cellDate < this.dateService.yesterday()) {
       return ''
     }
     const dayReservations = this.aggregateReservationsByMonth.filter(stat =>
       this.dateService.stringToDate(stat.date).getDate() == cellDate.getDate()
     );
     if (dayReservations.length == 0)
-      return ''
+      return 'available'
     const countMorning = dayReservations[0].countMorning;
     const countAfternoon = dayReservations[0].countAfternoon;
     if (countMorning >= this.library.capacity && countAfternoon >= this.library.capacity)

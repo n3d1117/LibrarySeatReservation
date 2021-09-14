@@ -16,7 +16,12 @@
             <mat-card-subtitle>{{library.address}}</mat-card-subtitle>
           </mat-card-header>
 
-          <img mat-card-image src="assets/library_images/{{library.imgFilename}}" alt="{{library.name}}">
+          
+          <img *ngIf="checkURLInFilename(library.imgFilename); else relativeFilename" mat-card-image src="{{library.imgFilename}}" alt="{{library.name}}">
+
+          <ng-template #relativeFilename>
+            <img  mat-card-image src="assets/library_images/{{library.imgFilename}}" alt="{{library.name}}">
+          </ng-template>
 
           <mat-card-content>
             Capacità: {{library.capacity}} posti
