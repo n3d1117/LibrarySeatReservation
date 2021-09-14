@@ -51,19 +51,19 @@ public class StartupBean {
         users.forEach(user -> userDao.save(user));
 
         List<Library> libraries = Arrays.asList(
-                createLibrary("Biblioteca Villa Bandini", "Via del Paradiso, 5, Firenze", 50),
-                createLibrary("Biblioteca Mario Luzi", "Via Ugo Schiff, 8, Firenze", 70),
-                createLibrary("Biblioteca delle Oblate", "Via dell’Oriuolo, 24, Firenze", 60),
-                createLibrary("Biblioteca Palagio di Parte Guelfa", "Piazza della Parte Guelfa, Firenze", 30),
-                createLibrary("Biblioteca Pietro Thouar", "Piazza Torquato Tasso 3, Firenze", 40),
-                createLibrary("Biblioteca Fabrizio De André", "Via delle Carra, 2, Firenze", 70),
-                createLibrary("Biblioteca dei ragazzi", "Via Tripoli, 34, Firenze", 20),
-                createLibrary("Biblioteca Dino Pieraccioni", "Via Nicolodi, 2, Firenze", 60),
-                createLibrary("Biblioteca del Galluzzo", "Via Senese, 206, Firenze", 70),
-                createLibrary("BiblioteCaNova Isolotto", "Via Chiusi, 50142 Firenze", 30),
-                createLibrary("Biblioteca Filippo Buonarroti", "Viale Guidoni, 188, Firenze", 50),
-                createLibrary("Biblioteca Orticoltura", "Via Vittorio Emanuele II, 4, Firenze", 40),
-                createLibrary("Biblioteca ISIS Leonardo da Vinci", "Via del Terzolle, 91, Firenze", 60)
+                createLibrary("Biblioteca Villa Bandini","biblioteca_villa_bandini.png" ,"Via del Paradiso, 5, Firenze", 50),
+                createLibrary("Biblioteca Mario Luzi", "biblioteca_mario_luzi.png","Via Ugo Schiff, 8, Firenze", 70),
+                createLibrary("Biblioteca delle Oblate", "biblioteca_delle_oblate.png","Via dell’Oriuolo, 24, Firenze", 60),
+                createLibrary("Biblioteca Palagio di Parte Guelfa", "biblioteca_palagio_di_parte_guelfa.png","Piazza della Parte Guelfa, Firenze", 30),
+                createLibrary("Biblioteca Pietro Thouar", "biblioteca_pietro_thouar.png","Piazza Torquato Tasso 3, Firenze", 40),
+                createLibrary("Biblioteca Fabrizio De André", "biblioteca_fabrizio_de_andrè.png","Via delle Carra, 2, Firenze", 70),
+                createLibrary("Biblioteca dei ragazzi", "biblioteca_dei_ragazzi.png","Via Tripoli, 34, Firenze", 20),
+                createLibrary("Biblioteca Dino Pieraccioni", "biblioteca_dino_pieraccioni.png","Via Nicolodi, 2, Firenze", 60),
+                createLibrary("Biblioteca del Galluzzo", "biblioteca_del_galluzzo.png","Via Senese, 206, Firenze", 70),
+                createLibrary("BiblioteCaNova Isolotto", "bibliotecanova_isolotto.png","Via Chiusi, 50142 Firenze", 30),
+                createLibrary("Biblioteca Filippo Buonarroti", "biblioteca_filippo_buonarroti.png","Viale Guidoni, 188, Firenze", 50),
+                createLibrary("Biblioteca Orticoltura", "biblioteca_orticoltura.png","Via Vittorio Emanuele II, 4, Firenze", 40),
+                createLibrary("Biblioteca ISIS Leonardo da Vinci", "biblioteca_isis_leonardo_da_vinci.png","Via del Terzolle, 91, Firenze", 60)
         );
         libraries.forEach(library -> libraryDao.save(library));
 
@@ -103,9 +103,10 @@ public class StartupBean {
         return user;
     }
 
-    private Library createLibrary(String name, String address, Integer capacity) {
+    private Library createLibrary(String name, String imgFilename, String address, Integer capacity) {
         Library library = ModelFactory.initializeLibrary();
         library.setName(name);
+        library.setImgFilename(imgFilename);
         library.setAddress(address);
         library.setCapacity(capacity);
         return library;

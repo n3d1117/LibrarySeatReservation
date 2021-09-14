@@ -22,6 +22,7 @@ public class LibraryDaoTest extends JPATest {
     protected void init() throws IllegalAccessException {
         library = ModelFactory.initializeLibrary();
         library.setName("Name");
+        library.setImgFilename("img.jpg");
         library.setAddress("Address");
         library.setCapacity(50);
         entityManager.persist(library);
@@ -33,6 +34,7 @@ public class LibraryDaoTest extends JPATest {
     public void testFindAll() {
         Library anotherLibrary = ModelFactory.initializeLibrary();
         anotherLibrary.setName("Another Name");
+        anotherLibrary.setImgFilename("img2.jpg");
         anotherLibrary.setAddress("Another Address");
         anotherLibrary.setCapacity(70);
         entityManager.persist(anotherLibrary);
@@ -49,6 +51,7 @@ public class LibraryDaoTest extends JPATest {
         assertEquals(library.getId(), result.getId());
         assertEquals(library.getUuid(), result.getUuid());
         assertEquals(library.getName(), result.getName());
+        assertEquals(library.getImgFilename(), result.getImgFilename());
         assertEquals(library.getAddress(), result.getAddress());
         assertEquals(library.getCapacity(), result.getCapacity());
     }
@@ -62,6 +65,7 @@ public class LibraryDaoTest extends JPATest {
     public void testSave() {
         Library entityToPersist = ModelFactory.initializeLibrary();
         entityToPersist.setName("Another name");
+        entityToPersist.setImgFilename("img2.jpg");
         entityToPersist.setAddress("Another address");
         entityToPersist.setCapacity(70);
 
@@ -96,6 +100,7 @@ public class LibraryDaoTest extends JPATest {
     public void testDelete() {
         Library anotherLibrary = ModelFactory.initializeLibrary();
         anotherLibrary.setName("Another name");
+        anotherLibrary.setImgFilename("img2.jpg");
         anotherLibrary.setAddress("Another address");
         anotherLibrary.setCapacity(70);
         entityManager.persist(anotherLibrary);

@@ -10,7 +10,7 @@ public class Library extends BaseEntity {
 
     private String name;
     private String address;
-
+    private String imgFilename;
     private Integer capacity;
 
     @OneToMany(mappedBy = "library", cascade = CascadeType.ALL)
@@ -26,6 +26,7 @@ public class Library extends BaseEntity {
     public void copy(BaseEntity a) {
         Library that = (Library) a;
         this.name = that.getName();
+        this.imgFilename = that.getImgFilename();
         this.address = that.getAddress();
         this.capacity = that.getCapacity();
     }
@@ -46,6 +47,10 @@ public class Library extends BaseEntity {
         this.address = address;
     }
 
+    public String getImgFilename() { return imgFilename; }
+
+    public void setImgFilename(String imgFilename) { this.imgFilename = imgFilename; }
+
     public Integer getCapacity() {
         return capacity;
     }
@@ -59,6 +64,7 @@ public class Library extends BaseEntity {
         return "Library{" +
                 "name='" + name + '\'' +
                 ", address='" + address + '\'' +
+                ", filename='" + imgFilename +'\'' +
                 ", capacity=" + capacity +
                 ", reservations=" + reservations +
                 '}';

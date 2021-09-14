@@ -4,6 +4,7 @@ public class LibraryDto {
 
     private long id;
     private String name;
+    private String imgFilename;
     private String address;
     private Integer capacity;
 
@@ -18,6 +19,10 @@ public class LibraryDto {
     public String getName() {
         return name;
     }
+
+    public String getImgFilename() { return imgFilename; }
+
+    public void setImgFilename(String imgFilename) { this.imgFilename = imgFilename; }
 
     public void setName(String name) {
         this.name = name;
