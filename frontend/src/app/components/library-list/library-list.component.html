@@ -17,10 +17,10 @@
           </mat-card-header>
 
           
-          <img *ngIf="checkURLInFilename(library.imgFilename); else relativeFilename" mat-card-image src="{{library.imgFilename}}" alt="{{library.name}}">
+          <img *ngIf="checkURLInFilename(library.imgFilename); else relativeFilename" mat-card-image src="{{library.imgFilename}}" onerror="this.src='assets/images/error_img.png';" alt="{{library.name}}">
 
           <ng-template #relativeFilename>
-            <img  mat-card-image src="assets/library_images/{{library.imgFilename}}" alt="{{library.name}}">
+            <img  mat-card-image src="assets/library_images/{{library.imgFilename}}" onerror="this.src='assets/images/error_img.png';" alt="{{library.name}}">
           </ng-template>
 
           <mat-card-content>
