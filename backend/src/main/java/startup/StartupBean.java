@@ -69,10 +69,12 @@ public class StartupBean {
         // Add reservations
         Random random = new Random();
 
+        int month = Calendar.getInstance().get(Calendar.MONTH); //start from 0
+        int year = Calendar.getInstance().get(Calendar.YEAR);
         // for every library
         for (Library library: libraries) {
-            // for every month (just aug-nov)
-            for (int i=8; i<11; i++) {
+            // for every month
+            for (int i=month; i<month+3; i++) {
                 // for every day
                 for (int j = 1; j< Month.of(i).length(false) + 1; j++) {
                     // for every time slot
@@ -80,7 +82,7 @@ public class StartupBean {
                         int fillAmount = random.nextBoolean() ? library.getCapacity() : ThreadLocalRandom.current().nextInt(1, library.getCapacity());
                         // fill reservations
                         for (int z=0; z<fillAmount; z++) {
-                            LocalDateTime date = LocalDateTime.of(2021, i, j, hour, 0);
+                            LocalDateTime date = LocalDateTime.of(year, i, j, hour, 0);
                             User randomUser = users.get(ThreadLocalRandom.current().nextInt(1, users.size()-1)); // start from 1 to skip admin
                             reservationDao.saveSkippingCapacityCheck(createReservation(library, randomUser, date));
                         }
