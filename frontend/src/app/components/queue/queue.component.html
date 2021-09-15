@@ -3,7 +3,13 @@
     <h1>Sei in coda...</h1>
     <img height="100" src="./assets/images/queue.png">
 
-    <h2 *ngIf="queueLength - 1 == 0; else elseBlock">Sei la prima persona in coda</h2>
+    <h2 *ngIf="queueLength - 1 == 0; else elseifBlock">Sei la prima persona in coda</h2>
+
+    <ng-template #elseifBlock>
+      <ng-container *ngIf="queueLength == 2;else elseBlock">
+        <h2>C'è {{queueLength - 1 }} persona prima di te</h2>
+      </ng-container>
+    </ng-template>
 
     <ng-template #elseBlock>
       <h2>Ci sono</h2>

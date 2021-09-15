@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import {Injectable} from '@angular/core';
 import {RSocketClient} from "rsocket-core";
 import RSocketWebsocketClient from "rsocket-websocket-client";
@@ -10,7 +11,7 @@ import {Single, Flowable} from 'rsocket-flowable';
 export class AdminMonitorService {
 
   onReceivedNotification: (message: string) => void;
-  rSocketUrl = 'ws://localhost:7878'; // todo parametrize
+  rSocketUrl = environment.ADMIN_NOTIFICATION_RSOCKET;
   client: RSocketClient<string, string> | null = null;
 
   constructor() {

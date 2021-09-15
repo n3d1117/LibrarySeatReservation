@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment.prod';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {LibraryService} from "../../services/library.service";
@@ -30,7 +31,7 @@ export class LibraryComponent implements OnInit {
   sliderValue = 10;
 
   subscribeTimer!: Subscription;
-  timeLeft = 120; // todo parametrize
+  timeLeft = environment.MAX_TIME_FOR_RESERVATION;
   progressValue = 100;
   isSubscribedToSocket = false;
 
@@ -83,7 +84,7 @@ export class LibraryComponent implements OnInit {
         this.subscribeTimer = timer(1000, 1000).subscribe(() => {
           if (this.timeLeft > 0) {
             this.timeLeft--;
-            this.progressValue -= 100 / 120; // todo use parameter instead of 120
+            this.progressValue -= 100 / environment.MAX_TIME_FOR_RESERVATION;
           } else {
             this.sessionExpired();
           }

@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import {Injectable} from '@angular/core';
 import {webSocket} from "rxjs/webSocket";
 
@@ -6,7 +7,7 @@ import {webSocket} from "rxjs/webSocket";
 })
 export class ConcurrentUsersService {
 
-  socket$ = webSocket("ws://localhost:8080/gateway/concurrent-users") // todo parametrize
+  socket$ = webSocket(environment.CONCURRENT_USERS_SOCKET);
 
   constructor() {
   }

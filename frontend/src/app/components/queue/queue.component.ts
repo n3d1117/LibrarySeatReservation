@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {QueueService} from "../../services/queue.service";
@@ -48,7 +49,7 @@ export class QueueComponent implements OnInit {
   }
 
   waitTimeSeconds(): number {
-    return this.queueLength * 15; // todo parameter
+    return this.queueLength * environment.ESTIMATED_WAITING_TIME_FOR_USER;
   }
 
   formatTime(seconds: number): string {

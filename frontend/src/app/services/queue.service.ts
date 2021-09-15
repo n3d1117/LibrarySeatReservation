@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import {Injectable} from '@angular/core';
 import {webSocket} from "rxjs/webSocket";
 
@@ -6,7 +7,7 @@ import {webSocket} from "rxjs/webSocket";
 })
 export class QueueService {
 
-  socket$ = webSocket("ws://localhost:8080/gateway/queue") // todo parametrize
+  socket$ = webSocket(environment.QUEUE_SOCKET);
 
   constructor() {
   }
