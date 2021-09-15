@@ -1,5 +1,6 @@
 package concurrent_users;
 
+import config.ConfigProperties;
 import queue.MessageDecoder;
 import queue.MessageEncoder;
 import queue.QueueSocketHandler;
@@ -8,6 +9,7 @@ import javax.websocket.OnClose;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,7 +36,13 @@ public class ConcurrentUsersSocketHandler {
     }
 
     public static Boolean maxUsersReached() {
-        return sessions.size() >= 5; // todo parametrize max users number
+        int maxConcurrentUsers = 5;
+        try {
+            maxConcurrentUsers = Integer.parseInt(ConfigProperties.getProperties().getProperty("MAX_CONCURRENT_USERS"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sessions.size() >= maxConcurrentUsers;
     }
 
 }

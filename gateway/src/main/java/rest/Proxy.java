@@ -18,9 +18,11 @@ public class Proxy {
 
     private static final Logger LOGGER = Logger.getLogger(Proxy.class.getName());
     private final String apiUrl;
+    private final String apiQueueRegex;
 
     public Proxy() throws IOException {
         apiUrl = ConfigProperties.getProperties().getProperty("API_URL");
+        apiQueueRegex = ConfigProperties.getProperties().getProperty("API_QUEUE_REGEX");
     }
 
     @POST
@@ -34,7 +36,7 @@ public class Proxy {
     @Path("/{s:.*}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response get(@Context UriInfo uri, @Context HttpServletRequest request) {
-        if (uri.getPath().matches("/libraries/\\d+")) { // todo parametrize
+        if (uri.getPath().matches(apiQueueRegex)) {
             if (ConcurrentUsersSocketHandler.maxUsersReached()) {
                 return Response
                         .status(Response.Status.TOO_MANY_REQUESTS)
