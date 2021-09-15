@@ -16,7 +16,8 @@ export class MapComponent implements OnInit {
   options: any;
   layers: any;
 
-  constructor(private geocoder: GeocodingService) { }
+  constructor(private geocoder: GeocodingService) {
+  }
 
   ngOnInit(): void {
     this.geocoder.search(this.library.address).pipe(first()).subscribe(result => {
@@ -25,7 +26,7 @@ export class MapComponent implements OnInit {
 
       this.options = {
         layers: [
-          tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '' })
+          tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 18, attribution: ''})
         ],
         zoom: 15,
         center: latLng(jsonValue.lat, jsonValue.lon)
@@ -43,8 +44,8 @@ export class MapComponent implements OnInit {
       })];
 
       this.showMap = true;
-      }, error => {
-        console.log(error);
+    }, error => {
+      console.log(error);
     });
   }
 

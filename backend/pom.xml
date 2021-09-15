@@ -29,6 +29,8 @@
         <hsqldb.version>2.6.0</hsqldb.version>
         <mockito.version>3.11.1</mockito.version>
         <guava.version>30.1.1-jre</guava.version>
+        <rsocket.version>1.1.1</rsocket.version>
+        <awaitility.version>4.1.0</awaitility.version>
 
     </properties>
 
@@ -105,6 +107,26 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
+        </dependency>
+
+        <!-- RSocket -->
+        <dependency>
+            <groupId>io.rsocket</groupId>
+            <artifactId>rsocket-core</artifactId>
+            <version>${rsocket.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.rsocket</groupId>
+            <artifactId>rsocket-transport-netty</artifactId>
+            <version>${rsocket.version}</version>
+        </dependency>
+
+        <!-- Awaitility -->
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitility.version}</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>

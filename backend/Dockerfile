@@ -44,6 +44,6 @@ RUN echo "=> Starting WildFly server" && \
       rm -rf $JBOSS_HOME/standalone/configuration/standalone_xml_history/ $JBOSS_HOME/standalone/log/* && \
       rm -f ./*.jar
 
-EXPOSE 8080 9990 5005
+EXPOSE 8080 9990 5005 7878
 
 CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0", "--debug", "*:5005"]

@@ -1,5 +1,6 @@
 package controller;
 
+import rsocket.RSocketClientHandler;
 import com.google.gson.Gson;
 import dao.LibraryDao;
 import dao.ReservationDao;
@@ -70,6 +71,9 @@ public class ReservationController {
 
         if (newReservation.getId() != null)
             reservationDto.setId(newReservation.getId());
+
+        RSocketClientHandler.notifyAll("{\"test\": " + 1 + "}");
+
         return gson.toJson(reservationDto);
     }
 

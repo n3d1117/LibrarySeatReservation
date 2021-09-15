@@ -24,6 +24,7 @@ services:
       - "8080:8080" # application
       - "9990:9990" # admin console
       - "5005:5005" # debug port
+      - "7878:7878" # rsocket port
 
   db:
     container_name: "db"

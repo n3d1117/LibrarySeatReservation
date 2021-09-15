@@ -40,16 +40,15 @@ public class StartupBean {
 
         LOGGER.info("Populating database...");
 
+        // Add users
         List<User> users = new ArrayList<>();
-        users.add(createUser("admin@email.com", "Admin", "Admin", "password", true));
-
+        users.add(createUser("admin@email.com", "Utente", "Admin", "password", true));
         for (int i=0; i<10000; i++) {
-            users.add(
-                    createUser("user" + i + "@email.com", "Utente", "" + i, "pass", false)
-            );
+            users.add(createUser("user" + i + "@email.com", "Utente", "" + i, "pass", false));
         }
         users.forEach(user -> userDao.save(user));
 
+        // Add libraries
         List<Library> libraries = Arrays.asList(
                 createLibrary("Biblioteca Villa Bandini","biblioteca_villa_bandini.png" ,"Via del Paradiso, 5, Firenze", 50),
                 createLibrary("Biblioteca Mario Luzi", "biblioteca_mario_luzi.png","Via Ugo Schiff, 8, Firenze", 70),
@@ -67,7 +66,7 @@ public class StartupBean {
         );
         libraries.forEach(library -> libraryDao.save(library));
 
-
+        // Add reservations
         Random random = new Random();
 
         // for every library
@@ -82,7 +81,7 @@ public class StartupBean {
                         // fill reservations
                         for (int z=0; z<fillAmount; z++) {
                             LocalDateTime date = LocalDateTime.of(2021, i, j, hour, 0);
-                            User randomUser = users.get(ThreadLocalRandom.current().nextInt(1, users.size()-1));
+                            User randomUser = users.get(ThreadLocalRandom.current().nextInt(1, users.size()-1)); // start from 1 to skip admin
                             reservationDao.saveSkippingCapacityCheck(createReservation(library, randomUser, date));
                         }
                     }

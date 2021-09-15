@@ -25,6 +25,8 @@
     "angularx-qrcode": "^11.0.0",
     "install": "^0.13.0",
     "leaflet": "^1.7.1",
+    "rsocket-core": "^0.0.27",
+    "rsocket-websocket-client": "^0.0.27",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
     "zone.js": "~0.11.4"
@@ -36,6 +38,8 @@
     "@types/jasmine": "~3.6.0",
     "@types/leaflet": "^1.7.4",
     "@types/node": "^12.11.1",
+    "@types/rsocket-core": "^0.0.7",
+    "@types/rsocket-websocket-client": "^0.0.4",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
     "eslint": "^7.30.0",
