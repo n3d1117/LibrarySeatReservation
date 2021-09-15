@@ -24,8 +24,6 @@ export class AdminReservationsBoxComponent implements OnInit {
   lowValue = 0;
   highValue = 5;
 
-  @Output() onReservationDeleted = new EventEmitter();
-
   constructor(
     private reservationService: ReservationService,
     private snackBar: MatSnackBar,
@@ -67,7 +65,6 @@ export class AdminReservationsBoxComponent implements OnInit {
           .pipe(first())
           .subscribe(() => {
             this.snackBar.open('Prenotazione cancellata!', '', {duration: 5000});
-            this.onReservationDeleted.emit();
           }, error => {
             console.log(error);
           });

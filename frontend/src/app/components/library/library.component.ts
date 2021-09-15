@@ -12,6 +12,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {ConcurrentUsersService} from "../../services/concurrent-users.service";
 import {Subscription} from "rxjs";
 import {timer} from 'rxjs';
+import { AdminMonitorService } from 'src/app/services/admin-monitor.service';
 
 @Component({
   selector: 'app-library',
@@ -43,7 +44,8 @@ export class LibraryComponent implements OnInit {
     private libraryService: LibraryService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private concurrentUsersService: ConcurrentUsersService
+    private concurrentUsersService: ConcurrentUsersService,
+    private adminMonitorService: AdminMonitorService
   ) {
   }
 
@@ -54,6 +56,8 @@ export class LibraryComponent implements OnInit {
         this.concurrentUsersService.socket$.complete();
         this.isSubscribedToSocket = false;
       }
+    } else {
+      this.adminMonitorService.stopMonitoring();
     }
   }
 
@@ -84,6 +88,17 @@ export class LibraryComponent implements OnInit {
             this.sessionExpired();
           }
         })
+      }
+
+      if (this.authenticationService.isAdmin()) {
+        this.adminMonitorService.startMonitoring((receivedMessage => {
+          const json = JSON.parse(receivedMessage);
+          if (json.libraryId == libraryId) {
+            this.snackBar.open(json.notificationMessage, '', {duration: 3000});
+            this.refreshCalendar();
+            this.refreshReservations();
+          }
+        }));
       }
 
     }, error => {
@@ -145,6 +160,10 @@ export class LibraryComponent implements OnInit {
 
   refreshReservations(): void {
     this.calendarComponent.onDateSelected(this.selectedDate);
+  }
+
+  refreshCalendar() : void {
+    this.calendarComponent.onMonthChange(this.selectedDate);
   }
 
 }

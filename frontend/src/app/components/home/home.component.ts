@@ -18,24 +18,11 @@ export class HomeComponent implements OnInit {
   loading = false;
   libraries: Library[] = [];
 
-  ngOnDestroy(): void {
-    this.adminMonitorService.stopMonitoring();
-  }
-
   ngOnInit(): void {
     this.loading = true;
     this.libraryService.all().pipe(first()).subscribe(libraries => {
       this.loading = false;
       this.libraries = libraries;
-
-      if (this.authenticationService.isAdmin()) {
-        this.adminMonitorService.startMonitoring((receivedMessage => {
-          const json = JSON.parse(receivedMessage);
-          this.snackBar.open(receivedMessage, '', {duration: 3000});
-        }));
-      }
-
-
     }, error => {
       console.log(error);
       this.loading = false;
@@ -45,9 +32,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private libraryService: LibraryService,
     private router: Router,
-    public authenticationService: AuthenticationService,
-    private adminMonitorService: AdminMonitorService,
-    private snackBar: MatSnackBar
+    public authenticationService: AuthenticationService
   ) {
   }
 

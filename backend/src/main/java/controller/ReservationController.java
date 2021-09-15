@@ -1,5 +1,6 @@
 package controller;
 
+import dto.AdminNotificationDto;
 import rsocket.RSocketClientHandler;
 import com.google.gson.Gson;
 import dao.LibraryDao;
@@ -72,12 +73,20 @@ public class ReservationController {
         if (newReservation.getId() != null)
             reservationDto.setId(newReservation.getId());
 
-        RSocketClientHandler.notifyAll("{\"test\": " + 1 + "}");
+        AdminNotificationDto notification = new AdminNotificationDto(AdminNotificationDto.UserAction.ADD, reservationDto.getId(), reservationDto.getLibraryId(), reservationDto.getDatetime());
+
+        RSocketClientHandler.notifyAll(gson.toJson(notification));
 
         return gson.toJson(reservationDto);
     }
 
     public void delete(Long id) {
+        Gson gson = new Gson();
+
+        ReservationDto reservationToDelete = reservationDao.findById(id);
         reservationDao.delete(id);
+        AdminNotificationDto notification = new AdminNotificationDto(AdminNotificationDto.UserAction.DELETE, id, reservationToDelete.getLibraryId(), reservationToDelete.getDatetime());
+
+        RSocketClientHandler.notifyAll(gson.toJson(notification));
     }
 }
