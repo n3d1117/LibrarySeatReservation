@@ -1,4 +1,4 @@
-import { environment } from './../../environments/environment';
+import {environment} from './../../environments/environment';
 import {Injectable} from '@angular/core';
 import {webSocket} from "rxjs/webSocket";
 
@@ -7,7 +7,7 @@ import {webSocket} from "rxjs/webSocket";
 })
 export class QueueService {
 
-  socket$ = webSocket(environment.QUEUE_SOCKET);
+  socket$ = webSocket(environment.QUEUE_SOCKET_URL);
 
   constructor() {
   }

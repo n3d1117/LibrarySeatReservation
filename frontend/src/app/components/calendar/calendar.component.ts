@@ -53,9 +53,10 @@ export class CalendarComponent implements OnInit {
   }
 
   onMonthChange(date: Date): void {
+    const selectedDate = date ? date : this.todayDate;
     this.aggregateReservationsByMonth = [];
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1; // In Typescript, months start from 0
+    const year = selectedDate.getFullYear();
+    const month = selectedDate.getMonth() + 1; // In Typescript, months start from 0
     this.reservationService.aggregateByLibraryAndMonth(this.library.id, year, month).pipe(first()).subscribe(stats => {
       this.aggregateReservationsByMonth = stats;
       this.calendar.updateTodaysDate();
@@ -65,9 +66,7 @@ export class CalendarComponent implements OnInit {
   }
 
   onDateSelected(date: Date | null): void {
-    if (!date) {
-      this.dayReservations.emit([]);
-    } else {
+    if (date) {
       const year = date.getFullYear();
       const month = date.getMonth() + 1; // In Typescript, months start from 0
       const day = date.getDate();

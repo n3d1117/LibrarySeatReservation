@@ -46,7 +46,7 @@ import {takeUntil} from 'rxjs/operators';
 export class CalendarHeader<D> implements OnDestroy {
   private _destroyed = new Subject<void>();
 
-  private monthCounter : number = 0;
+  private monthCounter = 0;
 
   constructor(
     private _calendar: MatCalendar<D>, private _dateAdapter: DateAdapter<D>,
@@ -73,16 +73,16 @@ export class CalendarHeader<D> implements OnDestroy {
     if (this.monthCounter > 0) {
       this._calendar.activeDate = this._dateAdapter.addCalendarMonths(this._calendar.activeDate, -1);
       this._calendar.monthSelected.emit(this._calendar.activeDate);
-      this.monthCounter --;
+      this.monthCounter--;
     }
-    
+
   }
 
   nextClicked(): void {
-    if (this.monthCounter < 2 ) {
+    if (this.monthCounter < 2) {
       this._calendar.activeDate = this._dateAdapter.addCalendarMonths(this._calendar.activeDate, 1);
       this._calendar.monthSelected.emit(this._calendar.activeDate);
-      this.monthCounter ++;
+      this.monthCounter++;
     }
   }
 }

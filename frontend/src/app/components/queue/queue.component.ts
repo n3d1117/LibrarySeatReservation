@@ -1,4 +1,4 @@
-import { environment } from './../../../environments/environment';
+import {environment} from './../../../environments/environment';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {QueueService} from "../../services/queue.service";
@@ -35,9 +35,9 @@ export class QueueComponent implements OnInit {
       const jsonString = JSON.stringify(message);
       const msg = JSON.parse(jsonString);
 
-      if (msg.action == 'queue_size') {
+      if (msg.type == 'queue_size') {
         this.queueLength = msg.value;
-      } else if (msg.action == 'queue_size_decrease') {
+      } else if (msg.type == 'queue_size_decrease') {
         this.queueLength--;
 
         // end of queue!
@@ -49,7 +49,7 @@ export class QueueComponent implements OnInit {
   }
 
   waitTimeSeconds(): number {
-    return this.queueLength * environment.ESTIMATED_WAITING_TIME_FOR_USER;
+    return this.queueLength * environment.ESTIMATED_WAITING_TIME_SECONDS_PER_USER;
   }
 
   formatTime(seconds: number): string {

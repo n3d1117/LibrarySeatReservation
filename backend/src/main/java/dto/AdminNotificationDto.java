@@ -1,33 +1,16 @@
 package dto;
 
+import com.google.gson.Gson;
+import mapper.ReservationMapper;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class AdminNotificationDto {
 
-    public AdminNotificationDto(UserAction action, Long reservationId, Long libraryId, String date) {
-        this.action = action;
-        this.reservationId = reservationId;
-        this.libraryId = libraryId;
-        this.date = date;
-        if (this.action == UserAction.ADD) {
-            this.notificationMessage = "Prenotazione "+this.reservationId+" effettuata per il giorno "+this.date;
-        } else if (this.action == UserAction.DELETE) {
-            this.notificationMessage = "Prenotazione "+this.reservationId+" cancellata dal giorno "+this.date;
-        }
-    }
-
     public enum UserAction {
-        ADD("ADD"),
-        DELETE("DELETE");
-
-        private final String text;
-
-        UserAction(final String text) {
-            this.text = text;
-        }
-
-        @Override
-        public String toString() {
-            return text;
-        }
+        ADD,
+        DELETE
     }
 
     private final UserAction action;
@@ -36,27 +19,26 @@ public class AdminNotificationDto {
     private final String date;
     private String notificationMessage;
 
-    public UserAction getAction() {
-        return action;
+    public AdminNotificationDto(UserAction action, Long reservationId, Long libraryId, String date) {
+        this.action = action;
+        this.reservationId = reservationId;
+        this.libraryId = libraryId;
+        this.date = date;
+        if (this.action == UserAction.ADD) {
+            this.notificationMessage = "Nuova prenotazione #" + this.reservationId + " effettuata per il giorno " + parse(this.date);
+        } else if (this.action == UserAction.DELETE) {
+            this.notificationMessage = "La prenotazione #" + this.reservationId + " è stata cancellata dal giorno " + parse(this.date);
+        }
     }
 
-    public Long getReservationId() {
-        return reservationId;
+    public String toJson() {
+        return new Gson().toJson(this);
     }
 
-    public Long getLibraryId() {
-        return libraryId;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getNotificationMessage() {
-        return notificationMessage;
-    }
-
-    public void setNotificationMessage(String notificationMessage) {
-        this.notificationMessage = notificationMessage;
+    private String parse(String date) {
+        LocalDateTime dateTime = ReservationMapper.stringToDate(date);
+        String day = dateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        String time = dateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+        return day + " alle " + time;
     }
 }

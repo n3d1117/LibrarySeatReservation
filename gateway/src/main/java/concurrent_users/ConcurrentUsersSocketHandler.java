@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 @ServerEndpoint(
         value = "/concurrent-users",
@@ -22,14 +23,17 @@ import java.util.Set;
 public class ConcurrentUsersSocketHandler {
 
     private static final Set<Session> sessions = Collections.synchronizedSet(new HashSet<>());
+    private static final Logger LOGGER = Logger.getLogger(ConcurrentUsersSocketHandler.class.getName());
 
     @OnOpen
     public void onOpen(Session session) {
+        LOGGER.info("New user started use case! -> " + session.getId());
         sessions.add(session);
     }
 
     @OnClose
     public void onClose(Session session) {
+        LOGGER.info("User ended use case! -> " + session.getId());
         sessions.remove(session);
         // also notify queue socket handler to let first in queue in
         QueueSocketHandler.userFinishedUseCase();
@@ -40,7 +44,7 @@ public class ConcurrentUsersSocketHandler {
         try {
             maxConcurrentUsers = Integer.parseInt(ConfigProperties.getProperties().getProperty("MAX_CONCURRENT_USERS"));
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warning(e.getMessage());
         }
         return sessions.size() >= maxConcurrentUsers;
     }

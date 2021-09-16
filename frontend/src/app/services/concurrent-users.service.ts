@@ -1,4 +1,4 @@
-import { environment } from './../../environments/environment';
+import {environment} from './../../environments/environment';
 import {Injectable} from '@angular/core';
 import {webSocket} from "rxjs/webSocket";
 
@@ -7,7 +7,7 @@ import {webSocket} from "rxjs/webSocket";
 })
 export class ConcurrentUsersService {
 
-  socket$ = webSocket(environment.CONCURRENT_USERS_SOCKET);
+  socket$ = webSocket(environment.CONCURRENT_USERS_SOCKET_URL);
 
   constructor() {
   }

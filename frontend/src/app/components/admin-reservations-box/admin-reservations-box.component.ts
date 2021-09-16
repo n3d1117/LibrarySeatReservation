@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Library} from "../../models/library.model";
 import {Reservation} from "../../models/reservation.model";
 import {PageEvent} from "@angular/material/paginator";

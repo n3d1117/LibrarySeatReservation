@@ -1,4 +1,4 @@
-import { environment } from './../../../environments/environment.prod';
+import {environment} from './../../../environments/environment.prod';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {LibraryService} from "../../services/library.service";
@@ -13,7 +13,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {ConcurrentUsersService} from "../../services/concurrent-users.service";
 import {Subscription} from "rxjs";
 import {timer} from 'rxjs';
-import { AdminMonitorService } from 'src/app/services/admin-monitor.service';
+import {AdminMonitorService} from 'src/app/services/admin-monitor.service';
 
 @Component({
   selector: 'app-library',
@@ -28,12 +28,12 @@ export class LibraryComponent implements OnInit {
   dayReservations!: Reservation[];
   selectedDate!: Date;
 
-  sliderValue = 10;
+  capacitySliderValue = 10;
+  timeSecondsLeft = environment.MAX_TIME_SECONDS_FOR_RESERVATION;
+  currentProgressValue = 100;
 
-  subscribeTimer!: Subscription;
-  timeLeft = environment.MAX_TIME_FOR_RESERVATION;
-  progressValue = 100;
-  isSubscribedToSocket = false;
+  private subscribeTimer!: Subscription;
+  private isSubscribedToSocket = false;
 
   @ViewChild(CalendarComponent)
   private calendarComponent!: CalendarComponent;
@@ -53,10 +53,7 @@ export class LibraryComponent implements OnInit {
   ngOnDestroy(): void {
     if (!this.authenticationService.isAdmin()) {
       this.subscribeTimer?.unsubscribe();
-      if (this.isSubscribedToSocket) {
-        this.concurrentUsersService.socket$.complete();
-        this.isSubscribedToSocket = false;
-      }
+      this.unsubscribeFromSocketIfNeeded();
     } else {
       this.adminMonitorService.stopMonitoring();
     }
@@ -73,29 +70,29 @@ export class LibraryComponent implements OnInit {
     const libraryId = this.route.snapshot.params['id'];
     this.libraryService.find(libraryId).pipe(first()).subscribe(library => {
       this.library = library;
-      this.sliderValue = this.library.capacity;
+      this.capacitySliderValue = this.library.capacity;
 
-      if (!this.authenticationService.isAdmin() && !this.isSubscribedToSocket) {
+      if (!this.authenticationService.isAdmin()) {
+        this.unsubscribeFromSocketIfNeeded()
+
         this.concurrentUsersService.socket$.subscribe();
         this.isSubscribedToSocket = true;
 
         // primo 1000: ms dopo quanto parte il timer (~1s giusto per caricare la pagina)
         // secondo 1000: ms ogni quanto si aggiorna il timer
         this.subscribeTimer = timer(1000, 1000).subscribe(() => {
-          if (this.timeLeft > 0) {
-            this.timeLeft--;
-            this.progressValue -= 100 / environment.MAX_TIME_FOR_RESERVATION;
+          if (this.timeSecondsLeft > 0) {
+            this.timeSecondsLeft--;
+            this.currentProgressValue -= 100 / environment.MAX_TIME_SECONDS_FOR_RESERVATION;
           } else {
             this.sessionExpired();
           }
         })
-      }
-
-      if (this.authenticationService.isAdmin()) {
+      } else {
         this.adminMonitorService.startMonitoring((receivedMessage => {
           const json = JSON.parse(receivedMessage);
           if (json.libraryId == libraryId) {
-            this.snackBar.open(json.notificationMessage, '', {duration: 3000});
+            this.snackBar.open(json.notificationMessage, '', {duration: 5000});
             this.refreshCalendar();
             this.refreshReservations();
           }
@@ -109,6 +106,13 @@ export class LibraryComponent implements OnInit {
         this.error = error.error || error.statusText;
       }
     });
+  }
+
+  unsubscribeFromSocketIfNeeded(): void {
+    if (this.isSubscribedToSocket) {
+      this.concurrentUsersService.socket$.complete();
+      this.isSubscribedToSocket = false;
+    }
   }
 
   sessionExpired(): void {
@@ -140,14 +144,14 @@ export class LibraryComponent implements OnInit {
   }
 
   updateLibraryCapacity(): void {
-    const dialogData = new ConfirmDialogModel("Conferma azione", `Sei sicuro di voler modificare la capacità di "${this.library?.name}" da ${this.library?.capacity} a ${this.sliderValue}?`);
+    const dialogData = new ConfirmDialogModel("Conferma azione", `Sei sicuro di voler modificare la capacità di "${this.library?.name}" da ${this.library?.capacity} a ${this.capacitySliderValue}?`);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: "400px",
       data: dialogData
     });
     dialogRef.afterClosed().subscribe(res => {
       if (res && this.library) {
-        this.library.capacity = this.sliderValue;
+        this.library.capacity = this.capacitySliderValue;
         this.libraryService.update(this.library)
           .pipe(first())
           .subscribe(() => {
@@ -159,12 +163,12 @@ export class LibraryComponent implements OnInit {
     });
   }
 
-  refreshReservations(): void {
-    this.calendarComponent.onDateSelected(this.selectedDate);
+  refreshCalendar(): void {
+    this.calendarComponent.onMonthChange(this.selectedDate);
   }
 
-  refreshCalendar() : void {
-    this.calendarComponent.onMonthChange(this.selectedDate);
+  refreshReservations(): void {
+    this.calendarComponent.onDateSelected(this.selectedDate);
   }
 
 }

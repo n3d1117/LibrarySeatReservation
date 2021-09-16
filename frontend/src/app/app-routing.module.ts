@@ -17,7 +17,7 @@ const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'libraries/:id', component: LibraryComponent},
   {path: 'my-reservations', component: MyReservationsComponent, canActivate: [LoginProtected]},
-  {path: 'queue', component: QueueComponent},
+  {path: 'queue', component: QueueComponent, canActivate: [LoginProtected]},
 
   {path: 'admin/add-library', component: AddLibraryComponent, canActivate: [AdminOnly]},
 

@@ -18,8 +18,8 @@
 
   <div *ngIf="!authenticationService.isAdmin()" class="content" fxLayout="row" fxLayout.lt-sm="column" fxFlexFill>
     <div fxFlex="100" style="margin: 3% 10%;">
-      <h2>Tempo rimasto: {{timeLeft * 1000 | date:'m:ss'}}</h2>
-      <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
+      <h2>Tempo rimasto: {{timeSecondsLeft * 1000 | date:'m:ss'}}</h2>
+      <mat-progress-bar mode="determinate" [value]="currentProgressValue"></mat-progress-bar>
     </div>
   </div>
 
@@ -57,18 +57,18 @@
       <mat-card class="mat-elevation-z6 editCapacity-component">
         <mat-card-content>
           <h2>Modifica capacità biblioteca</h2>
-          <p>Valore: {{sliderValue}}</p>
+          <p>Valore: {{capacitySliderValue}}</p>
           <mat-slider
             [max]="200"
             [min]="10"
             [step]="1"
             [thumbLabel]="true"
             [tickInterval]="1"
-            [(ngModel)]="sliderValue">
+            [(ngModel)]="capacitySliderValue">
           </mat-slider>
           <button
             mat-raised-button color="primary"
-            [disabled]="this.library.capacity == sliderValue"
+            [disabled]="this.library.capacity == capacitySliderValue"
             (click)="updateLibraryCapacity()"
           >
             Modifica

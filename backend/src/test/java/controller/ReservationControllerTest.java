@@ -160,6 +160,7 @@ public class ReservationControllerTest {
 
     @Test
     public void testDeleteReservation() {
+        when(dao.findById(dto.getId())).thenReturn(dto);
         controller.delete(dto.getId());
         verify(dao).delete(dto.getId());
     }

@@ -1,4 +1,4 @@
-import { environment } from './../../environments/environment';
+import {environment} from './../../environments/environment';
 import {Injectable} from '@angular/core';
 import {RSocketClient} from "rsocket-core";
 import RSocketWebsocketClient from "rsocket-websocket-client";
@@ -10,9 +10,10 @@ import {Single, Flowable} from 'rsocket-flowable';
 })
 export class AdminMonitorService {
 
-  onReceivedNotification: (message: string) => void;
-  rSocketUrl = environment.ADMIN_NOTIFICATION_RSOCKET;
-  client: RSocketClient<string, string> | null = null;
+  private onReceivedNotification: (message: string) => void;
+  private rSocketUrl = environment.ADMIN_NOTIFICATION_RSOCKET_URL;
+  private client: RSocketClient<string, string> | null = null;
+  private setupMessage = "setup";
 
   constructor() {
     this.onReceivedNotification = (message) => console.log(message);
@@ -33,36 +34,37 @@ export class AdminMonitorService {
       }
     };
     const setup = {
-      keepAlive: 1000000,
-      lifetime: 100000,
-      dataMimeType: 'text/plain',
-      metadataMimeType: 'text/plain'
+      keepAlive: 60000,
+      lifetime: 180000,
+      dataMimeType: 'application/json',
+      metadataMimeType: 'application/json'
     };
 
     const transport = new RSocketWebsocketClient(transportOptions);
-    const responder = new RSocketResponder(this.onReceivedNotification);
+    const responder = new RSocketResponder(this.onReceivedNotification, this.setupMessage);
 
     this.client = new RSocketClient({setup: setup, transport: transport, responder: responder});
 
     this.client.connect().subscribe({
       onComplete: (rsocket) => {
-        rsocket.fireAndForget({data: "setup"});
+        rsocket.fireAndForget({data: this.setupMessage});
       }
     })
   }
-
 }
 
 class RSocketResponder implements Responder<string, string> {
 
-  callback: (message: string) => void;
+  private readonly callback: (message: string) => void;
+  private readonly setupMessage: string;
 
-  constructor(callback: (message: string) => void) {
+  constructor(callback: (message: string) => void, setupMessage: string) {
     this.callback = callback;
+    this.setupMessage = setupMessage;
   }
 
   fireAndForget(payload: Payload<string, string>): void {
-    if (payload.data != null && payload.data != "setup") {
+    if (payload.data != null && payload.data != this.setupMessage) {
       this.callback(payload.data);
     }
   }

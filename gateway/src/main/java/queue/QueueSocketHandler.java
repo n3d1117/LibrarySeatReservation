@@ -27,7 +27,7 @@ public class QueueSocketHandler {
         sessions.put(session, new Date());
 
         // notify new user about current queue size
-        Message message = new Message("queue_size", "" + sessions.size());
+        Message message = new Message(Message.Type.queue_size, "" + sessions.size());
         sendMessage(message, session);
     }
 
@@ -37,7 +37,7 @@ public class QueueSocketHandler {
         sessions.remove(session);
 
         // when a user is removed from queue, we need to notify all users who joined later
-        Message message = new Message("queue_size_decrease", "");
+        Message message = new Message(Message.Type.queue_size_decrease);
         broadcast(message, allSessionsAfterDate(date));
     }
 
@@ -45,7 +45,7 @@ public class QueueSocketHandler {
         // when a user finished use case, we can let first in queue in, if any
         Session first = firstSessionInQueue();
         if (first != null) {
-            Message message = new Message("queue_size_decrease", "");
+            Message message = new Message(Message.Type.queue_size_decrease);
             sendMessage(message, first);
         }
     }

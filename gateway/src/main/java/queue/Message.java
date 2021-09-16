@@ -2,11 +2,21 @@ package queue;
 
 public class Message {
 
-    private final String action;
+    enum Type {
+        queue_size,
+        queue_size_decrease
+    }
+
+    private final Type type;
     private final String value;
 
-    public Message(String action, String value) {
-        this.action = action;
+    public Message(Type type, String value) {
+        this.type = type;
         this.value = value;
+    }
+
+    public Message(Type type) {
+        this.type = type;
+        this.value = "";
     }
 }

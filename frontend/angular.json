@@ -17,7 +17,13 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["qrcode", "rxjs/internal/operators/first"],
+            "allowedCommonJsDependencies": [
+              "qrcode",
+              "rxjs/internal/operators/first",
+              "rsocket-core",
+              "rsocket-flowable",
+              "rsocket-websocket-client"
+            ],
             "outputPath": "dist/frontend",
             "index": "src/index.html",
             "main": "src/main.ts",

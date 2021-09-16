@@ -73,20 +73,27 @@ public class ReservationController {
         if (newReservation.getId() != null)
             reservationDto.setId(newReservation.getId());
 
-        AdminNotificationDto notification = new AdminNotificationDto(AdminNotificationDto.UserAction.ADD, reservationDto.getId(), reservationDto.getLibraryId(), reservationDto.getDatetime());
-
-        RSocketClientHandler.notifyAll(gson.toJson(notification));
+        AdminNotificationDto notification = new AdminNotificationDto(
+                AdminNotificationDto.UserAction.ADD,
+                reservationDto.getId(),
+                reservationDto.getLibraryId(),
+                reservationDto.getDatetime()
+        );
+        RSocketClientHandler.notifyAll(notification.toJson());
 
         return gson.toJson(reservationDto);
     }
 
     public void delete(Long id) {
-        Gson gson = new Gson();
-
         ReservationDto reservationToDelete = reservationDao.findById(id);
         reservationDao.delete(id);
-        AdminNotificationDto notification = new AdminNotificationDto(AdminNotificationDto.UserAction.DELETE, id, reservationToDelete.getLibraryId(), reservationToDelete.getDatetime());
 
-        RSocketClientHandler.notifyAll(gson.toJson(notification));
+        AdminNotificationDto notification = new AdminNotificationDto(
+                AdminNotificationDto.UserAction.DELETE,
+                id,
+                reservationToDelete.getLibraryId(),
+                reservationToDelete.getDatetime()
+        );
+        RSocketClientHandler.notifyAll(notification.toJson());
     }
 }
