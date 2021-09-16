@@ -33,6 +33,7 @@ import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { QueueComponent } from './components/queue/queue.component';
+import { SplashScreenComponent } from './components/splash-screen/splash-screen.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { QueueComponent } from './components/queue/queue.component';
     MaterialElevationDirective,
     ConfirmDialogComponent,
     QueueComponent,
+    SplashScreenComponent,
   ],
   imports: [
     BrowserModule,
