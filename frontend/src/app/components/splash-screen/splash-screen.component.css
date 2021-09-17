@@ -6,7 +6,7 @@
   background-color: #3f51b5;
   left: 0;
   top: 0;
-  z-index: 1;
+  z-index: 99999;
   position: fixed;
   transition: 0.5s;
 }
