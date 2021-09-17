@@ -12,10 +12,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
-public class RSocketClientHandler implements SocketAcceptor {
+public class RSocketNotifier implements SocketAcceptor {
 
     private static final Set<RSocket> clients = Collections.synchronizedSet(new HashSet<>());
-    private static final Logger LOGGER = Logger.getLogger(RSocketClientHandler.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(RSocketNotifier.class.getName());
 
     @Override
     public Mono<RSocket> accept(ConnectionSetupPayload setup, RSocket sendingSocket) {

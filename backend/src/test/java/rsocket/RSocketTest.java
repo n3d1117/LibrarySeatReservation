@@ -32,7 +32,7 @@ public class RSocketTest {
     @BeforeEach
     public void startServer() {
         channel = RSocketServer
-                .create(new RSocketClientHandler())
+                .create(new RSocketNotifier())
                 .bindNow(WebsocketServerTransport.create(port));
         channel.onClose();
     }
@@ -79,7 +79,7 @@ public class RSocketTest {
 
         for (String message: expected) {
             Thread.sleep(500);
-            RSocketClientHandler.notifyAll(message);
+            RSocketNotifier.notifyAll(message);
         }
 
         await().atMost(5, SECONDS).until(() -> receivedMessages.equals(expected));
@@ -96,7 +96,7 @@ public class RSocketTest {
 
         for (String message: expected) {
             Thread.sleep(500);
-            RSocketClientHandler.notifyAll(message);
+            RSocketNotifier.notifyAll(message);
         }
 
         await().atMost(5, SECONDS).until(

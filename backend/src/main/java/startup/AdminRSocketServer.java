@@ -5,7 +5,7 @@ import io.rsocket.frame.decoder.PayloadDecoder;
 import io.rsocket.transport.netty.server.CloseableChannel;
 import io.rsocket.transport.netty.server.WebsocketServerTransport;
 import reactor.core.publisher.Hooks;
-import rsocket.RSocketClientHandler;
+import rsocket.RSocketNotifier;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -27,7 +27,7 @@ public class AdminRSocketServer {
         LOGGER.info("Starting admin RSocket server on port 7878...");
         Hooks.onErrorDropped(error -> {});
         channel = RSocketServer
-                .create(new RSocketClientHandler())
+                .create(new RSocketNotifier())
                 .payloadDecoder(PayloadDecoder.ZERO_COPY)
                 .bindNow(WebsocketServerTransport.create(7878));
         channel.onClose();

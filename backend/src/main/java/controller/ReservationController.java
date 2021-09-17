@@ -1,7 +1,7 @@
 package controller;
 
 import dto.AdminNotificationDto;
-import rsocket.RSocketClientHandler;
+import rsocket.RSocketNotifier;
 import com.google.gson.Gson;
 import dao.LibraryDao;
 import dao.ReservationDao;
@@ -79,7 +79,7 @@ public class ReservationController {
                 reservationDto.getLibraryId(),
                 reservationDto.getDatetime()
         );
-        RSocketClientHandler.notifyAll(notification.toJson());
+        RSocketNotifier.notifyAll(notification.toJson());
 
         return gson.toJson(reservationDto);
     }
@@ -94,6 +94,6 @@ public class ReservationController {
                 reservationToDelete.getLibraryId(),
                 reservationToDelete.getDatetime()
         );
-        RSocketClientHandler.notifyAll(notification.toJson());
+        RSocketNotifier.notifyAll(notification.toJson());
     }
 }
