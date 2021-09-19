@@ -10,17 +10,17 @@
           class="mat-elevation-z4 libraryCard"
           routerLink="/libraries/{{library.id}}"
         >
-          
+
           <mat-card-header>
             <mat-card-title>{{library.name}}</mat-card-title>
             <mat-card-subtitle>{{library.address}}</mat-card-subtitle>
           </mat-card-header>
 
-          
-          <img *ngIf="checkURLInFilename(library.imgFilename); else relativeFilename" mat-card-image src="{{library.imgFilename}}" onerror="this.src='assets/images/error_img.png';" alt="{{library.name}}">
+
+          <img *ngIf="checkURLInFilename(library.imgFilename); else relativeFilename" mat-card-image src="{{library.imgFilename}}" onerror="this.src='assets/images/image_not_found.png';" alt="{{library.name}}">
 
           <ng-template #relativeFilename>
-            <img  mat-card-image src="assets/library_images/{{library.imgFilename}}" onerror="this.src='assets/images/error_img.png';" alt="{{library.name}}">
+            <img  mat-card-image src="assets/library_images/{{library.imgFilename}}" onerror="this.src='assets/images/image_not_found.png';" alt="{{library.name}}">
           </ng-template>
 
           <mat-card-content>
