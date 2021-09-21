@@ -1966,7 +1966,7 @@
 										"$ref": "AAAAAAF8BACipoOZitY="
 									},
 									"edgePosition": 2,
-									"text": "#reservations"
+									"text": "-reservations"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -2238,7 +2238,7 @@
 										"$ref": "AAAAAAF8BAfmfY3DRgI="
 									},
 									"edgePosition": 2,
-									"text": "#reservations"
+									"text": "-reservations"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -2551,7 +2551,7 @@
 								"reference": {
 									"$ref": "AAAAAAF8A+icUXT76hg="
 								},
-								"visibility": "protected",
+								"visibility": "private",
 								"multiplicity": "0..*"
 							},
 							"end2": {
@@ -2586,7 +2586,7 @@
 								"reference": {
 									"$ref": "AAAAAAF8A+icUXT76hg="
 								},
-								"visibility": "protected",
+								"visibility": "private",
 								"multiplicity": "0..*"
 							},
 							"end2": {
@@ -2982,7 +2982,8 @@
 							"_parent": {
 								"$ref": "AAAAAAF8A/Xa9XjaY/o="
 							},
-							"name": "ADMIN"
+							"name": "ADMIN",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -2990,7 +2991,8 @@
 							"_parent": {
 								"$ref": "AAAAAAF8A/Xa9XjaY/o="
 							},
-							"name": "BASIC"
+							"name": "BASIC",
+							"type": ""
 						}
 					]
 				}
