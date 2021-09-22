@@ -10,6 +10,7 @@ import java.security.Principal;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+// This SecurityContext implementation will be injected into the SecurityRequestFilter
 public class SecurityContext implements javax.ws.rs.core.SecurityContext {
 
     private static final Logger LOGGER = Logger.getLogger(SecurityContext.class.getName());
@@ -35,6 +36,7 @@ public class SecurityContext implements javax.ws.rs.core.SecurityContext {
     public boolean isUserInRole(String role) {
         LOGGER.info(String.format("Checking role for email %s...", principalUsername));
         try {
+            // Use UserDao to check that specified user has the requested role
             User principal = dao.findByEmail(principalUsername);
             return principal.getRoles().stream()
                     .map(Role::toString)
@@ -43,7 +45,6 @@ public class SecurityContext implements javax.ws.rs.core.SecurityContext {
         } catch (Exception e) {
             return false;
         }
-
     }
 
     @Override

@@ -1,15 +1,18 @@
 package model;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ReservationTest {
+    
+    private Reservation r1, r2, r3;
 
     @Test
     public void testCopy() {
@@ -29,6 +32,34 @@ public class ReservationTest {
         assertEquals(r.getLibrary(), r2.getLibrary());
         assertEquals(r.getDatetime(), r2.getDatetime());
         assertNotEquals(r.getUuid(), r2.getUuid());
+    }
+
+    @BeforeEach
+    public void setUp() {
+        String uuid1 = UUID.randomUUID().toString();
+        String uuid2 = UUID.randomUUID().toString();
+        r1 = new Reservation(uuid1);
+        r2 = new Reservation(uuid2);
+        r3 = new Reservation(uuid1);
+    }
+
+    @Test
+    public void testNullUUID() {
+        assertThrows(IllegalArgumentException.class, () -> new Reservation(null));
+    }
+
+    @Test
+    public void testEquals() {
+        assertEquals(r1, r1);
+        assertEquals(r1, r3);
+        assertNotEquals(r1, r2);
+    }
+
+    @Test
+    public void testHashCode() {
+        assertEquals(r1.hashCode(), r1.hashCode());
+        assertEquals(r1.hashCode(), r3.hashCode());
+        assertNotEquals(r1.hashCode(), r2.hashCode());
     }
 
     private User exampleUser1() {

@@ -13,9 +13,11 @@ import model.Library;
 import model.Reservation;
 import model.User;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.util.List;
 
+@RequestScoped
 public class ReservationController {
 
     @Inject
@@ -73,6 +75,8 @@ public class ReservationController {
         if (newReservation.getId() != null)
             reservationDto.setId(newReservation.getId());
 
+        // When a new reservation is added, also fire
+        // a RSocket notification to all admins connected to the dashboard
         AdminNotificationDto notification = new AdminNotificationDto(
                 AdminNotificationDto.UserAction.ADD,
                 reservationDto.getId(),
@@ -88,6 +92,8 @@ public class ReservationController {
         ReservationDto reservationToDelete = reservationDao.findById(id);
         reservationDao.delete(id);
 
+        // When a reservation is deleted, also fire
+        // a RSocket notification to all admins connected to the dashboard
         AdminNotificationDto notification = new AdminNotificationDto(
                 AdminNotificationDto.UserAction.DELETE,
                 id,

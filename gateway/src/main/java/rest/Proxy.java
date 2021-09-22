@@ -11,12 +11,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
 import java.net.URI;
-import java.util.logging.Logger;
 
 @Path("")
 public class Proxy {
 
-    private static final Logger LOGGER = Logger.getLogger(Proxy.class.getName());
     private final String apiUrl;
     private final String apiQueueRegex;
 

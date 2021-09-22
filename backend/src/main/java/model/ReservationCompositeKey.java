@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * Represents a composite primary key (id, datetime) for the Reservation class
+ */
 public class ReservationCompositeKey implements Serializable {
 
     private Long id;

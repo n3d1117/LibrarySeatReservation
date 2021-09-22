@@ -3,9 +3,16 @@ package mapper;
 import dto.ReservationDto;
 import model.*;
 
+import javax.enterprise.context.RequestScoped;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Maps a ReservationDto into a Reservation and vice versa.
+ * When generating the DTO counterpart, Date objects are transformed into strings
+ * with the specified formatter.
+ */
+@RequestScoped
 public class ReservationMapper {
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

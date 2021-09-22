@@ -5,10 +5,16 @@ import model.ModelFactory;
 import model.Role;
 import model.User;
 
+import javax.enterprise.context.RequestScoped;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Maps a UserDto into a User and vice versa. When generating the DTO,
+ * this list of roles is serialized into a list of strings.
+ */
+@RequestScoped
 public class UserMapper {
 
     public UserDto generateRedactedUserDTO(User user) {

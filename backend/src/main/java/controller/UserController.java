@@ -6,10 +6,12 @@ import dto.UserDto;
 import mapper.UserMapper;
 import model.User;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequestScoped
 public class UserController {
 
     @Inject

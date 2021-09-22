@@ -4,6 +4,7 @@ import dto.ReservationDto;
 import dto.ReservationsDailyAggregateDto;
 import model.Reservation;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
@@ -12,6 +13,12 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * The ReservationDao cannot extend BaseDao, since Reservation is not a BaseEntity
+ * So all CRUD methods for the Reservation class have been implemented here.
+ * This DAO never returns a Reservation object directly, but uses a ReservationDto instead.
+ */
+@Stateless
 public class ReservationDao {
 
     @PersistenceContext(unitName = "default")
@@ -68,8 +75,20 @@ public class ReservationDao {
                 .getResultList();
     }
 
-    // Usa il time_bucket di TimescaleDB per aggregare il numero di prenotazioni per ogni giorno del mese specificato
-    // NB: Utilizza l'SqlResultSetMapping definito nella classe Reservation
+    /**
+     * Uses TimescaleDB's time_bucket feature (https://docs.timescale.com/api/latest/hyperfunctions/time_bucket/)
+     * to aggregate number of reservations for every day of the specified month, organized by morning and afternoon.
+     * Useful for a "calendar" view, where this API is called on every month change.
+     *
+     * NOTE: Uses SqlResultSetMapping (defined in Reservation class) to map query results directly
+     * into ReservationsDailyAggregateDto objects. This is needed because the time_bucket is not supported
+     * by JPA's TypedQuery, so a native query must be used instead.
+     *
+     * @param libraryId the id of the library
+     * @param year the year to search
+     * @param month the month to search
+     * @return a list of ReservationsDailyAggregateDto objects, each representing a daily aggregate
+     */
     public List<ReservationsDailyAggregateDto> dailyAggregateByLibraryIdAndMonth(Long libraryId, int year, int month) {
         return (List<ReservationsDailyAggregateDto>) entityManager
                 .createNativeQuery("SELECT time_bucket('1 day', datetime) AS date, " +
@@ -88,6 +107,11 @@ public class ReservationDao {
                 .getResultList();
     }
 
+    /**
+     * Saves the reservation into the database, if the library is not already full for the specified time slot
+     * @param entity the reservation to save
+     * @throws PersistenceException if the library is already full for that time slot
+     */
     @Transactional
     public void save(Reservation entity) {
         long count = (long)entityManager.createQuery(
@@ -103,7 +127,11 @@ public class ReservationDao {
         }
     }
 
-    // Only used in StartupBean for faster insertion
+    /**
+     * Saves the reservation into the database without checking if the library is full for the specified time slot
+     * NOTE: Only used in StartupBean for faster insertion of a controlled number of reservations
+     * @param entity the reservation to save
+     */
     @Transactional
     public void saveSkippingCapacityCheck(Reservation entity) {
         entityManager.persist(entity);
@@ -118,11 +146,20 @@ public class ReservationDao {
         entityManager.remove(toDelete);
     }
 
+    /**
+     * Enables the TimescaleDB PostgreSQL extension on the database (only needed once at startup)
+     */
     public void enableTimescalePostgresExtensionIfNeeded() {
         LOGGER.info("Enabling timescale extension...");
         entityManager.createNativeQuery("CREATE EXTENSION IF NOT EXISTS timescaledb;").executeUpdate();
     }
 
+    /**
+     * Sets up the reservations as a Timescale hypertable (https://docs.timescale.com/api/latest/hypertable/)
+     * using "datetime" as the temporal column.
+     * NOTE: requires setting up a custom PostgreSQL dialect in the "hibernate.dialect" of the persistence.xml file
+     * in order to parse the output correctly.
+     */
     public void setupHypertable() {
         LOGGER.info("Setting up hypertable...");
 

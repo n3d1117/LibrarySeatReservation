@@ -4,6 +4,12 @@ import dto.LibraryDto;
 import model.Library;
 import model.ModelFactory;
 
+import javax.enterprise.context.RequestScoped;
+
+/**
+ * Maps a LibraryDto into a Library and vice versa.
+ */
+@RequestScoped
 public class LibraryMapper {
 
     public LibraryDto generateLibraryDTO(Library library) {

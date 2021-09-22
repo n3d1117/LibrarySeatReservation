@@ -37,6 +37,7 @@ public class SecurityRequestFilter implements ContainerRequestFilter {
         if (methodRolesAllowed == null && classRolesAllowed == null)
             return;
 
+        // Get authentication header from the request
         String authorizationHeader = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
         if (authorizationHeader == null || authorizationHeader.isEmpty()) {
             requestContext.abortWith(
@@ -45,6 +46,7 @@ public class SecurityRequestFilter implements ContainerRequestFilter {
             return;
         }
 
+        // Decode the credentials and check them against database
         String email = null;
         if (authorizationHeader.toLowerCase().startsWith("basic")) {
             String base64Credentials = authorizationHeader.substring("Basic".length()).trim();

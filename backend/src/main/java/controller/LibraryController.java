@@ -6,10 +6,12 @@ import dto.LibraryDto;
 import mapper.LibraryMapper;
 import model.Library;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+@RequestScoped
 public class LibraryController {
 
     @Inject

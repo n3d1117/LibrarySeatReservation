@@ -16,6 +16,10 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
 
+/**
+ * The startup bean, used to populate users, libraries and fake reservations for demo purposes.
+ * Also enables the TimescaleDB extension and sets up the hypertable.
+ */
 @Singleton
 @Startup
 public class StartupBean {

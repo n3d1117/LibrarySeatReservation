@@ -18,7 +18,7 @@ public class User extends BaseEntity {
     private List<Role> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    protected Set<Reservation> reservations = new HashSet<>();
+    private Set<Reservation> reservations = new HashSet<>();
 
     public User() { }
 
@@ -74,6 +74,14 @@ public class User extends BaseEntity {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
     @Override

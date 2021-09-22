@@ -6,6 +6,10 @@ import mapper.ReservationMapper;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * A notification meant to be sent as JSON via RSocket to all admins connected through the dashboard
+ * to receive real time notifications about reservations added/deleted.
+ */
 public class AdminNotificationDto {
 
     public enum UserAction {

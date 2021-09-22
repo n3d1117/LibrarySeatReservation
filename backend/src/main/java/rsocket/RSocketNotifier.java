@@ -12,6 +12,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
+/**
+ * A SocketAcceptor implementation that saves all listening RSocket clients into a set
+ * and allows of broadcasting messages to all of them simultaneously.
+ */
 public class RSocketNotifier implements SocketAcceptor {
 
     private static final Set<RSocket> clients = Collections.synchronizedSet(new HashSet<>());
@@ -34,6 +38,11 @@ public class RSocketNotifier implements SocketAcceptor {
         return Mono.just(sendingSocket);
     }
 
+    /**
+     * Send a FNF (Fire and Forget) message to every listening client
+     * See also https://rsocket.io/about/motivations#fire-and-forget
+     * @param message the message to broadcast
+     */
     public static void notifyAll(String message) {
         Payload payload = DefaultPayload.create(message);
         clients.forEach(client -> client.fireAndForget(payload).block());

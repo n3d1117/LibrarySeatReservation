@@ -14,6 +14,11 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import java.util.logging.Logger;
 
+/**
+ * This RSocket server is active on port 7878 and used to communicate changes in the database
+ * in real-time with any connected RSocket client on the fronted side (i.e. admins with an open dashbaord).
+ * This class is wrapped in a @Singleton @Startup so that it starts and stops in sync with the Java application.
+ */
 @Singleton
 @Startup
 @DependsOn("StartupBean")

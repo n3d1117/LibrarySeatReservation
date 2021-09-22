@@ -8,6 +8,10 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**
+ * A generic abstract DAO that connects to the default
+ * persistence context and implements basic CRUD operations
+ */
 public abstract class BaseDao<E extends BaseEntity>  {
 
     @PersistenceContext(unitName = "default")

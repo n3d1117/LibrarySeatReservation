@@ -14,7 +14,7 @@ public class Library extends BaseEntity {
     private Integer capacity;
 
     @OneToMany(mappedBy = "library", cascade = CascadeType.ALL)
-    protected Set<Reservation> reservations = new HashSet<>();
+    private Set<Reservation> reservations = new HashSet<>();
 
     public Library() { }
 
@@ -57,6 +57,14 @@ public class Library extends BaseEntity {
 
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
+    }
+
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
     @Override

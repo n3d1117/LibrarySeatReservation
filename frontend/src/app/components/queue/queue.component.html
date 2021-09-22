@@ -4,7 +4,7 @@
 
     <img height="100" src="./assets/images/queue.png" alt="Sei in coda">
 
-    <h2 *ngIf="queueLength - 1 == 0; else elseifBlock">Sei la prima persona in coda</h2>
+    <h2 *ngIf="queueLength == 1; else elseifBlock">Sei la prima persona in coda</h2>
 
     <ng-template #elseifBlock>
       <ng-container *ngIf="queueLength == 2; else elseBlock">
