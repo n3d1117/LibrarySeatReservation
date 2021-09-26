@@ -34,8 +34,11 @@ public class Proxy {
     @Path("/{s:.*}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response get(@Context UriInfo uri, @Context HttpServletRequest request) {
+        // Only queue on API call specified in configuration file
         if (uri.getPath().matches(apiQueueRegex)) {
+            // Check if max concurrent users number is reached
             if (ConcurrentUsersSocketHandler.maxUsersReached()) {
+                // Returns HTTP 429: Too Many Requests
                 return Response
                         .status(Response.Status.TOO_MANY_REQUESTS)
                         .build();
@@ -58,6 +61,13 @@ public class Proxy {
         return redirect(uri, request);
     }
 
+    /**
+     * Redirects the specified request with the same path and parameters to a different URL
+     *
+     * @param uri     the UriInfo object containing the request path
+     * @param request the request object containing full query string
+     * @return a HTTP 307 Response (Temporary Redirect) object pointing to the real API url
+     */
     private Response redirect(UriInfo uri, HttpServletRequest request) {
         String redirectUrl = apiUrl + uri.getPath();
 

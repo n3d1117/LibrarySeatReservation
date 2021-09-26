@@ -5,6 +5,9 @@ import com.google.gson.Gson;
 import javax.websocket.Decoder;
 import javax.websocket.EndpointConfig;
 
+/**
+ * Decodes a Message object from JSON
+ */
 public class MessageDecoder implements Decoder.Text<Message> {
 
     private static final Gson gson = new Gson();
