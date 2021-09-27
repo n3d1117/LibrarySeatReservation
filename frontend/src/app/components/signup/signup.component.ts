@@ -30,7 +30,7 @@ export class SignupComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private snackBar: MatSnackBar
   ) {
-    // redirect to home if already logged in
+    // Redirect to home if the user is already logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
     }
@@ -39,7 +39,7 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // convenience getter for easy access to form fields
+  // Convenience getter for easy access to form fields
   get f() {
     return this.form.controls;
   }
@@ -58,7 +58,7 @@ export class SignupComponent implements OnInit {
       this.f.surname.value,
       this.f.email.value,
       this.f.password.value,
-      false
+      false // Currently it is not allowed to sign up as admin
     )
       .pipe(first())
       .subscribe(user => {
@@ -68,7 +68,6 @@ export class SignupComponent implements OnInit {
         }
       }, error => {
         this.error = error.error || error.statusText;
-
         this.loading = false;
       });
   }

@@ -14,7 +14,7 @@
           <table mat-table [dataSource]="futureReservations() | slice: lowValue : highValue">
             <ng-container matColumnDef="datetime">
               <th mat-header-cell *matHeaderCellDef> Data</th>
-              <td mat-cell *matCellDef="let element"> {{humanReadable(element.datetime)}} </td>
+              <td mat-cell *matCellDef="let element"> {{humanReadableDate(element.datetime)}} </td>
             </ng-container>
             <ng-container matColumnDef="hour">
               <th mat-header-cell *matHeaderCellDef> Ora</th>
@@ -54,7 +54,7 @@
           <table mat-table [dataSource]="pastReservations() | slice: lowValue : highValue">
             <ng-container matColumnDef="datetime">
               <th mat-header-cell *matHeaderCellDef> Data</th>
-              <td mat-cell *matCellDef="let element"> {{humanReadable(element.datetime)}} </td>
+              <td mat-cell *matCellDef="let element"> {{humanReadableDate(element.datetime)}} </td>
             </ng-container>
             <ng-container matColumnDef="hour">
               <th mat-header-cell *matHeaderCellDef> Ora</th>

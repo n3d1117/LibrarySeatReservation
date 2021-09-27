@@ -36,6 +36,10 @@ export class CalendarComponent implements OnInit {
     this.onMonthChange(new Date());
   }
 
+  /**
+   * Called for every day in the calendar view; returns the CSS class to apply for each of them.
+   * Possible classes: full/available/empty
+   */
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate) => {
     if (cellDate < this.dateService.yesterday()) {
       return ''
@@ -52,6 +56,10 @@ export class CalendarComponent implements OnInit {
     return 'available';
   }
 
+  /**
+   * Called every time user changes month in the calendar view.
+   * Will request reservation data from the API for the currently selected month.
+   */
   onMonthChange(date: Date): void {
     const selectedDate = date ? date : this.todayDate;
     this.aggregateReservationsByMonth = [];
@@ -65,6 +73,10 @@ export class CalendarComponent implements OnInit {
     });
   }
 
+  /**
+   * Called when a date is selected in the calendar view.
+   * Will request reservations for selected library and day from the API.
+   */
   onDateSelected(date: Date | null): void {
     if (date) {
       const year = date.getFullYear();

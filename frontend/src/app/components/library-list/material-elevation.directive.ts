@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Renderer2, OnChanges, SimpleChanges } from '@angular/core';
+import {Directive, ElementRef, HostListener, Renderer2, OnChanges, SimpleChanges} from '@angular/core';
 
 @Directive({
   selector: '[appMaterialElevation]'
@@ -6,7 +6,6 @@ import { Directive, ElementRef, HostListener, Renderer2, OnChanges, SimpleChange
 export class MaterialElevationDirective implements OnChanges {
 
   defaultElevation = 2;
-
   raisedElevation = 8;
 
   constructor(
@@ -31,13 +30,13 @@ export class MaterialElevationDirective implements OnChanges {
   }
 
   setElevation(amount: number): void {
-    // remove all elevation classes
+    // Remove all elevation classes
     const classesToRemove = Array.from((<HTMLElement>this.element.nativeElement).classList).filter(c => c.startsWith('mat-elevation-z'));
     classesToRemove.forEach((c) => {
       this.renderer.removeClass(this.element.nativeElement, c);
     });
 
-    // add the given elevation class
+    // Add the given elevation class
     const newClass = `mat-elevation-z${amount}`;
     this.renderer.addClass(this.element.nativeElement, newClass);
   }

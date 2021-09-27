@@ -4,8 +4,6 @@ import {first} from 'rxjs/internal/operators/first';
 import {Library} from 'src/app/models/library.model';
 import {LibraryService} from 'src/app/services/library.service';
 import {AuthenticationService} from "../../services/authentication.service";
-import {AdminMonitorService} from "../../services/admin-monitor.service";
-import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-home',
@@ -36,6 +34,9 @@ export class HomeComponent implements OnInit {
   ) {
   }
 
+  /**
+   * Filter libraries by search string (matching partial name or address)
+   */
   filterLibraries(): Library[] {
     return this.libraries.filter(library => {
       return library.name.toLowerCase().includes(this.searchBarValueHome.toLowerCase())

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {JsonArray} from "@angular/compiler-cli/ngcc/src/packages/entry_point";
 import {HttpClient} from "@angular/common/http";
@@ -8,10 +8,14 @@ import {HttpClient} from "@angular/common/http";
 })
 export class GeocodingService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
+  /**
+   * Search OpenStreetMap APIs for given address
+   */
   search(address: string): Observable<JsonArray> {
-    const encodedAddress = encodeURIComponent(address).replace(/%20/g,'+');
+    const encodedAddress = encodeURIComponent(address).replace(/%20/g, '+');
     return this.http.get<JsonArray>(
       `https://nominatim.openstreetmap.org/search?q=${encodedAddress}&format=jsonv2`
     )

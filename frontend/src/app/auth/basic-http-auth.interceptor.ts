@@ -6,10 +6,11 @@ import {Observable} from "rxjs";
 @Injectable()
 export class BasicAuthInterceptor implements HttpInterceptor {
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService) {
+  }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // add authorization header with basic auth credentials if available
+    // Add authorization header with basic auth credentials to the HTTP request, if available
     const currentUser = this.authenticationService.currentUserValue;
     if (currentUser && currentUser.authData) {
       request = request.clone({

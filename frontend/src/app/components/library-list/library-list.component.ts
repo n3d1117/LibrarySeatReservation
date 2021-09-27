@@ -17,7 +17,7 @@ export class LibraryListComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  checkURLInFilename(filename : string) : boolean {
-    return filename.includes("http");
+  checkURLInFilename(filename: string): boolean {
+    return filename.includes('http');
   }
 }

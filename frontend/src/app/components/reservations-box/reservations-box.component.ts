@@ -1,5 +1,5 @@
-import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn} from "@angular/forms";
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {Reservation} from "../../models/reservation.model";
 import {Library} from "../../models/library.model";
 import {first} from "rxjs/operators";
@@ -10,7 +10,6 @@ import {Router} from "@angular/router";
 import {DateUtilityService} from "../../services/date-utility.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/confirm-dialog.component";
-import {MatRadioChange} from '@angular/material/radio';
 
 @Component({
   selector: 'app-reservations-box',
@@ -47,6 +46,7 @@ export class ReservationsBoxComponent implements OnInit {
     });
   }
 
+  // Called when data-bound properties change
   ngOnChanges(): void {
     this.checkIfButtonEnable();
   }
@@ -67,34 +67,37 @@ export class ReservationsBoxComponent implements OnInit {
     return this.dayReservations.filter(r => this.dateService.stringToDate(r.datetime).getHours() == 13);
   }
 
+  /**
+   * Check if the 'Prenota' button should be enabled based on library availability wrt different time slots
+   */
   checkIfButtonEnable(): void {
     const fullMorning = this.morningReservations().length >= this.library.capacity;
     const fullAfternoon = this.afternoonReservations().length >= this.library.capacity;
     this.confirmButtonEnable = (this.isMorningSelected && !fullMorning) || (!this.isMorningSelected && !fullAfternoon);
   }
 
-  createStringFromDate(morning: boolean): string {
-    const date = this.selectedDate;
-    return this.dateService.prepareDateForBackend(date, morning);
-  }
-
+  /**
+   * Add a new reservation for the selected library, day and time slot
+   */
   addReservation(): void {
 
-    //check if user is logged in
+    // Check if user is logged in
     if (!this.authenticationService.currentUserValue) {
       this.snackBar.open('Devi essere autenticato per prenotarti.', '', {duration: 3000});
       this.router.navigate(['/login'], {queryParams: {returnUrl: this.router.url}});
       return;
     }
-    //show confirm dialog
+
+    // Show confirm dialog
     const dialogData = new ConfirmDialogModel("Conferma prenotazione", `Sei sicuro di voler prenotare per ${this.library.name} in data ${this.dateStringTitle()} (${this.isMorningSelected ? "fascia 8.00 - 13.00" : "fascia 13:00 - 19.00"})?`);
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       maxWidth: "400px",
       data: dialogData
     });
-    //if reservation confirmed
+
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
+        // If reservation confirmed
         this.loading = true;
         this.reservationService.add(
           this.authenticationService.currentUserValue.id,
@@ -114,5 +117,10 @@ export class ReservationsBoxComponent implements OnInit {
           });
       }
     });
+  }
+
+  private createStringFromDate(morning: boolean): string {
+    const date = this.selectedDate;
+    return this.dateService.prepareDateForBackend(date, morning);
   }
 }

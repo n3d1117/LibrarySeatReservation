@@ -11,6 +11,7 @@ export class SplashScreenComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Animate the splash screen
     const intro = document.querySelector<HTMLElement>(".intro");
     window.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {

@@ -1,4 +1,4 @@
-import {environment} from './../../../environments/environment.prod';
+import {environment} from '../../../environments/environment.prod';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {LibraryService} from "../../services/library.service";
@@ -75,11 +75,13 @@ export class LibraryComponent implements OnInit {
       if (!this.authenticationService.isAdmin()) {
         this.unsubscribeFromSocketIfNeeded()
 
+        // Subscribe to the concurrent users socket
         this.concurrentUsersService.socket$.subscribe();
         this.isSubscribedToSocket = true;
 
-        // primo 1000: ms dopo quanto parte il timer (~1s giusto per caricare la pagina)
-        // secondo 1000: ms ogni quanto si aggiorna il timer
+        // Start the countdown timer
+        // first 1000: ms delay before starting the timer, to allow full page load
+        // second 1000: ms scheduled timer period
         this.subscribeTimer = timer(1000, 1000).subscribe(() => {
           if (this.timeSecondsLeft > 0) {
             this.timeSecondsLeft--;
@@ -100,7 +102,8 @@ export class LibraryComponent implements OnInit {
       }
 
     }, error => {
-      if (error.status == 429) { // 429 HTTP Too Many Requests
+      // Handle 429 HTTP Too Many Requests in case of queue
+      if (error.status == 429) {
         this.router.navigate(['queue'], {queryParams: {returnUrl: this.router.url}});
       } else {
         this.error = error.error || error.statusText;

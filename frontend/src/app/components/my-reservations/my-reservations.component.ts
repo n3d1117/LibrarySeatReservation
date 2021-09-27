@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {first} from "rxjs/operators";
 import {Reservation} from "../../models/reservation.model";
@@ -9,7 +9,6 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {QrcodeComponent} from "../qrcode/qrcode.component";
 import {DateUtilityService} from "../../services/date-utility.service";
-import {MatTable} from "@angular/material/table";
 import {ConfirmDialogComponent, ConfirmDialogModel} from "../confirm-dialog/confirm-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 
@@ -43,7 +42,7 @@ export class MyReservationsComponent implements OnInit {
     return this.reservations.filter((item) => {
       return this.dateService.isOlderThanToday(item.datetime);
     }).sort((a, b) => {
-      return this.dateService.sort(a.datetime, b.datetime);
+      return this.dateService.difference(a.datetime, b.datetime);
     })
   }
 
@@ -51,7 +50,7 @@ export class MyReservationsComponent implements OnInit {
     return this.reservations.filter((item) => {
       return !this.dateService.isOlderThanToday(item.datetime);
     }).sort((a, b) => {
-      return this.dateService.sort(a.datetime, b.datetime);
+      return this.dateService.difference(a.datetime, b.datetime);
     })
   }
 
@@ -106,7 +105,7 @@ export class MyReservationsComponent implements OnInit {
     });
   }
 
-  humanReadable(date: string): string {
+  humanReadableDate(date: string): string {
     return this.dateService.dateToHumanReadableString(
       this.dateService.stringToDate(date)
     )
