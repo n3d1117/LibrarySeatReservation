@@ -3,12 +3,10 @@ package dao;
 import auth.PasswordHasher;
 import model.User;
 
-import javax.ejb.Stateless;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
-@Stateless
 public class UserDao extends BaseDao<User> {
 
     public UserDao() {

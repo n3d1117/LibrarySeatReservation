@@ -4,7 +4,6 @@ import dto.ReservationDto;
 import dto.ReservationsDailyAggregateDto;
 import model.Reservation;
 
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
@@ -18,7 +17,6 @@ import java.util.logging.Logger;
  * So all CRUD methods for the Reservation class have been implemented here.
  * This DAO never returns a Reservation object directly, but uses a ReservationDto instead.
  */
-@Stateless
 public class ReservationDao {
 
     @PersistenceContext(unitName = "default")
