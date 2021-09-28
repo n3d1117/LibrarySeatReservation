@@ -1,6 +1,6 @@
 # Backend
 
-Backend module of LibrarySeatResevation project built with [Java EE 8](https://www.oracle.com/it/java/technologies/java-ee-glance.html)
+Backend module of LibrarySeatReservation project built with [Java EE 8](https://www.oracle.com/it/java/technologies/java-ee-glance.html)
 
 ## Build
 
