@@ -1,9 +1,12 @@
 package queue;
 
+import config.ConfigProperties;
+
 import javax.websocket.OnClose;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -115,5 +118,20 @@ public class QueueSocketHandler {
                 .filter(entry -> entry.getValue().after(date))
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * @return true if the maximum number of users inside queue has been reached, false otherwise
+     */
+    public static Boolean maxQueueSizeReached() {
+        // Fallback to this value in case the config.properties file is missing MAX_QUEUE_SIZE property
+        int maxQueueSize = 5;
+
+        try {
+            maxQueueSize = Integer.parseInt(ConfigProperties.getProperties().getProperty("MAX_QUEUE_SIZE"));
+        } catch (IOException e) {
+            LOGGER.warning(e.getMessage());
+        }
+        return sessions.size() >= maxQueueSize;
     }
 }

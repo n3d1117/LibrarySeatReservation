@@ -32,6 +32,7 @@ import {AdminSkipQueueInterceptor} from "./auth/admin-skip-queue.interceptor";
 import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
 import {QueueComponent} from './components/queue/queue.component';
 import {SplashScreenComponent} from './components/splash-screen/splash-screen.component';
+import { QueueErrorComponent } from './components/queue-error/queue-error.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import {SplashScreenComponent} from './components/splash-screen/splash-screen.co
     ConfirmDialogComponent,
     QueueComponent,
     SplashScreenComponent,
+    QueueErrorComponent,
   ],
   imports: [
     BrowserModule,

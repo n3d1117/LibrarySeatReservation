@@ -10,6 +10,7 @@ import {AddLibraryComponent} from "./components/add-library/add-library.componen
 import {AdminOnly} from "./auth/admin-only";
 import {LibraryComponent} from "./components/library/library.component";
 import {QueueComponent} from "./components/queue/queue.component";
+import {QueueErrorComponent} from "./components/queue-error/queue-error.component";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'libraries/:id', component: LibraryComponent},
   {path: 'my-reservations', component: MyReservationsComponent, canActivate: [LoginProtected]},
   {path: 'queue', component: QueueComponent, canActivate: [LoginProtected]},
+  {path: 'queue-error', component: QueueErrorComponent},
 
   {path: 'admin/add-library', component: AddLibraryComponent, canActivate: [AdminOnly]},
 

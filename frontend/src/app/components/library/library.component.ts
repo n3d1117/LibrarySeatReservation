@@ -102,9 +102,12 @@ export class LibraryComponent implements OnInit {
       }
 
     }, error => {
-      // Handle 429 HTTP Too Many Requests in case of queue
       if (error.status == 429) {
+        // Handle 429 HTTP Too Many Requests in case of queue
         this.router.navigate(['queue'], {queryParams: {returnUrl: this.router.url}});
+      } else if (error.status == 503) {
+        // Handle 503 HTTP Service unavailable in case of max queue size reached
+        this.router.navigate(['queue-error'])
       } else {
         this.error = error.error || error.statusText;
       }

@@ -2,6 +2,7 @@ package rest;
 
 import concurrent_users.ConcurrentUsersSocketHandler;
 import config.ConfigProperties;
+import queue.QueueSocketHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
@@ -36,6 +37,13 @@ public class Proxy {
     public Response get(@Context UriInfo uri, @Context HttpServletRequest request) {
         // Only queue on API call specified in configuration file
         if (uri.getPath().matches(apiQueueRegex)) {
+            // Check if max queue size is reached
+            if (QueueSocketHandler.maxQueueSizeReached()) {
+                // Returns HTTP 503: Service Unavailable
+                return Response
+                        .status(Response.Status.SERVICE_UNAVAILABLE)
+                        .build();
+            }
             // Check if max concurrent users number is reached
             if (ConcurrentUsersSocketHandler.maxUsersReached()) {
                 // Returns HTTP 429: Too Many Requests
