@@ -31,6 +31,7 @@
         <guava.version>30.1.1-jre</guava.version>
         <rsocket.version>1.1.1</rsocket.version>
         <awaitility.version>4.1.0</awaitility.version>
+        <jwt.version>0.11.2</jwt.version>
 
     </properties>
 
@@ -127,6 +128,25 @@
             <artifactId>awaitility</artifactId>
             <version>${awaitility.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <!-- JWT -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-gson</artifactId>
+            <version>${jwt.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
     </dependencies>

@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 // This SecurityContext implementation will be injected into the SecurityRequestFilter
 public class SecurityContext implements javax.ws.rs.core.SecurityContext {
 
+    private static final String AUTHENTICATION_SCHEME = "Bearer";
     private static final Logger LOGGER = Logger.getLogger(SecurityContext.class.getName());
 
     @Inject private UserDao dao;
@@ -54,6 +55,6 @@ public class SecurityContext implements javax.ws.rs.core.SecurityContext {
 
     @Override
     public String getAuthenticationScheme() {
-        return SecurityContext.BASIC_AUTH;
+        return AUTHENTICATION_SCHEME;
     }
 }

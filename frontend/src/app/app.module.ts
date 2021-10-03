@@ -8,7 +8,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HomeComponent} from './components/home/home.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {BasicAuthInterceptor} from "./auth/basic-http-auth.interceptor";
+import {TokenAuthInterceptor} from "./auth/token-auth.interceptor";
 import {ErrorInterceptor} from "./auth/error.interceptor";
 import {SignupComponent} from './components/signup/signup.component';
 import {MyReservationsComponent} from './components/my-reservations/my-reservations.component';
@@ -32,7 +32,7 @@ import {AdminSkipQueueInterceptor} from "./auth/admin-skip-queue.interceptor";
 import {ConfirmDialogComponent} from './components/confirm-dialog/confirm-dialog.component';
 import {QueueComponent} from './components/queue/queue.component';
 import {SplashScreenComponent} from './components/splash-screen/splash-screen.component';
-import { QueueErrorComponent } from './components/queue-error/queue-error.component';
+import {QueueErrorComponent} from './components/queue-error/queue-error.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +72,7 @@ import { QueueErrorComponent } from './components/queue-error/queue-error.compon
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'it-IT'},
-    {provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: TokenAuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: AdminSkipQueueInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
   ],

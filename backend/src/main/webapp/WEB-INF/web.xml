@@ -7,11 +7,10 @@
         <param-name>resteasy.role.based.security</param-name>
         <param-value>true</param-value>
     </context-param>
-
     <security-role>
-        <role-name>ADIMN</role-name>
+        <role-name>BASIC</role-name>
     </security-role>
     <security-role>
-        <role-name>USER</role-name>
+        <role-name>ADIMN</role-name>
     </security-role>
 </web-app>

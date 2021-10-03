@@ -50,6 +50,14 @@ public class ReservationDao {
                 .getResultList();
     }
 
+    public List<ReservationDto> findByUserEmail(String email) {
+        return entityManager
+                .createQuery("SELECT NEW dto.ReservationDto(r.id, r.user.id, CONCAT(r.user.name, ' ', r.user.surname), r.user.email, r.library.id, r.library.name, r.datetime) " +
+                        "FROM Reservation r WHERE r.user.email = :email", ReservationDto.class)
+                .setParameter("email", email)
+                .getResultList();
+    }
+
     public List<ReservationDto> findByLibraryId(Long id) {
         return entityManager
                 .createQuery("SELECT NEW dto.ReservationDto(r.id, r.user.id, CONCAT(r.user.name, ' ', r.user.surname), r.user.email, r.library.id, r.library.name, r.datetime) " +

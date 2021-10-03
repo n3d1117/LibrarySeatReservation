@@ -9,7 +9,9 @@ import java.util.Set;
 @Table(name = "users")
 public class User extends BaseEntity {
 
+    @Column(unique=true)
     private String email;
+
     private String name;
     private String surname;
     private String password;

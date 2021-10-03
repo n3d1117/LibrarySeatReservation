@@ -1,6 +1,11 @@
 package rest;
 
+import auth.JWTHandler;
+import auth.Secured;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import controller.UserController;
+import model.User;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
@@ -24,6 +29,7 @@ public class UserRestServices {
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("ADMIN")
+    @Secured
     public Response list() {
         try {
             LOGGER.log(Level.INFO, "Listing all users...");
@@ -41,6 +47,7 @@ public class UserRestServices {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("ADMIN")
+    @Secured
     public Response listById(@PathParam("id") Long id) {
         try {
             LOGGER.log(Level.INFO, String.format("Listing user with id %s", id));
@@ -65,9 +72,19 @@ public class UserRestServices {
     public Response login(@QueryParam("email") String email, @QueryParam("password") String password) {
         try {
             LOGGER.log(Level.INFO, String.format("Login user with email: %s", email));
+
+            // Authenticate user
             String loggedInUserJson = userController.login(email, password);
+
+            // Generate and add custom JWT token to response
+            Gson gson = new Gson();
+            JsonElement jsonElement = gson.toJsonTree(gson.fromJson(loggedInUserJson, User.class));
+            String jwt = JWTHandler.createToken(email);
+            jsonElement.getAsJsonObject().addProperty("jwt", jwt);
+            String newJson = gson.toJson(jsonElement);
+
             return Response
-                    .ok(loggedInUserJson, MediaType.APPLICATION_JSON)
+                    .ok(newJson, MediaType.APPLICATION_JSON)
                     .build();
         } catch (EntityNotFoundException e) {
             return Response
@@ -105,6 +122,7 @@ public class UserRestServices {
     @DELETE
     @Path("/delete/{id}")
     @RolesAllowed("ADMIN")
+    @Secured
     public Response delete(@PathParam("id") Long id) {
         try {
             LOGGER.log(Level.INFO, String.format("Deleting user with id %s", id));
@@ -126,6 +144,7 @@ public class UserRestServices {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @RolesAllowed("ADMIN")
+    @Secured
     public Response update(String json) {
         try {
             LOGGER.log(Level.INFO, String.format("Updating user: %s", json));

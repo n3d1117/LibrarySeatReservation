@@ -37,10 +37,8 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string): Observable<User> {
-    return this.http.post<User>(`${this.url}/login?email=${email}&password=${password}`, {})
+    return this.http.post<User>(`${this.url}/login?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`, {})
       .pipe(map(user => {
-        // Encode user credentials with Base64 and assign it to authData field
-        user.authData = window.btoa(email + ':' + password);
         // Set user in the browser's local storage
         localStorage.setItem('currentUser', JSON.stringify(user));
         // Notify observables

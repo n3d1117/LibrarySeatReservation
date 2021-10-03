@@ -6,10 +6,7 @@ import queue.QueueSocketHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import java.io.IOException;
 import java.net.URI;
 
@@ -33,10 +30,11 @@ public class Proxy {
 
     @GET
     @Path("/{s:.*}")
-    @Produces(MediaType.TEXT_PLAIN)
     public Response get(@Context UriInfo uri, @Context HttpServletRequest request) {
+
         // Only queue on API call specified in configuration file
         if (uri.getPath().matches(apiQueueRegex)) {
+
             // Check if max queue size is reached
             if (QueueSocketHandler.maxQueueSizeReached()) {
                 // Returns HTTP 503: Service Unavailable
@@ -79,9 +77,16 @@ public class Proxy {
     private Response redirect(UriInfo uri, HttpServletRequest request) {
         String redirectUrl = apiUrl + uri.getPath();
 
-        // if there are query params in the request, append them
+        // If there are query params in the request, append them
         if (request.getQueryString() != null)
             redirectUrl += "?" + request.getQueryString();
+
+        // Apparently you can't set custom HTTP headers for a redirect (https://stackoverflow.com/a/41218304)
+        // So we append the JWT token, if any, directly to the redirect url's query string
+        if (request.getHeader("Authorization") != null) {
+            String token = request.getHeader("Authorization").substring("Bearer".length()).trim();
+            redirectUrl = UriBuilder.fromUri(redirectUrl).queryParam("jwt", token).build().toString();
+        }
 
         return Response
                 .temporaryRedirect(URI.create(redirectUrl))

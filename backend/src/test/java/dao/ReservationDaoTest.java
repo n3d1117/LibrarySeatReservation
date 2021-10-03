@@ -110,6 +110,24 @@ public class ReservationDaoTest extends JPATest {
     }
 
     @Test
+    public void testFindByUserEmail() {
+        List<ReservationDto> results = dao.findByUserEmail(user.getEmail());
+        assertEquals(results.size(), 1);
+        ReservationDto result = results.get(0);
+        assertEquals(reservation.getId(), result.getId());
+        assertEquals(ReservationMapper.dateToString(reservation.getDatetime()), result.getDatetime());
+        assertEquals(reservation.getUser().getId(), result.getUserId());
+        assertEquals(reservation.getLibrary().getId(), result.getLibraryId());
+        assertEquals(reservation.getLibrary().getName(), result.getLibraryName());
+    }
+
+    @Test
+    public void testFindByUserEmailReturnsEmptyListWhenUserNotFound() {
+        List<ReservationDto> results = dao.findByUserEmail("any@email.com");
+        assertEquals(Collections.emptyList(), results);
+    }
+
+    @Test
     public void testFindByLibraryId() {
         List<ReservationDto> results = dao.findByLibraryId(library.getId());
         assertEquals(results.size(), 1);

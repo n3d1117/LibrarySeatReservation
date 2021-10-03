@@ -1,13 +1,16 @@
 package rest;
 
+import auth.Secured;
 import controller.LibraryController;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.persistence.EntityNotFoundException;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,8 +40,9 @@ public class LibraryRestServices {
 
     @GET
     @Path("/{id}")
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listById(@PathParam("id") Long id) {
+    public Response listById(@PathParam("id") Long id, @Context SecurityContext securityContext) {
         try {
             LOGGER.log(Level.INFO, String.format("Listing library with id %s", id));
             String libraryJson = libraryController.find(id);
@@ -61,6 +65,7 @@ public class LibraryRestServices {
     @RolesAllowed("ADMIN")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Secured
     public Response add(String json) {
         try {
             LOGGER.log(Level.INFO, String.format("Adding new library: %s", json));
@@ -77,6 +82,7 @@ public class LibraryRestServices {
     @DELETE
     @Path("/delete/{id}")
     @RolesAllowed("ADMIN")
+    @Secured
     public Response delete(@PathParam("id") Long id) {
         try {
             LOGGER.log(Level.INFO, String.format("Deleting library with id %s", id));
@@ -97,6 +103,7 @@ public class LibraryRestServices {
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Secured
     @RolesAllowed("ADMIN")
     public Response update(String json) {
         try {
