@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
@@ -37,8 +37,8 @@ export class ReservationService {
   }
 
   add(userId: number, libraryId: number, datetime: string): Observable<Reservation> {
-    const options = { headers: {'Content-Type': 'application/json'} };
-    const reservation = { userId: userId, libraryId: libraryId, datetime: datetime };
+    const options = {headers: {'Content-Type': 'application/json', 'X-Requires-Gateway-Auth': 'true'}};
+    const reservation = {userId: userId, libraryId: libraryId, datetime: datetime};
     return this.http.post<Reservation>(`${this.url}/add`, reservation, options);
   }
 

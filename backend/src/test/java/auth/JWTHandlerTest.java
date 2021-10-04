@@ -45,5 +45,4 @@ public class JWTHandlerTest {
         assertTrue(JWTHandler.validate(jwt));
         assertFalse(JWTHandler.validate(FAKE_JWT));
     }
-
 }

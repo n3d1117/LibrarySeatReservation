@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Library} from "../models/library.model";
@@ -20,12 +20,13 @@ export class LibraryService {
   }
 
   find(id: number): Observable<Library> {
-    return this.http.get<Library>(this.url + `/${id}`)
+    const options = {headers: {'X-Requires-Gateway-Auth': 'true'}};
+    return this.http.get<Library>(this.url + `/${id}`, options);
   }
 
-  add(name: string, imgFilename: string ,address: string, capacity: number): Observable<Library> {
-    const options = { headers: {'Content-Type': 'application/json'} };
-    const library = { name: name, imgFilename : imgFilename ,address: address, capacity: capacity };
+  add(name: string, imgFilename: string, address: string, capacity: number): Observable<Library> {
+    const options = {headers: {'Content-Type': 'application/json'}};
+    const library = {name: name, imgFilename: imgFilename, address: address, capacity: capacity};
     return this.http.post<Library>(`${this.url}/add`, library, options);
   }
 

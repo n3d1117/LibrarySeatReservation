@@ -1,5 +1,6 @@
 package rest;
 
+import auth.GatewayAuthorizationRequired;
 import auth.Secured;
 import controller.LibraryController;
 
@@ -42,6 +43,7 @@ public class LibraryRestServices {
     @Path("/{id}")
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
+    @GatewayAuthorizationRequired
     public Response listById(@PathParam("id") Long id, @Context SecurityContext securityContext) {
         try {
             LOGGER.log(Level.INFO, String.format("Listing library with id %s", id));

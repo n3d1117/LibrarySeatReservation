@@ -1,5 +1,6 @@
 package rest;
 
+import auth.GatewayAuthorizationRequired;
 import auth.Secured;
 import com.google.gson.Gson;
 import controller.ReservationController;
@@ -189,10 +190,11 @@ public class ReservationRestServices {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Secured
+    @GatewayAuthorizationRequired
     public Response add(String json, @Context SecurityContext securityContext) {
         try {
 
-            // Make sure a user can't add reservations on other user's behalf
+            // Make sure a user can't add reservations on other users' behalf
             if (!securityContext.isUserInRole(Role.ADMIN.toString())) {
                 ReservationDto reservationDto = new Gson().fromJson(json, ReservationDto.class);
                 String email = securityContext.getUserPrincipal().getName();

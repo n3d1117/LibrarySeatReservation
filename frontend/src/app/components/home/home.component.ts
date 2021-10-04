@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
     this.loading = true;
     this.libraryService.all().pipe(first()).subscribe(libraries => {
       this.loading = false;
-      this.libraries = libraries;
+      this.libraries = libraries.sort((a, b) => a.name.localeCompare(b.name));
     }, error => {
       console.log(error);
       this.loading = false;
