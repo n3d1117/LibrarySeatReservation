@@ -743,7 +743,7 @@
 											"top": 485,
 											"width": 132.18359375,
 											"height": 13,
-											"text": "«CDI +JAX-RS»"
+											"text": "«CDI + JAX-RS»"
 										},
 										{
 											"_type": "LabelView",
@@ -1348,7 +1348,7 @@
 											"top": 629,
 											"width": 132.18359375,
 											"height": 13,
-											"text": "«Hybernate»"
+											"text": "«Hibernate»"
 										},
 										{
 											"_type": "LabelView",
@@ -2440,7 +2440,7 @@
 							}
 						}
 					],
-					"stereotype": "CDI +JAX-RS"
+					"stereotype": "CDI + JAX-RS"
 				},
 				{
 					"_type": "UMLComponentInstance",
@@ -2558,7 +2558,7 @@
 							}
 						}
 					],
-					"stereotype": "Hybernate"
+					"stereotype": "Hibernate"
 				},
 				{
 					"_type": "UMLComponentInstance",
