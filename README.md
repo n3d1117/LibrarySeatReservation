@@ -24,13 +24,13 @@ Check out the following modules:
 - [gateway](gateway) built with [Java EE 8](https://www.oracle.com/it/java/technologies/java-ee-glance.html)
 
 ## Documents (pdf, italian)
-- [Requirements Analysis](blob/master/documents/PDF%20Reports/Requirements%20Analysis.pdf)
-- [Mockup](blob/master/documents/PDF%20Reports/Mockup.pdf)
-- [System Design](blob/master/documents/PDF%20Reports/System%20Design.pdf)
-- [TimescaleDB](blob/master/documents/PDF%20Reports/TimescaleDB.pdf)
-- [WebSocket vs RSocket](blob/master/documents/PDF%20Reports/WebSocket%20vs%20RSocket.pdf)
-- [HyperSQL](blob/master/documents/PDF%20Reports/HyperSQL.pdf)
-- [Full Report](blob/master/documents/PDF%20Reports/LSR%20Report.pdf)
+- [Requirements Analysis](documents/PDF%20Reports/Requirements%20Analysis.pdf)
+- [Mockup](documents/PDF%20Reports/Mockup.pdf)
+- [System Design](documents/PDF%20Reports/System%20Design.pdf)
+- [TimescaleDB](documents/PDF%20Reports/TimescaleDB.pdf)
+- [WebSocket vs RSocket](documents/PDF%20Reports/WebSocket%20vs%20RSocket.pdf)
+- [HyperSQL](documents/PDF%20Reports/HyperSQL.pdf)
+- [Full Report](documents/PDF%20Reports/LSR%20Report.pdf)
 
 ## Build and run
 - Start [Wildfly](https://www.wildfly.org) instance with:
