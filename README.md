@@ -11,18 +11,26 @@
 
 LibrarySeatReservation is a web application for the management of seat reservations in the study rooms of the libraries of Florence.
 
+## Features
+- Configurable queue system to prevent server overload
+- [TimscaleDB](https://www.timescale.com) database integration for storing and retrieving time-based reservations
+- Real-time admin notifications using [RSocket](https://rsocket.io) protocol
+- Use of [JWT](https://jwt.io) for authentication and authorization
+
 ## Modules
 Check out the following modules: 
 - [frontend](frontend) built with [Angular](https://angular.io)
 - [backend](backend) built with [Java EE 8](https://www.oracle.com/it/java/technologies/java-ee-glance.html)
 - [gateway](gateway) built with [Java EE 8](https://www.oracle.com/it/java/technologies/java-ee-glance.html)
 
-## Documents (pdf)
-- [Mockup](blob/master/documents/PDF%20Reports/LibrarySeatReservationMockup.pdf)
+## Documents (pdf, italian)
 - [Requirements Analysis](blob/master/documents/PDF%20Reports/Requirements%20Analysis.pdf)
+- [Mockup](blob/master/documents/PDF%20Reports/Mockup.pdf)
 - [System Design](blob/master/documents/PDF%20Reports/System%20Design.pdf)
 - [TimescaleDB](blob/master/documents/PDF%20Reports/TimescaleDB.pdf)
 - [WebSocket vs RSocket](blob/master/documents/PDF%20Reports/WebSocket%20vs%20RSocket.pdf)
+- [HyperSQL](blob/master/documents/PDF%20Reports/HyperSQL.pdf)
+- [Full Report](blob/master/documents/PDF%20Reports/LSR%20Report.pdf)
 
 ## Build and run
 - Start [Wildfly](https://www.wildfly.org) instance with:
@@ -38,6 +46,12 @@ ng serve
 ```
 -  Navigate to `http://localhost:4200/`
 
-## Screenshot
+## Screenshots
 
 <img width="1287" alt="Screenshot 2021-09-24 at 00 26 08" src="https://user-images.githubusercontent.com/11541888/135116285-8fe8e081-cf9f-4e6f-b0e0-d07ab0c77864.png">
+
+<img width="1283" alt="Screenshot 2021-09-24 at 00 28 14" src="https://user-images.githubusercontent.com/11541888/136655543-6b2d8e18-bf84-4991-9abe-3d0b144a4f45.png">
+
+<img width="1283" alt="Screenshot 2021-09-24 at 00 30 12" src="https://user-images.githubusercontent.com/11541888/136655548-49a554de-e016-4e52-b5b9-162c2dc01fd3.png">
+
+<img width="1281" alt="Screenshot 2021-09-24 at 00 27 41" src="https://user-images.githubusercontent.com/11541888/136655559-ce4afe7e-8ea7-47fa-ba3d-09d3626d3022.png">
