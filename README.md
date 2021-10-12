@@ -31,6 +31,7 @@ Check out the following modules:
 - [WebSocket vs RSocket](documents/PDF%20Reports/WebSocket%20vs%20RSocket.pdf)
 - [HyperSQL](documents/PDF%20Reports/HyperSQL.pdf)
 - [Full Report](documents/PDF%20Reports/LSR%20Report.pdf)
+- [Presentation](documents/PDF%20Reports/LSR%20Presentation.pdf)
 
 ## Build and run
 - Start [Wildfly](https://www.wildfly.org) instance with:
