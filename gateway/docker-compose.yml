@@ -1,0 +1,6 @@
+version: '2'
+services:
+  wildfly:
+    build: .
+    ports:
+      - 8081:8080
