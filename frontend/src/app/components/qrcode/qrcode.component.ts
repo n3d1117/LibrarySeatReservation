@@ -11,11 +11,21 @@ import {DateUtilityService} from "../../services/date-utility.service";
 export class QrcodeComponent implements OnInit {
 
   constructor(
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: {reservation: Reservation},
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: { reservation: Reservation },
     private dateService: DateUtilityService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
+  }
+
+  reservationInfo(): string {
+    return this.data.reservation.id.toString()
+      + " - " + this.data.reservation.userId.toString()
+      + " - " + this.humanReadableDate()
+      + " - " + this.humanReadableHours()
+      + " - " + this.libraryName()
+      + " - " + this.data.reservation.userEmail;
   }
 
   libraryName(): string {
