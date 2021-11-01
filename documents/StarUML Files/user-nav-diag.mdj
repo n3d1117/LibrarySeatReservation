@@ -51,15 +51,17 @@
 													"_parent": {
 														"$ref": "AAAAAAF8E0pa9XojGvA="
 													},
+													"fillColor": "#38bcff",
 													"font": "Arial;13;0",
 													"left": 274,
 													"top": 246,
 													"width": 92,
 													"height": 13,
-													"text": "Library List",
+													"text": "Home",
 													"wordWrap": true
 												}
 											],
+											"fillColor": "#38bcff",
 											"font": "Arial;13;0",
 											"left": 264,
 											"top": 236,
@@ -661,7 +663,7 @@
 									"_parent": {
 										"$ref": "AAAAAAF8E0nJ+3oT3yQ="
 									},
-									"name": "Library List",
+									"name": "Home",
 									"ownedElements": [
 										{
 											"_type": "FCFlow",
