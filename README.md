@@ -13,7 +13,7 @@ LibrarySeatReservation is a web application for the management of seat reservati
 
 ## Features
 - Configurable queue system to prevent server overload
-- [TimscaleDB](https://www.timescale.com) database integration for storing and retrieving time-based reservations
+- [TimescaleDB](https://www.timescale.com) database integration for storing and retrieving time-based reservations
 - Real-time admin notifications using [RSocket](https://rsocket.io) protocol
 - Use of [JWT](https://jwt.io) for authentication and authorization
 
